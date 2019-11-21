@@ -26,7 +26,6 @@ void GameEngine::initialize(ISystem* _projectEngine)
 	InputManager::instance().initialize();
 	RenderSystem::instance().initialize();
     GameObjectManager::instance().initialize();
-
     projectEngine = _projectEngine;
     if (projectEngine != nullptr)
     {
