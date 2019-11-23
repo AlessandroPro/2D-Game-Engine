@@ -16,6 +16,11 @@ void InputManager::update(float deltaTime)
 	sf::RenderWindow* window = RenderSystem::instance().getRenderWindow();
 	sf::Event ev;
 
+	if (window == nullptr) 
+	{
+		return;
+	}
+
 	while (window->pollEvent(ev))
 	{
 		switch (ev.type)
@@ -25,10 +30,11 @@ void InputManager::update(float deltaTime)
 			return;
 		case sf::Event::KeyPressed:
 			//If a modifier key is pressed then the modifier map is updated
-			if(modifierKeyMap.find(ev.key.code) != modifierKeyMap.end())
+			if(modifierKeyMap.count(ev.key.code) != 0)
 			{
 				updateModifier(ev.key.code, true);
 			}
+
 			//Do not update the state to down if it's already been set as being held.
 			if(keyMap[ev.key.code].state != PushState::Held)
 			{
@@ -37,7 +43,7 @@ void InputManager::update(float deltaTime)
 			break;
 		case sf::Event::KeyReleased:
 			//If a modifier key is released then the modifier map is updated
-			if (modifierKeyMap.find(ev.key.code) != modifierKeyMap.end())
+			if (modifierKeyMap.count(ev.key.code) != 0)
 			{
 				updateModifier(ev.key.code, false);
 			}
@@ -63,6 +69,7 @@ void InputManager::update(float deltaTime)
 			uniformMousePosition.x = mousePosition.x / window->getSize().x;
 			
 			break;
+
 		default:
 			break;
 		}
@@ -71,31 +78,40 @@ void InputManager::update(float deltaTime)
 
 InputManager::PushState InputManager::getKeyState(sf::Keyboard::Key inKey)
 {
+	auto keyIter = keyMap.find(inKey);
+
 	//Initializes the key data if it doesn't already exist.
-	if (keyMap.find(inKey) == keyMap.end())
+	if (keyIter == keyMap.end())
 	{
 		KeyData newKey = { PushState::None, false, false, false };
-		keyMap.insert(std::pair<sf::Keyboard::Key, KeyData>(inKey, newKey));
+		keyMap.insert(keyIter,std::pair<sf::Keyboard::Key, KeyData>(inKey,newKey));
 	}
+
 	return keyMap[inKey].state;
 }
 InputManager::KeyData& InputManager::getKeyData(sf::Keyboard::Key inKey)
 {
+	auto keyIter = keyMap.find(inKey);
+
 	//Initializes the key data if it doesn't already exist.
-	if (keyMap.find(inKey) == keyMap.end())
+	if (keyIter == keyMap.end())
 	{
 		KeyData newKey = { PushState::None, false, false, false };
-		keyMap.insert(std::pair<sf::Keyboard::Key, KeyData>(inKey, newKey));
+		keyMap.insert(keyIter, std::pair<sf::Keyboard::Key, KeyData>(inKey, newKey));
 	}
+
 	return keyMap[inKey];
 }
 InputManager::PushState InputManager::getMouseButtonState(sf::Mouse::Button inMouseBtn)
 {
+	auto btnIter = mouseBtnMap.find(inMouseBtn);
+
 	//Initializes the button state if it doesn't already exist.
-	if (mouseBtnMap.find(inMouseBtn) == mouseBtnMap.end())
+	if (btnIter == mouseBtnMap.end())
 	{
-		mouseBtnMap.insert(std::pair<sf::Mouse::Button, PushState>(inMouseBtn, PushState::None));
+		mouseBtnMap.insert(btnIter, std::pair<sf::Mouse::Button, PushState>(inMouseBtn, PushState::None));
 	}
+
 	return mouseBtnMap[inMouseBtn];
 }
 
