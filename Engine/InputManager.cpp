@@ -16,6 +16,7 @@ void InputManager::update(float deltaTime)
 	sf::RenderWindow* window = RenderSystem::instance().getRenderWindow();
 	sf::Event ev;
 
+	//Return if the window is null.
 	if (window == nullptr) 
 	{
 		return;
@@ -29,26 +30,14 @@ void InputManager::update(float deltaTime)
 			RenderSystem::instance().closeWindow();
 			return;
 		case sf::Event::KeyPressed:
-			//If a modifier key is pressed then the modifier map is updated
-			if(modifierKeyMap.count(ev.key.code) != 0)
-			{
-				updateModifier(ev.key.code, true);
-			}
-
 			//Do not update the state to down if it's already been set as being held.
-			if(keyMap[ev.key.code].state != PushState::Held)
+			if(keyMap[ev.key.code] != PushState::Held)
 			{
-				keyMap[ev.key.code].state = PushState::Down;
+				keyMap[ev.key.code] = PushState::Down;
 			}
 			break;
 		case sf::Event::KeyReleased:
-			//If a modifier key is released then the modifier map is updated
-			if (modifierKeyMap.count(ev.key.code) != 0)
-			{
-				updateModifier(ev.key.code, false);
-			}
-
-			keyMap[ev.key.code].state = PushState::Up;
+			keyMap[ev.key.code] = PushState::Up;
 			break;
 		case sf::Event::MouseButtonPressed:
 			//Do not update the state to down if it's already been set as being held.
@@ -83,25 +72,12 @@ InputManager::PushState InputManager::getKeyState(sf::Keyboard::Key inKey)
 	//Initializes the key data if it doesn't already exist.
 	if (keyIter == keyMap.end())
 	{
-		KeyData newKey = { PushState::None, false, false, false };
-		keyMap.insert(keyIter,std::pair<sf::Keyboard::Key, KeyData>(inKey,newKey));
-	}
-
-	return keyMap[inKey].state;
-}
-InputManager::KeyData& InputManager::getKeyData(sf::Keyboard::Key inKey)
-{
-	auto keyIter = keyMap.find(inKey);
-
-	//Initializes the key data if it doesn't already exist.
-	if (keyIter == keyMap.end())
-	{
-		KeyData newKey = { PushState::None, false, false, false };
-		keyMap.insert(keyIter, std::pair<sf::Keyboard::Key, KeyData>(inKey, newKey));
+		keyMap.insert(keyIter,std::pair<sf::Keyboard::Key, PushState>(inKey, PushState::None));
 	}
 
 	return keyMap[inKey];
 }
+
 InputManager::PushState InputManager::getMouseButtonState(sf::Mouse::Button inMouseBtn)
 {
 	auto btnIter = mouseBtnMap.find(inMouseBtn);
@@ -131,15 +107,15 @@ void InputManager::updateKeyStates()
 	{
 		//The initial key release is stored for only one iteration of the inputmanager's loop
 		//it then shifts to the None state.
-		if (key.second.state == PushState::Up)
+		if (key.second == PushState::Up)
 		{
-			keyMap[key.first].state = PushState::None;
+			keyMap[key.first] = PushState::None;
 		}
 		//The initial key push is stored for only one iteration of the inputmanager's loop
 		//it then shifts to the Held state.
-		else if (key.second.state == PushState::Down)
+		else if (key.second == PushState::Down)
 		{
-			keyMap[key.first].state = PushState::Held;
+			keyMap[key.first] = PushState::Held;
 		}
 	}
 }
@@ -159,80 +135,6 @@ void InputManager::updateMouseButtonStates()
 		else if (btn.second == PushState::Down)
 		{
 			mouseBtnMap[btn.first] = PushState::Held;
-		}
-	}
-}
-
-//Updates the state for all keys if a new modifier state is achieved as a result
-//of the provided input modifier key's new value.
-void InputManager::updateModifier(sf::Keyboard::Key modifierKey, bool isPressed)
-{
-	modifierKeyMap[modifierKey] = isPressed;
-
-	if(modifierKey == sf::Keyboard::LShift ||
-		modifierKey == sf::Keyboard::RShift)
-	{ 
-		//We only care about updating the the shift state for all keys if one of the shifts is true
-		//and the update to the state was one of them being pushed.
-		if((modifierKeyMap[sf::Keyboard::LShift] || modifierKeyMap[sf::Keyboard::RShift])
-			&& isPressed)
-		{
-			for(auto key : keyMap)
-			{
-				keyMap[key.first].shift = true;
-			}
-		}
-		//We only care about updating the the shift state for all keys if both of the shifts are false
-		else if (!modifierKeyMap[sf::Keyboard::LShift] && !modifierKeyMap[sf::Keyboard::RShift])
-		{
-			for (auto key : keyMap)
-			{
-				keyMap[key.first].shift = false;
-			}
-		}
-	}
-	else if(modifierKey == sf::Keyboard::LControl ||
-		modifierKey == sf::Keyboard::RControl)
-	{
-		//We only care about updating the the control state for all keys if one of the controls is true
-		//and the update to the state was one of them being pushed.
-		if ((modifierKeyMap[sf::Keyboard::LControl] || modifierKeyMap[sf::Keyboard::RControl])
-			&& isPressed)
-		{
-			for (auto key : keyMap)
-			{
-				keyMap[key.first].control = true;
-			}
-		}
-		//We only care about updating the the control state for all keys if both of the controls are false
-		else if (!modifierKeyMap[sf::Keyboard::LControl] && !modifierKeyMap[sf::Keyboard::RControl])
-		{
-			for (auto key : keyMap)
-			{
-				keyMap[key.first].control = false;
-			}
-		}
-	}
-	else if(modifierKey == sf::Keyboard::LAlt ||
-		modifierKey == sf::Keyboard::RAlt)
-	{
-		//We only care about updating the the alt state for all keys if one of the alts is true
-		//and the update to the state was one of them being pushed.
-		if ((modifierKeyMap[sf::Keyboard::LAlt] || modifierKeyMap[sf::Keyboard::RAlt])
-			&& isPressed)
-		{
-			for (auto key : keyMap)
-			{
-				keyMap[key.first].alt = true;
-			}
-		}
-		//We only care about updating the the alt state for all keys if both of the alts are false
-		else if (!modifierKeyMap[sf::Keyboard::LAlt] && !modifierKeyMap[sf::Keyboard::RAlt])
-		{
-			for (auto key : keyMap)
-			{
-				keyMap[key.first].alt = false;
-			}
 		}
 	}
 }

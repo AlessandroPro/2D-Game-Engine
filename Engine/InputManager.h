@@ -21,28 +21,8 @@ public:
 		None, Down, Held, Up
 	};
 
-	//Used to store additional information on keys.
-	struct KeyData
-	{
-		PushState state;
-		bool alt;
-		bool shift;
-		bool control;
-	};
-
 private:
-	std::map<sf::Keyboard::Key, KeyData> keyMap;
-
-	//A map of all of the modifier keys that are used to shorthand check whether a key is being pressed along with one of these modifiers.
-	std::map<sf::Keyboard::Key,bool> modifierKeyMap 
-	{ 
-		std::pair<sf::Keyboard::Key,bool>(sf::Keyboard::LControl, false), 
-		std::pair<sf::Keyboard::Key,bool>(sf::Keyboard::RControl, false),
-		std::pair<sf::Keyboard::Key,bool>(sf::Keyboard::LShift, false),
-		std::pair<sf::Keyboard::Key,bool>(sf::Keyboard::RShift, false),
-		std::pair<sf::Keyboard::Key,bool>(sf::Keyboard::LAlt, false),
-		std::pair<sf::Keyboard::Key,bool>(sf::Keyboard::RAlt, false)
-	};
+	std::map<sf::Keyboard::Key, PushState> keyMap;
 
 	std::map<sf::Mouse::Button, PushState> mouseBtnMap;
 
@@ -55,10 +35,8 @@ private:
 
 	void updateKeyStates();
 	void updateMouseButtonStates();
-	void updateModifier(sf::Keyboard::Key modifierKey, bool isPressed);
 
 public:
-	KeyData& getKeyData(sf::Keyboard::Key inKey);
 	PushState getKeyState(sf::Keyboard::Key inKey);
 	PushState getMouseButtonState(sf::Mouse::Button inButton);
 	sf::Vector2f& getMousePosition();
