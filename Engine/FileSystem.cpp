@@ -33,7 +33,7 @@ void FileSystem::load(std::string fileName, bool protectedFile, bool isLevelFile
 		{
 			protectedFiles.push_back(fileId);
 		}
-		else if (isLevelFile == true && protectedFile == true)
+		else if (isLevelFile == true && protectedFile != true)
 		{
 			currentLevel = fileId;
 		}
