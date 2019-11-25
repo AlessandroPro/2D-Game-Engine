@@ -23,7 +23,7 @@ protected:
 	void initialize() override;
 
 public:
-	Transform() = default;
+	Transform() ;
 	~Transform() = default;
 
 	const sf::Vector2f& getPosition();
