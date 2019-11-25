@@ -96,6 +96,15 @@
     <ClCompile Include="PrefabAsset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TextureAsset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioAsset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontAsset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h">
@@ -156,6 +165,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PrefabAsset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureAsset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioAsset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontAsset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

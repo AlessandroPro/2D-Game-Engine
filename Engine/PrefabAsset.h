@@ -8,10 +8,9 @@ private:
 	json::JSON gameObjectInfo;
 
 protected:
-	PrefabAsset() = default;
+	PrefabAsset();
 	~PrefabAsset();
 
 public:
 	json::JSON& getPrefab();
-
 };

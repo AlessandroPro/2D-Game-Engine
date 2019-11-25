@@ -3,6 +3,10 @@
 
 IMPLEMENT_DYNAMIC_CLASS(PrefabAsset)
 
+PrefabAsset::PrefabAsset()
+{
+}
+
 PrefabAsset::~PrefabAsset()
 {
 }
