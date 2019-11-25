@@ -17,23 +17,23 @@ void FileSystem::load(std::string fileName, bool protectedFile, bool isLevelFile
 
 	if (protectedFile == true && isLevelFile == true)
 	{
-		std::cout << "Level Cannot be Protected" << std::endl;
+		std::cout << "Level Cannot be Protected" << std::endl;							 //check if the file is a level file and protected? if so throw an error 
 	}
 	else
 	{
 		std::ifstream inputStream(fileName);
-		std::string JSONstr((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		std::string JSONstr((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>()); 
 		json::JSON fileJSON = json::JSON::Load(JSONstr);
 
-		fileId = getHashCode(fileName.c_str());
+		fileId = getHashCode(fileName.c_str());											
 
-		fileData.emplace(fileId, fileJSON);
+		fileData.emplace(fileId, fileJSON);												
 
-		if (protectedFile == true)
+		if (protectedFile == true && isLevelFile != true)									// check if the file is protected and not a level file
 		{
 			protectedFiles.push_back(fileId);
 		}
-		else if (isLevelFile == true && protectedFile != true)
+		else if (isLevelFile == true && protectedFile != true)								// check if the file is a level file and not protected. Then set it as current level
 		{
 			currentLevel = fileId;
 		}
