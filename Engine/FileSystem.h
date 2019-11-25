@@ -19,12 +19,13 @@ private:
 	std::list<STRCODE> protectedFiles;
 	std::list<STRCODE> removedFiles;
 	STRCODE currentLevel;
+	STRCODE fileId;
 
 protected:
     void initialize() override;
     void update(float deltaTime) override;
 
-	void load(std::string fileName, bool protectedFile);
+	void load(std::string fileName, bool protectedFile, bool isLevelFile);
 	void unload(std::string fileName);
 	STRCODE getCurrentLevel();
 
