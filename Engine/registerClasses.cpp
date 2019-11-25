@@ -5,6 +5,8 @@
 #include "Component.h"
 #include "Sprite.h"
 #include "Transform.h"
+#include "Asset.h"
+#include "PrefabAsset.h"
 
 void registerEngineClasses()
 {
@@ -13,4 +15,6 @@ void registerEngineClasses()
 	REGISTER_DYNAMIC_CLASS(GameObject);
 	REGISTER_DYNAMIC_CLASS(Sprite);
 	REGISTER_DYNAMIC_CLASS(Transform);
+	REGISTER_DYNAMIC_CLASS(Asset);
+	REGISTER_DYNAMIC_CLASS(PrefabAsset);
 }

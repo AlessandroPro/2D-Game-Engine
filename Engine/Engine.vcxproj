@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Asset.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CRtti.cpp" />
@@ -32,12 +33,14 @@
     <ClCompile Include="json.cpp" />
     <ClCompile Include="mersenne.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PrefabAsset.cpp" />
     <ClCompile Include="registerClasses.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asset.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
@@ -51,6 +54,7 @@
     <ClInclude Include="ISystem.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PrefabAsset.h" />
     <ClInclude Include="randomc.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Sprite.h" />
