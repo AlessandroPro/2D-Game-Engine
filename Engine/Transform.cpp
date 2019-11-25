@@ -7,6 +7,11 @@ void Transform::initialize()
 {
 }
 
+Transform::Transform()
+{
+	type = "Transform";
+}
+
 const sf::Vector2f& Transform::getPosition()
 {
 	return transform.getPosition();
