@@ -3,6 +3,7 @@
 #include "GameObjectManager.h"
 #include "AssetManager.h"
 #include "RenderSystem.h"
+#include <Windows.h>
 
 void FileSystem::initialize()
 {
@@ -14,10 +15,9 @@ void FileSystem::update(float deltaTime)
 
 void FileSystem::load(std::string fileName, bool protectedFile, bool isLevelFile)
 {
-
 	if (protectedFile == true && isLevelFile == true)
 	{
-		std::cout << "Level Cannot be Protected" << std::endl;							 //check if the file is a level file and protected? if so throw an error 
+		MessageBox(NULL, TEXT("Error"), TEXT("Level Cannot be Protected"), MB_OK | MB_ICONEXCLAMATION);  //check if the file is a level file and protected? if so throw an error 
 	}
 	else
 	{
@@ -29,11 +29,11 @@ void FileSystem::load(std::string fileName, bool protectedFile, bool isLevelFile
 
 		fileData.emplace(fileId, fileJSON);												
 
-		if (protectedFile == true && isLevelFile != true)									// check if the file is protected and not a level file
+		if (protectedFile == true && isLevelFile != true)				// check if the file is protected and not a level file
 		{
 			protectedFiles.push_back(fileId);
 		}
-		else if (isLevelFile == true && protectedFile != true)								// check if the file is a level file and not protected. Then set it as current level
+		else if (isLevelFile == true && protectedFile != true)			// check if the file is a level file and not protected. Then set it as current level
 		{
 			currentLevel = fileId;
 		}
