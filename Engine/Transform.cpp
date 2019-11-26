@@ -7,6 +7,13 @@ void Transform::initialize()
 {
 	Component::initialize();
 	transform.setPosition(sf::Vector2f(0, 0));
+	transform.setScale(sf::Vector2f(0, 0));
+	transform.setRotation(0.0f);
+	forward = sf::Vector2f(1.0f, 0.0f);
+	lockedDirections[Direction::Up] = false;
+	lockedDirections[Direction::Down] = false;
+	lockedDirections[Direction::Right] = false;
+	lockedDirections[Direction::Left] = false;
 }
 
 Transform::Transform()
