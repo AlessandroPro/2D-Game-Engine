@@ -20,10 +20,11 @@ void Object::initialize()
 
 void Object::load(json::JSON& node)
 {
-	_ASSERT_EXPR(node.hasKey("guid"), "JSON node missing guid.");
-
-	guid = node["guid"].ToString();
-	id = GUIDToSTRCODE(guid);
+	if (node.hasKey("guid"))
+	{
+		guid = node["guid"].ToString();
+		id = GUIDToSTRCODE(guid);
+	}
 }
 
 bool Object::isInitialized()

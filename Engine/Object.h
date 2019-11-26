@@ -13,11 +13,11 @@ class Object
 	DECLARE_ABSTRACT_BASE_CLASS(Object)
 
 protected:
-
 	bool initialized = false;
 	STRCODE id = 0;
 	std::string guid;
 
+protected:
     Object();
     virtual ~Object() = default;
 
