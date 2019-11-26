@@ -14,8 +14,8 @@ private:
 	std::list<RigidBody*> rigidbodies;
 
 private:
-	CollisionSystem() = default;
-	~CollisionSystem() = default;
+	CollisionSystem();
+	~CollisionSystem();
 	CollisionSystem(const CollisionSystem& other) = default;
 	CollisionSystem& operator= (const CollisionSystem& other) = default;
 

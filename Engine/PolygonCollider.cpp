@@ -3,6 +3,7 @@
 
 PolygonCollider::PolygonCollider()
 {
+	enabled = true;
 }
 
 PolygonCollider::~PolygonCollider()
