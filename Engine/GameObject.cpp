@@ -62,7 +62,7 @@ std::list<Component*> GameObject::getComponents(std::string& compType)
 
 std::map<STRCODE, GameObject*>& GameObject::getChildren()
 {
-	// TODO: insert return statement here
+	return children;
 }
 
 GameObject* GameObject::getParent()

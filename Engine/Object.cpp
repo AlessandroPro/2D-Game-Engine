@@ -29,7 +29,7 @@ void Object::load(json::JSON& node)
 
 bool Object::isInitialized()
 {
-	return isInitialized;
+	return initialized;
 }
 
 STRCODE Object::getID()
