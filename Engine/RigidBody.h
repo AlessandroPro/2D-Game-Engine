@@ -25,9 +25,5 @@ public:
 	void onCollisionEnter(const ICollidable* const other);
 	void onCollisionStay(const ICollidable* const other);
 	void onCollisionExit(const ICollidable* const other);
-
-	void onTriggerEnter(const ICollidable* const other);
-	void onTriggerStay(const ICollidable* const other);
-	void onTriggerExit(const ICollidable* const other);
 };
 
