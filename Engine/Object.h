@@ -1,25 +1,32 @@
 ///-------------------------------------------------------------------------------------------------
 // file: Object.h
-//
-// author: William Barry
-// date: 10/28/2019
-//
 // summary:	The Object
 ///-------------------------------------------------------------------------------------------------
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
 #pragma once
 
+#include "json.hpp"
+
 class Object
 {
 	DECLARE_ABSTRACT_BASE_CLASS(Object)
 
 protected:
-    Object() = default;
+
+	bool initialized = false;
+	STRCODE id = 0;
+	std::string guid;
+
+    Object();
     virtual ~Object() = default;
 
 public:
 	virtual void initialize();
+	virtual void load(json::JSON& node);
+	bool isInitialized();
+	STRCODE getID();
+	const std::string& getGUID();
 };
 
 #endif
