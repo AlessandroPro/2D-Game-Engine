@@ -166,8 +166,8 @@ GameObject* GameObjectManager::createGameObjectWithComponents(std::list<std::str
 {
 	GameObject* newGameObject = new GameObject();
 
-	newGameObject->initialize();
 	//newGameObject->createComponents(comTypes);
+	newGameObject->initialize();
 	addGameObject(newGameObject);
 	return newGameObject;
 }
