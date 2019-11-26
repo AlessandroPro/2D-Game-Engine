@@ -54,6 +54,7 @@ private:
 	void load(json::JSON& node);
 	void unload(STRCODE levelID);
 	//json::JSON save();
+	void deleteFromRemoveList();
 
 
 	friend class GameEngine;
