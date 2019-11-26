@@ -29,7 +29,7 @@ void GameObjectManager::load(json::JSON& node)
 			std::string className = gameObjectNode["class"].ToString();
 
 			GameObject* newGameObject = new GameObject();
-			//newGameObject->load(gameObjectNode);
+			newGameObject->load(gameObjectNode);
 			newGameObject->initialize();
 			addGameObject(newGameObject);
 		}
@@ -38,15 +38,15 @@ void GameObjectManager::load(json::JSON& node)
 
 void GameObjectManager::unload(STRCODE levelID)
 {
-	//for (auto gameObject : gameObjects)
-	//{
-	//	if (gameObject.second != nullptr && gameObject.second->levelID == levelID)
-	//	{
-	//		removeGameObject(gameObject.second);
-	//	}
-	//}
+	for (auto gameObject : gameObjects)
+	{
+		if (gameObject.second != nullptr && gameObject.second->levelID == levelID)
+		{
+			removeGameObject(gameObject.second);
+		}
+	}
 
-	////deleteFromRemoveList();
+	//deleteFromRemoveList();
 }
 
 void GameObjectManager::deleteFromRemoveList()
@@ -94,7 +94,7 @@ void GameObjectManager::update(float deltaTime)
 void GameObjectManager::addGameObject(GameObject* gameObject)
 {
 	//need strcode in gameobject to add
-	//gameObjects.emplace(gameObject.uuid, gameObject);
+	gameObjects.emplace(gameObject->id, gameObject);
 
 }
 
@@ -107,21 +107,21 @@ void GameObjectManager::removeGameObject(STRCODE gameObjectUID)
 	{
 		gameObjectsToRemove.push_back(toRemove);
 		gameObjects.erase(gameObjectUID);
-		//toRemove.removeChildren();
+		toRemove->removeChildren();
 	}
 }
 
 void GameObjectManager::removeGameObject(GameObject* gameObject)
 {
 	//Need to check if it is actually in the gameobject list
-	//GameObject* toRemove = findGameObject(gameObject.uuid);
+	GameObject* toRemove = findGameObject(gameObject->id);
 
-	//if (toRemove != nullptr)
-	//{
-	//	gameObjectsToRemove.push_back(toRemove);
-	//	gameObjects.erase(gameObject.uuid);
-	//	//toRemove.removeChildren();
-	//}
+	if (toRemove != nullptr)
+	{
+		gameObjectsToRemove.push_back(toRemove);
+		gameObjects.erase(gameObject->id);
+		toRemove->removeChildren();
+	}
 }
 
 GameObject* GameObjectManager::findGameObject(STRCODE gameObjectUID)
@@ -141,13 +141,13 @@ std::list<GameObject*> GameObjectManager::getGameObjectsWithComponent(std::strin
 {
 	std::list<GameObject*> returnList;
 
-	//for (auto gameObject : gameObjects)
-	//{
-	//	if (gameObject.second != nullptr && gameObject.second->getComponent(compType) != nullptr)
-	//	{
-	//		returnList.push_back(gameObject.second);
-	//	}
-	//}
+	for (auto gameObject : gameObjects)
+	{
+		if (gameObject.second != nullptr && gameObject.second->getComponent(compType) != nullptr)
+		{
+			returnList.push_back(gameObject.second);
+		}
+	}
 
 	return returnList;
 }
@@ -166,7 +166,7 @@ GameObject* GameObjectManager::createGameObjectWithComponents(std::list<std::str
 {
 	GameObject* newGameObject = new GameObject();
 
-	//newGameObject->createComponents(comTypes);
+	newGameObject->createComponents(comTypes);
 	newGameObject->initialize();
 	addGameObject(newGameObject);
 	return newGameObject;
