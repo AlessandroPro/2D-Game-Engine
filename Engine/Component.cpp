@@ -10,10 +10,12 @@ Component::Component()
 
 Component::~Component()
 {
+	
 }
 
 void Component::initialize()
 {
+	Object::initialize();
 }
 
 void Component::update(float deltaTime)
@@ -22,7 +24,7 @@ void Component::update(float deltaTime)
 
 void Component::load(json::JSON& node)
 {
-
+	
 }
 
 std::string& Component::getType()
