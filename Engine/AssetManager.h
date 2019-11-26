@@ -11,15 +11,29 @@
 #pragma once
 
 #include "ISystem.h"
+#include "Asset.h"
 
 class AssetManager final : public ISystem
 {
+private:
+	std::map<STRCODE, Asset*> assets;
+
 protected:
+
     void initialize() override;
     void update(float deltaTime) override;
 
     friend class GameEngine;
     DECLARE_SINGLETON(AssetManager)
+
+public:
+	void loadLevelAssets(json::JSON& node);
+	void unloadLevelAssets();
+
+	Asset* CreateAssetT();
+
+	Asset* getAssetByGUID(std::string& guid);	//TODO: Confirm with everyone and remove this?
+	Asset* getAssetBySTRCODE(STRCODE);
 };
 
 #endif
