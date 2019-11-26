@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 
-enum Direction
+enum class Direction
 {
 	Up,
 	Down,
@@ -14,7 +14,6 @@ class Transform : public Component
 	DECLARE_DYNAMIC_DERIVED_CLASS(Transform, Component)
 
 private:
-
 	sf::Transformable transform;
 	sf::Vector2f forward;
 	std::map<Direction, bool> lockedDirections;
@@ -37,5 +36,6 @@ public:
 	void translate(const sf::Vector2f& offset);
 	void setDirectionLock(Direction direction, bool locked);
 	bool checkDirectionLocked(Direction direction);
+	
 };
 
