@@ -14,6 +14,10 @@ RigidBody::~RigidBody()
 {
 	//remove on destruction
 	CollisionSystem::instance().removeRigidBody(this);
+
+	for (ICollidable* ic : colliders) {
+		delete ic;
+	}
 }
 void RigidBody::onCollisionEnter(const ICollidable* const other)
 {
