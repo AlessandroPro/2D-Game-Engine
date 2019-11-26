@@ -1,5 +1,6 @@
 #pragma once
 #include "Box2D/Box2D.h"
+#include "CollisionSystem.h"
 
 class ICollidable
 {
@@ -14,13 +15,13 @@ protected:
 	b2DistanceOutput* distance;
 
 protected:
-	ICollidable() = default;
+	ICollidable();
 
 public:
 	bool trigger;
 
 public:
-	virtual ~ICollidable() = default;
+	virtual ~ICollidable();
 	inline const b2Shape* const getShape() { return shape; }
 	inline const b2Manifold* const getManifold() { return manifold; }
 	inline const b2DistanceOutput* const getDistanceOutput() { return distance; }
