@@ -19,8 +19,8 @@ public:
 	GameObject* gameObject;
 
 public:
-	RigidBody() = default;
-	~RigidBody() = default;
+	RigidBody();
+	virtual ~RigidBody() override;
 
 	void onCollisionEnter(const ICollidable* const other);
 	void onCollisionStay(const ICollidable* const other);
