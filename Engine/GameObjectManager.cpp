@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "GameObjectManager.h"
 #include "GameObject.h"
+#include "AssetManager.h"
 
 GameObjectManager::~GameObjectManager()
 {
@@ -13,40 +14,43 @@ GameObjectManager::~GameObjectManager()
 	}
 	gameObjects.clear();
 
-
-	for (auto gameObject : gameObjectsToRemove)
-	{
-		if (gameObject != nullptr)
-		{
-			delete gameObject;
-		}
-	}
-	gameObjectsToRemove.clear();
+	deleteFromRemoveList();
 }
 
 void GameObjectManager::load(json::JSON& node)
 {
-	//Need to know file format
+	if (node.hasKey("GameObjects"))
+	{
+		json::JSON gameObjectsNode = node["GameObjects"];
+		for (auto& gameObjectsNode : gameObjectsNode.ArrayRange())
+		{
+			_ASSERT_EXPR(gameObjectsNode.hasKey("class"), "Missing class name");
+			
+			std::string className = gameObjectsNode["class"].ToString();
+
+			GameObject* newGameObject = createGameObject();
+
+			//newGameObject->load(gameObjectsNode);
+		}
+	}
 }
 
 void GameObjectManager::unload(STRCODE levelID)
 {
-	//loop through gameobjects and 
+	//for (auto gameObject : gameObjects)
+	//{
+	//	if (gameObject.second != nullptr && gameObject.second->levelID == levelID)
+	//	{
+	//		removeGameObject(gameObject.second);
+	//	}
+	//}
+
+	////deleteFromRemoveList();
 }
 
-//json::JSON GameObjectManager::save()
-//{
-//
-//	// TODO: insert return statement here
-//	
-//}
-
-void GameObjectManager::initialize()
+void GameObjectManager::deleteFromRemoveList()
 {
-}
-
-void GameObjectManager::update(float deltaTime)
-{
+	//Created this as a function since it would be written multiple times otherwise
 	for (auto gameObject : gameObjectsToRemove)
 	{
 		if (gameObject != nullptr)
@@ -55,6 +59,24 @@ void GameObjectManager::update(float deltaTime)
 		}
 	}
 	gameObjectsToRemove.clear();
+}
+
+//json::JSON GameObjectManager::save()
+//{
+//	for (auto gameObject : gameObjects)
+//	{
+//
+//	}
+//}
+
+void GameObjectManager::initialize()
+{
+	//Nothing needs to be done here for now
+}
+
+void GameObjectManager::update(float deltaTime)
+{
+	deleteFromRemoveList();
 
 	for (auto gameObject : gameObjects)
 	{
@@ -112,10 +134,13 @@ std::list<GameObject*> GameObjectManager::getGameObjectsWithComponent(std::strin
 {
 	std::list<GameObject*> returnList;
 
-	for (auto gameObject : gameObjects)
-	{
-		//Get Components and add to list
-	}
+	//for (auto gameObject : gameObjects)
+	//{
+	//	if (gameObject.second != nullptr && gameObject.second->getComponent(compType) != nullptr)
+	//	{
+	//		returnList.push_back(gameObject.second);
+	//	}
+	//}
 
 	return returnList;
 }
@@ -125,17 +150,27 @@ GameObject* GameObjectManager::createGameObject()
 	GameObject* newGameObj = new GameObject();
 	newGameObj->initialize();
 
-	//gameObjects.emplace(newGameObj.uuid, newGameObj);
+	addGameObject(newGameObj);
 
-	return nullptr;
-}
-
-GameObject* GameObjectManager::instantiatePrefab(STRCODE prefabUID)
-{
-	return nullptr;
+	return newGameObj;
 }
 
 GameObject* GameObjectManager::createGameObjectWithComponents(std::list<std::string>& comTypes)
 {
-	return nullptr;
+	GameObject* newGameObject = createGameObject();
+	//newGameObject->createComponents(comTypes);
+
+	return newGameObject;
+
 }
+
+GameObject* GameObjectManager::instantiatePrefab(STRCODE prefabUID)
+{
+	//PrefabAsset* prefab = AssetManager::instance().getAssetByUUID(prefabUID);
+
+	GameObject* newGameObject = createGameObject();
+	//newGameobject->load(prefab.getPrefab());
+
+	return newGameObject;
+}
+
