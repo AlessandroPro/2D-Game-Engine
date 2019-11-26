@@ -4,13 +4,12 @@
 
 class PolygonCollider : public ICollidable, public Component
 {
+
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
+	void load(json::JSON& file);
 
-public:
-	bool enabled;
-	GameObject* gameObject;
 
 public:
 	PolygonCollider();

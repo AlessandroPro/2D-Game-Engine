@@ -19,6 +19,12 @@ RigidBody::~RigidBody()
 		delete ic;
 	}
 }
+void RigidBody::addCollidable(ICollidable* ic)
+{
+}
+void RigidBody::removeCollidable(ICollidable* ic)
+{
+}
 void RigidBody::onCollisionEnter(const ICollidable* const other)
 {
 }

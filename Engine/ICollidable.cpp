@@ -7,6 +7,8 @@ ICollidable::ICollidable()
 	CollisionSystem::instance().addCollidable(this);
 
 	trigger = false;
+	shape = nullptr;
+	manifold = nullptr;
 }
 
 ICollidable::~ICollidable()
@@ -16,5 +18,6 @@ ICollidable::~ICollidable()
 	
 	delete shape;
 	delete manifold;
-	delete distance;
 }
+
+

@@ -22,6 +22,9 @@ public:
 	RigidBody();
 	virtual ~RigidBody() override;
 
+	void addCollidable(ICollidable* ic);
+	void removeCollidable(ICollidable* ic);
+
 	void onCollisionEnter(const ICollidable* const other);
 	void onCollisionStay(const ICollidable* const other);
 	void onCollisionExit(const ICollidable* const other);
