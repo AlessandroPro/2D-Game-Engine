@@ -12,11 +12,18 @@
 
 #include "ISystem.h"
 
+class GameObject;
+
 class GameObjectManager final : public ISystem
 {
+
+private:
+	std::map<STRCODE, GameObject*> gameObjects;
+	std::list<GameObject*> gameObjectsToRemove;
+
 protected:
-    void initialize() override;
-    void update(float deltaTime) override;
+	void initialize() override;
+	void update(float deltaTime) override;
 
 public:
 	static GameObjectManager& instance()
@@ -25,13 +32,32 @@ public:
 		return _instance;
 	}
 
-private:
-    GameObjectManager() = default;
-    ~GameObjectManager();
-    GameObjectManager(const GameObjectManager& other) = default;
-    GameObjectManager& operator= (const GameObjectManager& other) = default;
+	void addGameObject(GameObject* gameObject);
+	void removeGameObject(STRCODE gameObjectUID);
+	void removeGameObject(GameObject* gameObject);
+	GameObject* findGameObject(STRCODE gameObjectUID);
+	std::list<GameObject*> getGameObjectsWithComponent(std::string& compType);
+	GameObject* createGameObject();
+	GameObject* instantiatePrefab(STRCODE prefabUID);
+	GameObject* createGameObjectWithComponents(std::list<std::string>& comTypes);
 
-    friend class GameEngine;
+
+
+
+private:
+	GameObjectManager() = default;
+	~GameObjectManager();
+	GameObjectManager(const GameObjectManager& other) = default;
+	GameObjectManager& operator= (const GameObjectManager& other) = default;
+
+
+	void load(json::JSON& node);
+	void unload(STRCODE levelID);
+	//json::JSON save();
+
+
+	friend class GameEngine;
+	friend class FileSystem;
 };
 
 #endif
