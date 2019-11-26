@@ -4,6 +4,7 @@
 class Asset : public Object
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Asset,Object)
+
 protected:
 	Asset() = default;
 	~Asset();

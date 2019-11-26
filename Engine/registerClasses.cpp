@@ -7,6 +7,9 @@
 #include "Transform.h"
 #include "Asset.h"
 #include "PrefabAsset.h"
+#include "TextureAsset.h"
+#include "AudioAsset.h"
+#include "FontAsset.h"
 
 void registerEngineClasses()
 {
@@ -17,4 +20,7 @@ void registerEngineClasses()
 	REGISTER_DYNAMIC_CLASS(Transform);
 	REGISTER_DYNAMIC_CLASS(Asset);
 	REGISTER_DYNAMIC_CLASS(PrefabAsset);
+	REGISTER_DYNAMIC_CLASS(TextureAsset);
+	REGISTER_DYNAMIC_CLASS(AudioAsset);
+	REGISTER_DYNAMIC_CLASS(FontAsset);
 }
