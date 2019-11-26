@@ -9,7 +9,8 @@ class CollisionSystem : public ISystem
 	friend class GameEngine;
 
 private:
-	std::list<ICollidable*> colliders;
+	//keep a list of all colliders and rigidbodies
+	std::list<ICollidable*> colliders; 
 	std::list<RigidBody*> rigidbodies;
 
 private:
@@ -29,6 +30,11 @@ public:
 		return _instance;
 	}
 
+	//Adders and removers for lists of Icollidables and rigidbodies
+	inline void addCollidable(ICollidable* ic) { colliders.push_back(ic); }
+	inline void removeCollidable(ICollidable* ic) { colliders.remove(ic); }
 
+	inline void addRigidBody(RigidBody* rb) { rigidbodies.push_back(rb); }
+	inline void removeRigidBody(RigidBody* rb) { rigidbodies.remove(rb); }
 };
 
