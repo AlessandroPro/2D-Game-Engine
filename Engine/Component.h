@@ -28,7 +28,7 @@ protected:
 	
 protected:
 	Component();
-	~Component();
+	virtual ~Component();
     virtual void initialize() override;
 	virtual void update(float deltaTime);
 	virtual void load(json::JSON& node);
