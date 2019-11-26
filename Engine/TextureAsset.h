@@ -10,6 +10,7 @@ private:
 protected:
 	TextureAsset();
 	~TextureAsset();
+	void initialize(std::string GUID, std::string assetPath) override;
 
 public:
 	sf::Texture	getTexture();

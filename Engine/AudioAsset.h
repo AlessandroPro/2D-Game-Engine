@@ -10,6 +10,7 @@ private:
 protected:
 	AudioAsset();
 	~AudioAsset();
+	void initialize(std::string GUID, std::string assetPath) override;
 
 public:
 	sf::SoundBuffer getAudio();

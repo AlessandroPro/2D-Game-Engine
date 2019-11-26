@@ -7,6 +7,6 @@ Asset::~Asset()
 {
 }
 
-void Asset::initialize(std::string GUID)
+void Asset::initialize(std::string GUID, std::string assetPath)
 {
 }

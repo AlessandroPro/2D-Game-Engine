@@ -10,6 +10,7 @@ private:
 protected:
 	PrefabAsset();
 	~PrefabAsset();
+	void initialize(std::string GUID, std::string assetPath) override;
 
 public:
 	json::JSON& getPrefab();

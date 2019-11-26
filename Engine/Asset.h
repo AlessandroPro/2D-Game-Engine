@@ -8,7 +8,8 @@ class Asset : public Object
 protected:
 	Asset() = default;
 	~Asset();
-	void initialize(std::string GUID);
+
+virtual	void initialize(std::string GUID, std::string assetPath);
 
 	friend class AssetManager;
 };
