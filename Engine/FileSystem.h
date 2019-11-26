@@ -25,8 +25,10 @@ protected:
     void initialize() override;
     void update(float deltaTime) override;
 
-	void load(std::string fileName, bool protectedFile, bool isLevelFile);
-	void unload(std::string fileName);
+	void load(std::string& fileName, bool protectedFile, bool isLevelFile);
+	void unload(std::string& fileName);
+	json::JSON loadAsset(std::string& fileName);
+	json::JSON parseJSON(std::string& fileName);
 	STRCODE getCurrentLevel();
 
     friend class GameEngine;

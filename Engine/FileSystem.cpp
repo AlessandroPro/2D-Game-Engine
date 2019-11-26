@@ -12,18 +12,16 @@ void FileSystem::update(float deltaTime)
 {
 }
 
-void FileSystem::load(std::string fileName, bool protectedFile, bool isLevelFile)
+void FileSystem::load(std::string& fileName, bool protectedFile, bool isLevelFile)			//Method to load a file
 {
 
-	if (protectedFile == true && isLevelFile == true)
+	if (protectedFile == true && isLevelFile == true)										//check if the file is a level file and protected? if so throw an error 
 	{
-		std::cout << "Level Cannot be Protected" << std::endl;							 //check if the file is a level file and protected? if so throw an error 
+		MessageBox(NULL, TEXT("Level File Cannot Be Protected"), TEXT("Alert"), MB_ABORTRETRYIGNORE | MB_ICONEXCLAMATION);
 	}
 	else
 	{
-		std::ifstream inputStream(fileName);
-		std::string JSONstr((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>()); 
-		json::JSON fileJSON = json::JSON::Load(JSONstr);
+		json::JSON fileJSON = parseJSON(fileName);
 
 		fileId = getHashCode(fileName.c_str());											
 
@@ -44,11 +42,31 @@ void FileSystem::load(std::string fileName, bool protectedFile, bool isLevelFile
 	}
 }
 
-void FileSystem::unload(std::string fileName)
+void FileSystem::unload(std::string& fileName)												//Method to unload a file
 {
 }
 
-STRCODE FileSystem::getCurrentLevel()
+json::JSON FileSystem::loadAsset(std::string& fileName)										//pass the Json file to the Asset Manager
 {
-	return currentLevel;
+	return parseJSON(fileName);
+}
+
+json::JSON FileSystem::parseJSON(std::string& fileName)										//Method to parse the Json FIle 
+{
+	std::ifstream inputStream(fileName);
+	std::string JSONstr((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	return (json::JSON::Load(JSONstr));
+}
+
+STRCODE FileSystem::getCurrentLevel()														//returns current loaded level
+{
+	if (currentLevel != NULL)
+	{
+		return currentLevel;
+	}
+	else
+	{
+		MessageBox(NULL, TEXT("There Is No Current Level"), TEXT("Alert"), MB_ABORTRETRYIGNORE | MB_ICONEXCLAMATION);
+
+	}
 }
