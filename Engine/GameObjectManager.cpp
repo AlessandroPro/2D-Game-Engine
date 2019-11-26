@@ -22,15 +22,16 @@ void GameObjectManager::load(json::JSON& node)
 	if (node.hasKey("GameObjects"))
 	{
 		json::JSON gameObjectsNode = node["GameObjects"];
-		for (auto& gameObjectsNode : gameObjectsNode.ArrayRange())
+		for (auto& gameObjectNode : gameObjectsNode.ArrayRange())
 		{
-			_ASSERT_EXPR(gameObjectsNode.hasKey("class"), "Missing class name");
-			
-			std::string className = gameObjectsNode["class"].ToString();
+			_ASSERT_EXPR(gameObjectNode.hasKey("class"), "Missing class name");
 
-			GameObject* newGameObject = createGameObject();
+			std::string className = gameObjectNode["class"].ToString();
 
-			//newGameObject->load(gameObjectsNode);
+			GameObject* newGameObject = new GameObject();
+			//newGameObject->load(gameObjectNode);
+			newGameObject->initialize();
+			addGameObject(newGameObject);
 		}
 	}
 }
@@ -71,7 +72,13 @@ void GameObjectManager::deleteFromRemoveList()
 
 void GameObjectManager::initialize()
 {
-	//Nothing needs to be done here for now
+	for (auto gameObject : gameObjects)
+	{
+		if (gameObject.second != nullptr)
+		{
+			gameObject.second->initialize();
+		}
+	}
 }
 
 void GameObjectManager::update(float deltaTime)
@@ -148,8 +155,8 @@ std::list<GameObject*> GameObjectManager::getGameObjectsWithComponent(std::strin
 GameObject* GameObjectManager::createGameObject()
 {
 	GameObject* newGameObj = new GameObject();
-	newGameObj->initialize();
 
+	newGameObj->initialize();
 	addGameObject(newGameObj);
 
 	return newGameObj;
@@ -157,19 +164,22 @@ GameObject* GameObjectManager::createGameObject()
 
 GameObject* GameObjectManager::createGameObjectWithComponents(std::list<std::string>& comTypes)
 {
-	GameObject* newGameObject = createGameObject();
+	GameObject* newGameObject = new GameObject();
+
+	newGameObject->initialize();
 	//newGameObject->createComponents(comTypes);
-
+	addGameObject(newGameObject);
 	return newGameObject;
-
 }
 
 GameObject* GameObjectManager::instantiatePrefab(STRCODE prefabUID)
 {
 	//PrefabAsset* prefab = AssetManager::instance().getAssetByUUID(prefabUID);
 
-	GameObject* newGameObject = createGameObject();
+	GameObject* newGameObject = new GameObject();
 	//newGameobject->load(prefab.getPrefab());
+	newGameObject->initialize();
+	addGameObject(newGameObject);
 
 	return newGameObject;
 }
