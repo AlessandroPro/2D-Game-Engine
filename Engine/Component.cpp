@@ -20,11 +20,15 @@ void Component::initialize()
 
 void Component::update(float deltaTime)
 {
+	if (!enabled)
+	{
+		return;
+	}
 }
 
 void Component::load(json::JSON& node)
 {
-	
+	Object::load(node);
 }
 
 void Component::setGameObject(GameObject* _gameObject)

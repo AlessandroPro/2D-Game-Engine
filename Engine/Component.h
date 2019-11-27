@@ -31,7 +31,7 @@ protected:
 	virtual ~Component();
     virtual void initialize() override;
 	virtual void update(float deltaTime);
-	virtual void load(json::JSON& node);
+	virtual void load(json::JSON& node) override;
 public:
     void setGameObject(GameObject* _gameObject);
 	GameObject* getGameObject();

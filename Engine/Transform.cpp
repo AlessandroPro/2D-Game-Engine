@@ -6,6 +6,11 @@ IMPLEMENT_DYNAMIC_CLASS(Transform)
 void Transform::initialize()
 {
 	Component::initialize();
+
+}
+
+Transform::Transform()
+{
 	transform.setPosition(sf::Vector2f(0, 0));
 	transform.setScale(sf::Vector2f(0, 0));
 	transform.setRotation(0.0f);
@@ -16,9 +21,47 @@ void Transform::initialize()
 	lockedDirections[Direction::Left] = false;
 }
 
-Transform::Transform()
+void Transform::load(json::JSON& node)
 {
+	Component::load(node);
+	if (node.hasKey("Position"))
+	{
+		json::JSON position = node["Position"];
+		float x, y = 0.0f;
+		if (position.hasKey("X"))
+		{
+			x = position["X"].ToFloat();
+		}
+		if (position.hasKey("Y"))
+		{
+			y = position["Y"].ToFloat();
+		}
+		setPosition(sf::Vector2f(x, y));
+	}
 
+	if (node.hasKey("Scale"))
+	{
+		json::JSON scale = node["Scale"];
+		float x, y = 0.0f;
+		if (scale.hasKey("X"))
+		{
+			x = scale["X"].ToFloat();
+		}
+		if (scale.hasKey("Y"))
+		{
+			y = scale["Y"].ToFloat();
+		}
+		setScale(sf::Vector2f(x, y));
+	}
+
+	if (node.hasKey("Rotation"))
+	{
+		json::JSON rotation = node["Rotation"];
+		if (rotation.hasKey("Angle"))
+		{
+			setRotation(rotation["Angle"].ToFloat());
+		}
+	}
 }
 
 const sf::Vector2f& Transform::getPosition()
@@ -54,6 +97,8 @@ void Transform::setScale(const sf::Vector2f& newScale)
 void Transform::setRotation(float angle)
 {
 	transform.setRotation(angle);
+	forward.x = sinf(angle);
+	forward.y = cosf(angle);
 }
 
 void Transform::translate(const sf::Vector2f& offset)
