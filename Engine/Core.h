@@ -7,9 +7,8 @@
 //#define NOMINMAX
 #define _WINSOCKAPI_
 
-#define PIXELS_TO_PHYSICS 0.01
-#define PHYSICS_TO_PIXELS 100
-#define GRAVITY  b2Vec2(0,9.8)
+#define PIXELS_TO_PHYSICS 0.01f
+#define PHYSICS_TO_PIXELS 100.f
 
 #include <algorithm>
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "ISystem.h"
+#define GRAVITY  b2Vec2(0.f,9.8f)
 
 class Rigidbody;
 class ICollidable;
@@ -8,9 +9,11 @@ class CollisionSystem : public ISystem
 	friend class GameEngine;
 
 private:
-	//keep a list of all colliders and rigidbodies
+	//keep a list of all colliders and rigidbodies in the engine world
 	std::list<ICollidable*> colliders; 
 	std::list<RigidBody*> rigidbodies;
+
+	b2World* physicsWorld = nullptr;
 
 private:
 	CollisionSystem();
@@ -30,10 +33,10 @@ public:
 	}
 
 	//Adders and removers for lists of Icollidables and rigidbodies
-	inline void addCollidable(ICollidable* ic) { colliders.push_back(ic); }
-	inline void removeCollidable(ICollidable* ic) { colliders.remove(ic); }
+	inline void addCollidable(ICollidable* collider) { colliders.push_back(collider); }
+	inline void removeCollidable(ICollidable* collider) { colliders.remove(collider); }
 
-	inline void addRigidBody(RigidBody* rb) { rigidbodies.push_back(rb); }
-	inline void removeRigidBody(RigidBody* rb) { rigidbodies.remove(rb); }
+	inline void addRigidBody(RigidBody* rigidBody) { rigidbodies.push_back(rigidBody); }
+	inline void removeRigidBody(RigidBody* rigidBody) { rigidbodies.remove(rigidBody); }
 };
 
