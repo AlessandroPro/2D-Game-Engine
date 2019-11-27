@@ -20,10 +20,12 @@ class GameObject final : public Object
 
 private:
 	std::map<STRCODE, Component*> components;
-	std::map<STRCODE, GameObject*> children;
-	GameObject* parent = nullptr;
+	std::list<Component*> componentsToRemove;
 	Transform* transform = nullptr;
-	STRCODE levelID = 0;
+	STRCODE levelID = -1;
+
+	// std::map<STRCODE, GameObject*> children;
+	// GameObject* parent = nullptr;
 
 public:
 	std::string name;
@@ -35,32 +37,34 @@ protected:
 	void initialize() override;
 	void load(json::JSON& node) override;
 	void update(float deltaTime);
+	void deleteFromRemoveList();
 
 public:
-	void detachChildren(bool toWorld);
-	void detachChild(Component* component, bool toWorld);
-	void removeChildren();
 	void addComponent(Component* component);
 	void removeComponent(STRCODE compID);
 	std::map<STRCODE, Component*>& getAllComponents();
 	Component* getComponent(STRCODE compID);
-	Component* getComponent(std::string& compType);
-	std::list<Component*> getComponents(std::string& compType);
-	std::map<STRCODE, GameObject*>& getChildren();
-	GameObject* getParent();
-	void setParent(GameObject* parentObject);
+	Component* getComponent(const std::string& compType);
+	std::list<Component*> getComponents(const std::string& compType);
 	Transform* getTransform();
 	void createComponents(std::list<std::string>& compTypes);
-	void createComponent(std::string& compType);
+	Component* createComponent(const std::string& compType);
 
 	template<class T>
 	Component* createComponent()
 	{
-		T* component = new T();
+		Component* component = new T();
 		addComponent(component);
 		component->initialize();
 		return component;
 	}
+
+	//void detachChildren(bool toWorld);
+	//void detachChild(GameObject* childObject, bool toWorld);
+	//void removeChildren();
+	//std::map<STRCODE, GameObject*>& getChildren();
+	//GameObject* getParent();
+	//void setParent(GameObject* parentObject);
 };
 
 #endif

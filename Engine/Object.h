@@ -14,7 +14,7 @@ class Object
 
 protected:
 	bool initialized = false;
-	STRCODE id = 0;
+	STRCODE id = -1;
 	std::string guid;
 
 protected:
