@@ -15,15 +15,11 @@ protected:
 	void update(float deltaTime);
 
 public:
-	bool enabled;
-	GameObject* gameObject;
-
-public:
 	RigidBody();
 	virtual ~RigidBody() override;
 
-	void addCollidable(ICollidable* ic);
-	void removeCollidable(ICollidable* ic);
+	void addCollidable(ICollidable* collider);
+	void removeCollidable(ICollidable* collider);
 
 	void onCollisionEnter(const ICollidable* const other);
 	void onCollisionStay(const ICollidable* const other);
