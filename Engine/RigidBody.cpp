@@ -34,7 +34,24 @@ void RigidBody::addCollidable(ICollidable* collider)
 
 void RigidBody::removeCollidable(ICollidable* collider)
 {
-
+	if (collider == nullptr)
+	{
+		return;
+	}
+	if (body != nullptr && containsCollider(collider))
+	{
+		for (b2Fixture* currentFixture = body->GetFixtureList(); currentFixture != nullptr; currentFixture = currentFixture->GetNext())
+		{
+			if (currentFixture->GetShape() == collider->shape)
+			{
+				b2Fixture* fixtureToDestroy = currentFixture;
+				currentFixture = currentFixture->GetNext();
+				body->DestroyFixture(fixtureToDestroy);
+				break;
+			}
+		}
+		colliders.remove(collider);
+	}
 }
 
 void RigidBody::onCollisionEnter(const ICollidable* const other)
