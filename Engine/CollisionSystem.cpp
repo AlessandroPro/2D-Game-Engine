@@ -19,4 +19,12 @@ void CollisionSystem::initialize()
 
 void CollisionSystem::update(float deltaTime)
 {
+	for (auto rigidBody : rigidbodies)
+	{
+		for (auto collider : colliders)
+		{
+
+		}
+	}
+	physicsWorld->Step(PHYSICS_TIME_STEP, PHYSICS_VELOCITY_ITERATIONS, PHYSICS_POSITION_ITERATIONS);
 }
