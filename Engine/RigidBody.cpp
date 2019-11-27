@@ -21,7 +21,15 @@ RigidBody::~RigidBody()
 
 void RigidBody::addCollidable(ICollidable* collider)
 {
-
+	if (collider == nullptr)
+	{
+		return;
+	}
+	if (body != nullptr && !containsCollider(collider))
+	{
+		body->CreateFixture(&collider->fixtureDefinition);
+		colliders.push_back(collider);
+	}
 }
 
 void RigidBody::removeCollidable(ICollidable* collider)
@@ -50,6 +58,11 @@ void RigidBody::initialize()
 }
 
 void RigidBody::update(float deltaTime)
+{
+
+}
+
+void RigidBody::load(json::JSON& componentData)
 {
 
 }

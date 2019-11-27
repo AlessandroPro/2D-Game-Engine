@@ -18,9 +18,11 @@ private:
 protected:
 	std::list<ICollidable*> colliders;
 	b2Body* body;
+	b2BodyDef bodyDef;
 protected:
 	void initialize();
 	void update(float deltaTime);
+	void load(json::JSON& componentData);
 	//function to check if collidable is already in rigidbody
 	inline bool containsCollider(ICollidable* collider) { return std::count(colliders.begin(), colliders.end(),collider) == 1; }
 public:
