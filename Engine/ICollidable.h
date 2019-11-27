@@ -16,7 +16,7 @@ protected:
 
 protected:
 	ICollidable();
-	inline const b2Transform& const getTransform() { return b2transform; }
+	inline const b2Transform& const getB2Transform() { return b2transform; }
 
 public:
 	bool trigger;

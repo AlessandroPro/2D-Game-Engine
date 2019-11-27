@@ -17,10 +17,11 @@ void PolygonCollider::initialize()
 	//if current gameobject has a rigidbody component
 	//add this to that rigidbody
 
-	/*RigidBody* rb = getComponent("RigidBody");
-	if (rb != nullptr) {
-		rb->addCollidable(this);
-	}*/
+	//RigidBody* rb = getComponent("RigidBody");
+	//if (rb != nullptr) {
+	//	rb->addCollidable(this);
+	//	b2transform = rb->getB2Transform();
+	//}
 }
 
 void PolygonCollider::update(float deltaTime)
@@ -36,7 +37,7 @@ void PolygonCollider::update(float deltaTime)
 	//	//get transform and rotation from gameobject
 
 	//	//convert transform to b2Transform
-	//	b2Vec2 b2Transform = b2Vec2(
+	//	b2Vec2 position = b2Vec2(
 	//		gameObject.getTransform().getPosition().x * 0.01f,
 	//		gameObject.getTransform().getPosition().y * 0.01f);
 
@@ -44,7 +45,7 @@ void PolygonCollider::update(float deltaTime)
 	//	float rotation = DEG_TO_RAD(gameObject.getTransform().getRotation());
 
 	//	//set transform
-	//	transform.Set(b2Transform, rotation);
+	//	b2transform.Set(position, rotation);
 	//}
 }
 
