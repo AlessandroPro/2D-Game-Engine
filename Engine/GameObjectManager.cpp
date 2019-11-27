@@ -2,6 +2,7 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "AssetManager.h"
+#include "FileSystem.h"
 
 GameObjectManager::~GameObjectManager()
 {
@@ -17,7 +18,7 @@ GameObjectManager::~GameObjectManager()
 	deleteFromRemoveList();
 }
 
-void GameObjectManager::load(json::JSON& node)
+void GameObjectManager::load(json::JSON& node, STRCODE levelID)
 {
 	if (node.hasKey("GameObjects"))
 	{
@@ -29,10 +30,14 @@ void GameObjectManager::load(json::JSON& node)
 			std::string className = gameObjectNode["class"].ToString();
 
 			GameObject* newGameObject = new GameObject();
+			
+			newGameObject->levelID = levelID;
+			
 			newGameObject->load(gameObjectNode);
-			newGameObject->initialize();
 			addGameObject(newGameObject);
 		}
+
+		initializeAllGameObjects();
 	}
 }
 
@@ -42,7 +47,10 @@ void GameObjectManager::unload(STRCODE levelID)
 	{
 		if (gameObject.second != nullptr && gameObject.second->levelID == levelID)
 		{
-			removeGameObject(gameObject.second);
+			if (gameObject.second->destroyOnUnload)
+			{
+				removeGameObject(gameObject.second);
+			}
 		}
 	}
 
@@ -62,6 +70,17 @@ void GameObjectManager::deleteFromRemoveList()
 	gameObjectsToRemove.clear();
 }
 
+void GameObjectManager::initializeAllGameObjects()
+{
+	for (auto gameObject : gameObjects)
+	{
+		if (gameObject.second != nullptr)
+		{
+			gameObject.second->initialize();
+		}
+	}
+}
+
 //json::JSON GameObjectManager::save()
 //{
 //	for (auto gameObject : gameObjects)
@@ -72,13 +91,6 @@ void GameObjectManager::deleteFromRemoveList()
 
 void GameObjectManager::initialize()
 {
-	for (auto gameObject : gameObjects)
-	{
-		if (gameObject.second != nullptr)
-		{
-			gameObject.second->initialize();
-		}
-	}
 }
 
 void GameObjectManager::update(float deltaTime)
@@ -107,7 +119,6 @@ void GameObjectManager::removeGameObject(STRCODE gameObjectUID)
 	{
 		gameObjectsToRemove.push_back(toRemove);
 		gameObjects.erase(gameObjectUID);
-		toRemove->removeChildren();
 	}
 }
 
@@ -120,7 +131,6 @@ void GameObjectManager::removeGameObject(GameObject* gameObject)
 	{
 		gameObjectsToRemove.push_back(toRemove);
 		gameObjects.erase(gameObject->id);
-		toRemove->removeChildren();
 	}
 }
 
@@ -154,18 +164,20 @@ std::list<GameObject*> GameObjectManager::getGameObjectsWithComponent(std::strin
 
 GameObject* GameObjectManager::createGameObject()
 {
-	GameObject* newGameObj = new GameObject();
+	GameObject* newGameObject = new GameObject();
 
-	newGameObj->initialize();
-	addGameObject(newGameObj);
+	//newGameObject->levelID = FileManager::instance().getCurrentLevel();
+	newGameObject->initialize();
+	addGameObject(newGameObject);
 
-	return newGameObj;
+	return newGameObject;
 }
 
 GameObject* GameObjectManager::createGameObjectWithComponents(std::list<std::string>& comTypes)
 {
 	GameObject* newGameObject = new GameObject();
 
+	//newGameObj->levelID = FileManager::instance().getCurrentLevel();
 	newGameObject->createComponents(comTypes);
 	newGameObject->initialize();
 	addGameObject(newGameObject);

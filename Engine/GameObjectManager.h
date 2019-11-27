@@ -51,10 +51,11 @@ private:
 	GameObjectManager& operator= (const GameObjectManager& other) = default;
 
 
-	void load(json::JSON& node);
+	void load(json::JSON& node, STRCODE levelID);
 	void unload(STRCODE levelID);
 	//json::JSON save();
 	void deleteFromRemoveList();
+	void initializeAllGameObjects();
 
 
 	friend class GameEngine;
