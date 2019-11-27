@@ -18,13 +18,13 @@ class GameObject;
 class Component : public Object
 {
 	DECLARE_ABSTRACT_DERIVED_CLASS(Component, Object)
-private:
+
 	friend class GameObject;
-	GameObject* gameObject=nullptr;
+
+private:
+	GameObject* gameObject = nullptr;
 public:
 	bool enabled=true;
-protected:
-	std::string type;
 	
 protected:
 	Component();
@@ -33,8 +33,8 @@ protected:
 	virtual void update(float deltaTime);
 	virtual void load(json::JSON& node);
 public:
-	std::string& getType();
     void setGameObject(GameObject* _gameObject);
+	GameObject* getGameObject();
 	virtual void onCollisionEnter(const ICollidable* const other);
 	virtual void onCollisionStay(const ICollidable* const other);
 	virtual void onCollisionExit(const ICollidable* const other);

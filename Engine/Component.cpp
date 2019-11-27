@@ -5,7 +5,7 @@ IMPLEMENT_ABSTRACT_CLASS(Component)
 
 Component::Component()
 {
-	type = "NoType";
+
 }
 
 Component::~Component()
@@ -27,14 +27,14 @@ void Component::load(json::JSON& node)
 	
 }
 
-std::string& Component::getType()
-{
-	return type;
-}
-
 void Component::setGameObject(GameObject* _gameObject)
 {
 	gameObject = _gameObject;
+}
+
+GameObject* Component::getGameObject()
+{
+	return gameObject;
 }
 
 void Component::onCollisionEnter(const ICollidable* const other)
