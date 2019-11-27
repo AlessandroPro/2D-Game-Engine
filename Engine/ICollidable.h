@@ -1,3 +1,10 @@
+///-------------------------------------------------------------------------------------------------
+// file: ICollidable.h
+//
+// editors: Rishi Barnwal , Dakshvir Rehill
+//
+// summary:	ICollidable Interface (Every collider component needs to be an ICollidable)
+///-------------------------------------------------------------------------------------------------
 #pragma once
 #ifndef _I_COLLIDABLE_H_
 #define _I_COLLIDABLE_H_

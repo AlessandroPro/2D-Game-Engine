@@ -1,3 +1,10 @@
+///-------------------------------------------------------------------------------------------------
+// file: CollisionSystem.h
+//
+// editors: Rishi Barnwal , Dakshvir Rehill
+//
+// summary:	CollisionSystem ISystem is responsible for all physics simulations in the game world
+///-------------------------------------------------------------------------------------------------
 #pragma once
 #ifndef _COLLISION_SYSTEM_H_
 #define _COLLISION_SYSTEM_H_
@@ -25,6 +32,9 @@ private:
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
+
+	//RigidBody Helper functions
+protected:
 
 public:
 	static CollisionSystem& instance()

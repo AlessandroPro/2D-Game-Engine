@@ -1,3 +1,10 @@
+///-------------------------------------------------------------------------------------------------
+// file: RigidBody.h
+//
+// editors: Rishi Barnwal , Dakshvir Rehill
+//
+// summary:	RigidBody Component (Only gameObjects with this component will collide will all colliders)
+///-------------------------------------------------------------------------------------------------
 #pragma once
 #ifndef _RIGID_BODY_H_
 #define _RIGID_BODY_H_

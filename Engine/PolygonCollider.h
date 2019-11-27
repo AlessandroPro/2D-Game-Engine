@@ -1,3 +1,10 @@
+///-------------------------------------------------------------------------------------------------
+// file: PolygonCollider.h
+//
+// editors: Rishi Barnwal , Dakshvir Rehill
+//
+// summary:	PolygonCollider Component (A Collider with maximum 8 vertices)
+///-------------------------------------------------------------------------------------------------
 #pragma once
 #ifndef _POLYGON_COLLIDER_H_
 #define _POLYGON_COLLIDER_H_
