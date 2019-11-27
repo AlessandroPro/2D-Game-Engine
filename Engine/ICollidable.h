@@ -17,6 +17,7 @@ private:
 protected:
 	bool staticCollider;
 	b2Transform b2transform;
+	b2FixtureDef fixtureDefinition;
 	b2Shape* shape;
 	b2Manifold* manifold;
 
