@@ -51,7 +51,8 @@ void CircleCollider::update(float deltaTime)
 	//}
 }
 
-void CircleCollider::load(json::JSON& file)
+void load(json::JSON& componentData)
 {
+
 }
 

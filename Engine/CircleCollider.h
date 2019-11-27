@@ -7,7 +7,7 @@ class CircleCollider : public Component, public ICollidable
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
-	void load(json::JSON& file);
+	void load(json::JSON& componentData);
 
 public:
 	CircleCollider();

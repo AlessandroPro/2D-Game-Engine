@@ -49,6 +49,7 @@ void PolygonCollider::update(float deltaTime)
 	//}
 }
 
-void PolygonCollider::load(json::JSON& file)
+void load(json::JSON& componentData)
 {
+
 }
