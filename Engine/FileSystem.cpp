@@ -11,13 +11,13 @@ void FileSystem::initialize()
 
 void FileSystem::update(float deltaTime)
 {
-	if (removeFiles.size() > 0)					// if there is any file to unload
+	if (removeFiles.size() > 0)																// if there is any file to unload
 	{
 		for (auto iter : removeFiles)
 		{
-			fileData.erase(fileData.find(iter));	// find the file in the cached data and removed it
+			fileData.erase(fileData.find(iter));											// find the file in the cached data and removed it
 		}
-		removeFiles.clear();					// clear the list used to store remove fileIds
+		removeFiles.clear();																// clear the list used to store remove fileIds
 	}
 }
 
@@ -42,7 +42,7 @@ void FileSystem::load(std::string& fileName, bool protectedFile, bool isLevelFil
 			currentLevel = fileId;
 		}
 
-		//RenderSystem::instance().loadFIle(fileJSON);
+		//RenderSystem::instance().loadFile(fileJSON);
 		//GameObjectManager::instance().loadFile(fileJSON);
 		//AssetManager::instance().loadFile(fileJSON);
 	}
@@ -50,12 +50,12 @@ void FileSystem::load(std::string& fileName, bool protectedFile, bool isLevelFil
 
 void FileSystem::unload(std::string& fileName)												//Method to unload a file
 {
-	STRCODE fileID = getHashCode(fileName.c_str());		// Convert filepath to STRCODE
-	bool isSafe = true;									// A check to see if file is safe to unload
+	STRCODE fileID = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
+	bool isSafe = true;																		// A check to see if file is safe to unload
 
-	for (auto iter : protectedFiles)		// Iterate through 'protectedFiles' list to check if the file is protected
+	for (auto iter : protectedFiles)														// Iterate through 'protectedFiles' list to check if the file is protected
 	{
-		if (iter == fileId)		// If file is present in the list i.e protected file then dont unload
+		if (iter == fileId)																	// If file is present in the list i.e protected file then dont unload
 		{
 			isSafe = false;
 			MessageBox(NULL, TEXT("This file is protected and cannot be deleted"), TEXT("Alert"), MB_ABORTRETRYIGNORE | MB_ICONEXCLAMATION);
@@ -63,7 +63,7 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 		}
 	}
 
-	if (isSafe)		// if file is safe to unload then add to the 'removeFile' list which will be deleted on update
+	if (isSafe)						// if file is safe to unload then add to the 'removeFile' list which will be deleted on update
 	{
 		removeFiles.push_back(fileID);
 		//GameObjectManager::instance().unloadFile(fileJSON);
@@ -73,7 +73,7 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 
 json::JSON FileSystem::loadAsset(std::string& fileName)										//pass the Json file to the Asset Manager
 {
-	
+	return parseJSON(fileName);
 }
 
 json::JSON FileSystem::parseJSON(std::string& fileName)										//Method to parse the Json FIle 
