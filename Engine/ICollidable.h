@@ -23,9 +23,9 @@ protected:
 
 protected:
 	ICollidable();
-	inline const b2Transform& getB2Transform() { return b2transform; }
-	inline const b2Shape* const getShape() { return shape; }
-	inline const b2FixtureDef& getFixtureDefinition() { return fixtureDefinition; }
+	//inline const b2Transform& getB2Transform() { return b2transform; }
+	//inline const b2Shape* const getShape() { return shape; }
+	//inline const b2FixtureDef& getFixtureDefinition() { return fixtureDefinition; }
 public:
 	bool trigger;
 
