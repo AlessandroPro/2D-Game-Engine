@@ -16,11 +16,15 @@ class Sprite : public Component, IRenderable
 	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Component)
 
 private:
-	std::string textureAssetGUID;
-	STRCODE textureAssetGUID;
+	std::string textureAssetGUID_String;
+	STRCODE textureAssetGUID_STRCODE;
+	sf::Texture texture;
+	sf::IntRect dimensions; //might not be implementing this in later versions
 	sf::Sprite sprite;
 
 protected:
+	sf::Texture findTexture(STRCODE guid);
+	sf::Texture findTexture(std::string guid);
 	void initialize() override;
 	void update(float deltaTime) override;
 	virtual void render(sf::RenderWindow* _window) override;
@@ -30,5 +34,6 @@ protected:
 public:
 	Sprite();
 	~Sprite();
-	void setSpriteTexture(sf::Texture inTexture, sf::IntRect dimensions);
+	void setTextureAssetGUID(STRCODE guid);
+	void setTextureAssetGUID(std::string guid);
 };
