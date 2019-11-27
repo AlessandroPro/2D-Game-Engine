@@ -25,6 +25,7 @@ public:
 	Transform() ;
 	~Transform() = default;
 
+	void load(json::JSON& node);
 	const sf::Vector2f& getPosition();
 	const sf::Vector2f& getScale();
 	const sf::Vector2f& getForward();
