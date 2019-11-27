@@ -8,7 +8,7 @@ ICollidable::ICollidable()
 {
 	//add this to collision system on construction
 	CollisionSystem::instance().addCollidable(this);
-
+	staticCollider = false;
 	trigger = false;
 	shape = nullptr;
 	manifold = nullptr;
