@@ -7,10 +7,10 @@ class ICollidable
 	friend class CollisionSystem;
 
 private:
-	b2Transform transform;
-	bool staticCollider;
 
 protected:
+	bool staticCollider;
+	b2Transform transform;
 	b2Shape* shape;
 	b2Manifold* manifold;
 
