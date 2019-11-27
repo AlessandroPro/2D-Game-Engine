@@ -10,13 +10,13 @@ private:
 
 protected:
 	bool staticCollider;
-	b2Transform transform;
+	b2Transform b2transform;
 	b2Shape* shape;
 	b2Manifold* manifold;
 
 protected:
 	ICollidable();
-	inline const b2Transform& const getTransform() { return transform; }
+	inline const b2Transform& const getTransform() { return b2transform; }
 
 public:
 	bool trigger;
