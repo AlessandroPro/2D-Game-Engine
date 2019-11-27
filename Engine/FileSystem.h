@@ -20,6 +20,7 @@ private:
 	std::list<STRCODE> removeFiles;
 	STRCODE currentLevel;
 	STRCODE fileId;
+	bool isEmptyJSON = false;
 
 	json::JSON parseJSON(std::string& fileName);
 

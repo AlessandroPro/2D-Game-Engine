@@ -16,7 +16,7 @@ void FileSystem::update(float deltaTime)
 		{
 			//GameObjectManager::instance().unloadFile(fileData.find(iter)->second);
 			//AssetManager::instance().unloadFile(fileData.find(iter)->second);
-			fileData.erase(fileData.find(iter));	// find the file in the cached data and removed it
+			fileData.erase(fileData.find(iter));											// find the file in the cached data and removed it
 		}
 		removeFiles.clear();																// clear the list used to store remove fileIds
 	}
@@ -32,7 +32,7 @@ void FileSystem::load(std::string& fileName, bool protectedFile, bool isLevelFil
 	{
 		json::JSON fileJSON = parseJSON(fileName);
 
-		if (fileJSON.IsNull == true)
+		if (isEmptyJSON != true)
 		{
 			fileId = getHashCode(fileName.c_str());
 			fileData.emplace(fileId, fileJSON);
@@ -52,7 +52,7 @@ void FileSystem::load(std::string& fileName, bool protectedFile, bool isLevelFil
 		}
 		else
 		{
-			std::cout << " JSON is empty or not in .json format" << std::endl;
+			std::cout << " JSON is empty , not in .json format or File doesn't exist" << std::endl;
 		}
 
 	}
@@ -68,7 +68,7 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 		if (iter == fileId)																	// If file is present in the list i.e protected file then dont unload
 		{
 			isSafe = false;
-			MessageBox(NULL, TEXT("This file is protected and cannot be deleted"), TEXT("Alert"), MB_ABORTRETRYIGNORE | MB_ICONEXCLAMATION);
+			std::cout << "store the files to be removed in the removeFiles List and remove it in the next update" << std::endl;
 			break;
 		}
 	}
@@ -76,7 +76,6 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 	if (isSafe)						// if file is safe to unload then add to the 'removeFile' list which will be deleted on update
 	{
 		removeFiles.push_back(fileID);
-		std::cout << "store the files to be removed in the removeFiles List and remove it in the next update" << std::endl;
 	}
 }
 
@@ -89,14 +88,15 @@ json::JSON FileSystem::parseJSON(std::string& fileName)										//Method to par
 {
 	std::ifstream inputStream(fileName);
 	std::string JSONstr((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
-	if (JSONstr.empty() == true || JSONstr == "")
+
+	if (JSONstr.empty() == true || JSONstr == "" || !inputStream)							// check if JSON is empty , not in .json format or File doesn't exist
 	{
+		isEmptyJSON = true;
 		return NULL;
 	}
 	else
 	{
 		return (json::JSON::Load(JSONstr));
-
 	}
 
 }
