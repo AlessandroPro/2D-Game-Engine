@@ -9,7 +9,7 @@ RigidBody::RigidBody()
 {
 	//add this to collision system on construction
 	CollisionSystem::instance().addRigidBody(this);
-
+	body = nullptr;
 	//enabled = true;
 }
 

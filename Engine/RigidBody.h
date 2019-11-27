@@ -3,7 +3,7 @@
 //
 // editors: Rishi Barnwal , Dakshvir Rehill
 //
-// summary:	RigidBody Component (Only gameObjects with this component will collide will all colliders)
+// summary:	RigidBody Component (Only gameObjects with this component will collide with all colliders)
 ///-------------------------------------------------------------------------------------------------
 #pragma once
 #ifndef _RIGID_BODY_H_
@@ -17,7 +17,7 @@ private:
 	DECLARE_DYNAMIC_DERIVED_CLASS(RigidBody,Component)
 protected:
 	std::list<ICollidable*> colliders;
-
+	b2Body* body;
 protected:
 	void initialize();
 	void update(float deltaTime);
@@ -29,6 +29,8 @@ public:
 
 	void addCollidable(ICollidable* collider);
 	void removeCollidable(ICollidable* collider);
+
+	const b2Transform& getB2Transform();
 
 	void onCollisionEnter(const ICollidable* const other);
 	void onCollisionStay(const ICollidable* const other);
