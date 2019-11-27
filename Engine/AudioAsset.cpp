@@ -11,8 +11,13 @@ AudioAsset::~AudioAsset()
 {
 }
 
-void AudioAsset::initialize(std::string GUID, std::string assetPath)
+void AudioAsset::initialize()
 {
+}
+
+void AudioAsset::load(std::string GUID, std::string assetPath)
+{
+	audio.loadFromFile(assetPath);
 }
 
 sf::SoundBuffer AudioAsset::getAudio()

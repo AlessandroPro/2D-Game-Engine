@@ -11,8 +11,13 @@ FontAsset::~FontAsset()
 {
 }
 
-void FontAsset::initialize(std::string GUID, std::string assetPath)
+void FontAsset::initialize()
 {
+}
+
+void FontAsset::load(std::string GUID, std::string assetPath)
+{
+	font.loadFromFile(assetPath);
 }
 
 sf::Font FontAsset::getFont()

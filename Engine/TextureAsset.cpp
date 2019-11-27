@@ -11,10 +11,15 @@ TextureAsset::~TextureAsset()
 {
 }
 
-void TextureAsset::initialize(std::string GUID, std::string assetPath)
+void TextureAsset::initialize()
 {
-	
 }
+
+void TextureAsset::load(std::string GUID, std::string assetPath)
+{
+	texture.loadFromFile(assetPath);
+}
+
 
 sf::Texture TextureAsset::getTexture()
 {

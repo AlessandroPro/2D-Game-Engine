@@ -9,7 +9,8 @@ protected:
 	Asset() = default;
 	~Asset();
 
-virtual	void initialize(std::string GUID, std::string assetPath);
+virtual	void initialize();
+virtual void load(std::string GUID, std::string assetPath);
 
-	friend class AssetManager;
+friend class AssetManager;
 };

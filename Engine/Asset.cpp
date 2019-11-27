@@ -7,6 +7,10 @@ Asset::~Asset()
 {
 }
 
-void Asset::initialize(std::string GUID, std::string assetPath)
+void Asset::initialize()
+{
+}
+
+void Asset::load(std::string GUID, std::string assetPath)
 {
 }
