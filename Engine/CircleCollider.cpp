@@ -1,6 +1,6 @@
 #include "Core.h"
 #include "CircleCollider.h"
-
+#include "RigidBody.h"
 
 CircleCollider::CircleCollider()
 {
@@ -51,7 +51,7 @@ void CircleCollider::update(float deltaTime)
 	//}
 }
 
-void load(json::JSON& componentData)
+void CircleCollider::load(json::JSON& componentData)
 {
 
 }

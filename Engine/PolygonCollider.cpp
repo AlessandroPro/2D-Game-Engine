@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "PolygonCollider.h"
+#include "RigidBody.h"
 
 PolygonCollider::PolygonCollider()
 {
@@ -49,7 +50,7 @@ void PolygonCollider::update(float deltaTime)
 	//}
 }
 
-void load(json::JSON& componentData)
+void PolygonCollider::load(json::JSON& componentData)
 {
 
 }

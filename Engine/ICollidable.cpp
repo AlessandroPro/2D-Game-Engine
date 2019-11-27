@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "ICollidable.h"
+#include "CollisionSystem.h"
 
 ICollidable::ICollidable()
 {
