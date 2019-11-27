@@ -24,15 +24,13 @@ private:
 	Transform* transform = nullptr;
 	STRCODE levelID = -1;
 
-	// std::map<STRCODE, GameObject*> children;
-	// GameObject* parent = nullptr;
-
 public:
 	std::string name;
 	bool enabled = true;
+	bool destroyOnUnload = true;
 
 protected:
-	GameObject() = default;
+	GameObject();
 	~GameObject();
 	void initialize() override;
 	void load(json::JSON& node) override;
@@ -58,13 +56,6 @@ public:
 		component->initialize();
 		return component;
 	}
-
-	//void detachChildren(bool toWorld);
-	//void detachChild(GameObject* childObject, bool toWorld);
-	//void removeChildren();
-	//std::map<STRCODE, GameObject*>& getChildren();
-	//GameObject* getParent();
-	//void setParent(GameObject* parentObject);
 };
 
 #endif
