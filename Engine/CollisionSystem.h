@@ -9,7 +9,18 @@
 #ifndef _COLLISION_SYSTEM_H_
 #define _COLLISION_SYSTEM_H_
 #include "ISystem.h"
+//Gravity in the 2D Physics World
 #define GRAVITY  b2Vec2(0.f,9.8f)
+//Physics resolution time step
+//Change if frameRate is lower or higher than 60fps
+#define PHYSICS_TIME_STEP 0.0167f
+//Number of iterations the world takes to calculate velocity of bodies
+//Lower it if game performance is affected
+#define PHYSICS_VELOCITY_ITERATIONS 8
+//Number of iterations the world takes to calculate position of bodies
+//Lower it if game performance is affected
+#define PHYSICS_POSITION_ITERATIONS 3
+
 class RigidBody;
 class ICollidable;
 class CollisionSystem : public ISystem
