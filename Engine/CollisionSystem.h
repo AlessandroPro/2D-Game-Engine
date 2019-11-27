@@ -3,7 +3,7 @@
 #define _COLLISION_SYSTEM_H_
 #include "ISystem.h"
 #define GRAVITY  b2Vec2(0.f,9.8f)
-class Rigidbody;
+class RigidBody;
 class ICollidable;
 class CollisionSystem : public ISystem
 { 
