@@ -13,8 +13,8 @@
 class CircleCollider : public Component, public ICollidable
 {
 private:
-	DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider, Component)
-	//DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,ICollidable)
+	DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider, Component)
+	//DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider,ICollidable)
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
