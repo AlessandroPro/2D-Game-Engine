@@ -2,6 +2,9 @@
 #include "CircleCollider.h"
 #include "RigidBody.h"
 
+IMPLEMENT_DYNAMIC_CLASS(CircleCollider)
+
+
 CircleCollider::CircleCollider()
 {
 }

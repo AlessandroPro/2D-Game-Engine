@@ -13,7 +13,8 @@ class ICollidable;
 class RigidBody : public Component
 {
 	friend class CollisionSystem;
-	
+private:
+	DECLARE_DYNAMIC_DERIVED_CLASS(RigidBody,Component)
 protected:
 	std::list<ICollidable*> colliders;
 

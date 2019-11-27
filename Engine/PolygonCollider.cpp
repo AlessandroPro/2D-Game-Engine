@@ -2,6 +2,8 @@
 #include "PolygonCollider.h"
 #include "RigidBody.h"
 
+IMPLEMENT_DYNAMIC_CLASS(PolygonCollider)
+
 PolygonCollider::PolygonCollider()
 {
 }

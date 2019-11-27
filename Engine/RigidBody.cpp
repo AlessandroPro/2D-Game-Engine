@@ -3,6 +3,8 @@
 #include "RigidBody.h"
 #include "CollisionSystem.h"
 
+IMPLEMENT_DYNAMIC_CLASS(RigidBody)
+
 RigidBody::RigidBody()
 {
 	//add this to collision system on construction

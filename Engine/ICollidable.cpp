@@ -2,6 +2,8 @@
 #include "ICollidable.h"
 #include "CollisionSystem.h"
 
+IMPLEMENT_ABSTRACT_CLASS(ICollidable)
+
 ICollidable::ICollidable()
 {
 	//add this to collision system on construction

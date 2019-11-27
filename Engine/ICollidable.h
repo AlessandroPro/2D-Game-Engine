@@ -13,7 +13,7 @@ class ICollidable
 	friend class CollisionSystem;
 
 private:
-
+	DECLARE_ABSTRACT_BASE_CLASS(ICollidable)
 protected:
 	bool staticCollider;
 	b2Transform b2transform;

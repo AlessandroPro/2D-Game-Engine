@@ -12,6 +12,9 @@
 #include "Component.h"
 class CircleCollider : public Component, public ICollidable
 {
+private:
+	DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider, Component)
+	//DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,ICollidable)
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
