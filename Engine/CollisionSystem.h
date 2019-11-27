@@ -26,7 +26,7 @@ class ICollidable;
 class CollisionSystem : public ISystem
 { 
 	friend class GameEngine;
-
+	friend class RigidBody;
 private:
 	//keep a list of all colliders and rigidbodies in the engine world
 	std::list<ICollidable*> colliders; 

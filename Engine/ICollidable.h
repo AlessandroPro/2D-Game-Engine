@@ -11,7 +11,7 @@
 class ICollidable
 {
 	friend class CollisionSystem;
-
+	friend class RigidBody;
 private:
 	DECLARE_ABSTRACT_BASE_CLASS(ICollidable)
 protected:
