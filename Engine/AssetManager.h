@@ -30,9 +30,9 @@ public:
 	void loadLevelAssets(json::JSON& node);
 	void unloadLevelAssets();
 
-	Asset* CreateAssetT();
+	Asset* CreateAssetT(std::string& className, std::string& guid, std::string& assetPath);
 
-	Asset* getAssetByGUID(std::string& guid);	//TODO: Confirm with everyone and remove this?
+	Asset* getAssetByGUID(std::string guid);
 	Asset* getAssetBySTRCODE(STRCODE);
 };
 

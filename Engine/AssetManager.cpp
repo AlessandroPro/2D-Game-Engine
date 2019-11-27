@@ -9,7 +9,7 @@ void AssetManager::update(float deltaTime)
 {
 }
 
-void loadLevelAssets(json::JSON& node)
+void AssetManager::loadLevelAssets(json::JSON& node)
 {
 	if (node.hasKey("resources"))
 	{
@@ -29,27 +29,51 @@ void loadLevelAssets(json::JSON& node)
 			_ASSERT_EXPR(assetInformation.hasKey("path"), "asset Meta Node missing file path");
 			std::string assetPath = assetInformation["path"].ToString();
 
-			
+			assets.emplace(getHashCode(guid.c_str()),CreateAssetT(className, guid, assetPath));
 		}
 	}
 }
 
 void AssetManager::unloadLevelAssets()
 {
+	std::map<STRCODE, Asset*>::iterator iteratorAssets = assets.begin();
+	while (iteratorAssets != assets.end())
+	{
+		delete iteratorAssets->second;
+		assets.erase(iteratorAssets++);
+	}
 }
 
-Asset* AssetManager::CreateAssetT()
+Asset* AssetManager::CreateAssetT(std::string& className, std::string& guid, std::string& assetPath)
 {
-	return nullptr;
+	Asset* asset = (Asset*)CRtti::constructObject(className.c_str());
+	asset->load(guid, assetPath);
+	asset->initialize();
+	return asset;
 }
 
-Asset* AssetManager::getAssetByGUID(std::string& guid)
+Asset* AssetManager::getAssetByGUID(std::string guid)
 {
-	return nullptr;
+	STRCODE uuid = getHashCode(guid.c_str());
+	if (assets.count(uuid))
+	{
+		return assets[uuid];
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
-Asset* AssetManager::getAssetBySTRCODE(STRCODE)
+Asset* AssetManager::getAssetBySTRCODE(STRCODE uuid)
 {
-	return nullptr;
+	if (assets.count(uuid))
+	{
+		return assets[uuid];
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
