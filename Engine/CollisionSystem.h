@@ -46,7 +46,8 @@ protected:
 
 	//RigidBody Helper functions
 protected:
-
+	b2Body* CreateRigidBodyInWorld(b2BodyDef& bodyDefinition);
+	void RemoveRigidBodyFromWorld(b2Body* rigidBody);
 public:
 	static CollisionSystem& instance()
 	{
