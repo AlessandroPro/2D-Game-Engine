@@ -14,7 +14,9 @@ void FileSystem::update(float deltaTime)
 	{
 		for (auto iter : removeFiles)
 		{
-			fileData.erase(fileData.find(iter));											// find the file in the cached data and removed it
+			//GameObjectManager::instance().unloadFile(fileData.find(iter)->second);
+			//AssetManager::instance().unloadFile(fileData.find(iter)->second);
+			fileData.erase(fileData.find(iter));	// find the file in the cached data and removed it
 		}
 		removeFiles.clear();																// clear the list used to store remove fileIds
 	}
@@ -74,11 +76,7 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 	if (isSafe)						// if file is safe to unload then add to the 'removeFile' list which will be deleted on update
 	{
 		removeFiles.push_back(fileID);
-		//GameObjectManager::instance().unloadFile(fileJSON);
-		//AssetManager::instance().unloadFile(fileJSON);
-
 		std::cout << "store the files to be removed in the removeFiles List and remove it in the next update" << std::endl;
-
 	}
 }
 
