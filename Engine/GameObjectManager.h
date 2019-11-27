@@ -20,6 +20,7 @@ class GameObjectManager final : public ISystem
 private:
 	std::map<STRCODE, GameObject*> gameObjects;
 	std::list<GameObject*> gameObjectsToRemove;
+	STRCODE currentLevel = -1;
 
 protected:
 	void initialize() override;
@@ -38,7 +39,7 @@ public:
 	GameObject* findGameObject(STRCODE gameObjectUID);
 	std::list<GameObject*> getGameObjectsWithComponent(std::string& compType);
 	GameObject* createGameObject();
-	GameObject* instantiatePrefab(STRCODE prefabUID);
+	//GameObject* instantiatePrefab(STRCODE prefabUID);
 	GameObject* createGameObjectWithComponents(std::list<std::string>& comTypes);
 
 
@@ -53,7 +54,6 @@ private:
 
 	void load(json::JSON& node, STRCODE levelID);
 	void unload(STRCODE levelID);
-	//json::JSON save();
 	void deleteFromRemoveList();
 	void initializeAllGameObjects();
 

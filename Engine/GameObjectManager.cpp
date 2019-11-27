@@ -22,6 +22,8 @@ void GameObjectManager::load(json::JSON& node, STRCODE levelID)
 {
 	if (node.hasKey("GameObjects"))
 	{
+		currentLevel = levelID;
+
 		json::JSON gameObjectsNode = node["GameObjects"];
 		for (auto& gameObjectNode : gameObjectsNode.ArrayRange())
 		{
@@ -31,7 +33,7 @@ void GameObjectManager::load(json::JSON& node, STRCODE levelID)
 
 			GameObject* newGameObject = new GameObject();
 			
-			newGameObject->levelID = levelID;
+			newGameObject->levelID = currentLevel;
 			
 			newGameObject->load(gameObjectNode);
 			addGameObject(newGameObject);
@@ -54,7 +56,8 @@ void GameObjectManager::unload(STRCODE levelID)
 		}
 	}
 
-	//deleteFromRemoveList();
+	//This will delete the gameobjects right away
+	deleteFromRemoveList();
 }
 
 void GameObjectManager::deleteFromRemoveList()
@@ -64,6 +67,7 @@ void GameObjectManager::deleteFromRemoveList()
 	{
 		if (gameObject != nullptr)
 		{
+			gameObjects.erase(gameObject->id);
 			delete gameObject;
 		}
 	}
@@ -80,14 +84,6 @@ void GameObjectManager::initializeAllGameObjects()
 		}
 	}
 }
-
-//json::JSON GameObjectManager::save()
-//{
-//	for (auto gameObject : gameObjects)
-//	{
-//
-//	}
-//}
 
 void GameObjectManager::initialize()
 {
@@ -118,7 +114,6 @@ void GameObjectManager::removeGameObject(STRCODE gameObjectUID)
 	if (toRemove != nullptr)
 	{
 		gameObjectsToRemove.push_back(toRemove);
-		gameObjects.erase(gameObjectUID);
 	}
 }
 
@@ -136,9 +131,11 @@ void GameObjectManager::removeGameObject(GameObject* gameObject)
 
 GameObject* GameObjectManager::findGameObject(STRCODE gameObjectUID)
 {
-	if (gameObjects.find(gameObjectUID) != gameObjects.end())
+	auto iter = gameObjects.find(gameObjectUID);
+	
+	if (iter != gameObjects.end())
 	{
-		return gameObjects[gameObjectUID];
+		return iter->second;
 	}
 	else
 	{
@@ -166,7 +163,7 @@ GameObject* GameObjectManager::createGameObject()
 {
 	GameObject* newGameObject = new GameObject();
 
-	//newGameObject->levelID = FileManager::instance().getCurrentLevel();
+	newGameObject->levelID = currentLevel;
 	newGameObject->initialize();
 	addGameObject(newGameObject);
 
@@ -177,22 +174,22 @@ GameObject* GameObjectManager::createGameObjectWithComponents(std::list<std::str
 {
 	GameObject* newGameObject = new GameObject();
 
-	//newGameObj->levelID = FileManager::instance().getCurrentLevel();
+	newGameObject->levelID = currentLevel;
 	newGameObject->createComponents(comTypes);
 	newGameObject->initialize();
 	addGameObject(newGameObject);
 	return newGameObject;
 }
 
-GameObject* GameObjectManager::instantiatePrefab(STRCODE prefabUID)
-{
-	//PrefabAsset* prefab = AssetManager::instance().getAssetByUUID(prefabUID);
-
-	GameObject* newGameObject = new GameObject();
-	//newGameobject->load(prefab.getPrefab());
-	newGameObject->initialize();
-	addGameObject(newGameObject);
-
-	return newGameObject;
-}
+//GameObject* GameObjectManager::instantiatePrefab(STRCODE prefabUID)
+//{
+//	//PrefabAsset* prefab = AssetManager::instance().getAssetByUUID(prefabUID);
+//
+//	GameObject* newGameObject = new GameObject();
+//	//newGameobject->load(prefab.getPrefab());
+//	newGameObject->initialize();
+//	addGameObject(newGameObject);
+//
+//	return newGameObject;
+//}
 
