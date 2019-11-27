@@ -3,7 +3,6 @@
 #include "GameObjectManager.h"
 #include "AssetManager.h"
 #include "RenderSystem.h"
-#include <Windows.h>
 
 void FileSystem::initialize()
 {
@@ -18,7 +17,6 @@ void FileSystem::update(float deltaTime)
 			fileData.erase(fileData.find(iter));											// find the file in the cached data and removed it
 		}
 		removeFiles.clear();																// clear the list used to store remove fileIds
-		std::cout << "Remove all the files in the removeFile list" << std::endl;
 	}
 }
 
@@ -26,29 +24,35 @@ void FileSystem::load(std::string& fileName, bool protectedFile, bool isLevelFil
 {
 	if (protectedFile == true && isLevelFile == true)										//check if the file is a level file and protected? if so throw an error 
 	{
-		MessageBox(NULL, TEXT("Level File Cannot Be Protected"), TEXT("Alert"), MB_ABORTRETRYIGNORE | MB_ICONEXCLAMATION);
+		std::cout << "Level File Cannot Be Protected" << std::endl;
 	}
 	else
 	{
 		json::JSON fileJSON = parseJSON(fileName);
-		fileId = getHashCode(fileName.c_str());											
-		fileData.emplace(fileId, fileJSON);												
 
-		if (protectedFile == true && isLevelFile != true)				// check if the file is protected and not a level file
+		if (fileJSON.IsNull == true)
 		{
-			protectedFiles.push_back(fileId);
-			std::cout << "file is protected and not a level file" << std::endl;
+			fileId = getHashCode(fileName.c_str());
+			fileData.emplace(fileId, fileJSON);
+
+			if (protectedFile == true && isLevelFile != true)				// check if the file is protected and not a level file
+			{
+				protectedFiles.push_back(fileId);
+			}
+			else if (isLevelFile == true && protectedFile != true)			// check if the file is a level file and not protected. Then set it as current level
+			{
+				currentLevel = fileId;
+			}
+
+			//RenderSystem::instance().loadFile(fileJSON , fileId);
+			//GameObjectManager::instance().loadFile(fileJSON , fileId);
+			//AssetManager::instance().loadFile(fileJSON , fileId);
 		}
-		else if (isLevelFile == true && protectedFile != true)			// check if the file is a level file and not protected. Then set it as current level
+		else
 		{
-			currentLevel = fileId;
-			std::cout << "file is a level file and catch the current level file." << std::endl;
-
+			std::cout << " JSON is empty or not in .json format" << std::endl;
 		}
 
-		//RenderSystem::instance().loadFile(fileJSON , fileId);
-		//GameObjectManager::instance().loadFile(fileJSON , fileId);
-		//AssetManager::instance().loadFile(fileJSON , fileId);
 	}
 }
 
@@ -81,16 +85,21 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 json::JSON FileSystem::loadAsset(std::string& fileName)										//pass the Json file to the Asset Manager
 {
 	return parseJSON(fileName);
-	std::cout << "return json file to AssetManager" << std::endl;
-
 }
 
 json::JSON FileSystem::parseJSON(std::string& fileName)										//Method to parse the Json FIle 
 {
 	std::ifstream inputStream(fileName);
 	std::string JSONstr((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
-	return (json::JSON::Load(JSONstr));
-	std::cout << "Parse the JSON" << std::endl;
+	if (JSONstr.empty() == true || JSONstr == "")
+	{
+		return NULL;
+	}
+	else
+	{
+		return (json::JSON::Load(JSONstr));
+
+	}
 
 }
 
@@ -99,10 +108,9 @@ STRCODE FileSystem::getCurrentLevel()														//returns current loaded leve
 	if (currentLevel != NULL)
 	{
 		return currentLevel;
-		std::cout << "return the current level to the gameBojectManager" << std::endl;
 	}
 	else
 	{
-		MessageBox(NULL, TEXT("No level has been loaded"), TEXT("Alert"), MB_ABORTRETRYIGNORE | MB_ICONEXCLAMATION);
+		std::cout << "No level has been loaded" << std::endl;
 	}
 }
