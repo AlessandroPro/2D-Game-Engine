@@ -97,8 +97,8 @@ void Transform::setScale(const sf::Vector2f& newScale)
 void Transform::setRotation(float angle)
 {
 	transform.setRotation(angle);
-	forward.x = sinf(angle);
-	forward.y = cosf(angle);
+	forward.x = cosf(DEG_TO_RAD(angle));
+	forward.y = sinf(DEG_TO_RAD(angle));
 }
 
 void Transform::translate(const sf::Vector2f& offset)
