@@ -6,11 +6,15 @@
 
 CollisionSystem::~CollisionSystem()
 {
-
+	if (physicsWorld != nullptr)
+	{
+		delete physicsWorld;
+	}
 }
 
 void CollisionSystem::initialize()
 {
+	physicsWorld = new b2World(GRAVITY);
 }
 
 void CollisionSystem::update(float deltaTime)
