@@ -1,7 +1,8 @@
 #pragma once
+#ifndef _POLYGON_COLLIDER_H_
+#define _POLYGON_COLLIDER_H_
 #include "ICollidable.h"
 #include "Component.h"
-
 class PolygonCollider : public ICollidable, public Component
 {
 
@@ -14,4 +15,4 @@ public:
 	PolygonCollider();
 	~PolygonCollider();
 };
-
+#endif

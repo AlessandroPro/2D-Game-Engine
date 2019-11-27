@@ -1,6 +1,7 @@
 #pragma once
+#ifndef _RIGID_BODY_H_
+#define _RIGID_BODY_H_
 #include "Component.h"
-
 class ICollidable;
 class RigidBody : public Component
 {
@@ -24,4 +25,4 @@ public:
 	void onCollisionStay(const ICollidable* const other);
 	void onCollisionExit(const ICollidable* const other);
 };
-
+#endif
