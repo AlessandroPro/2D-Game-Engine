@@ -56,6 +56,7 @@ void CircleCollider::update(float deltaTime)
 
 void CircleCollider::load(json::JSON& componentData)
 {
-
+	//create ICollidable shape
+	//create ICollidable Fixture Definition
 }
 

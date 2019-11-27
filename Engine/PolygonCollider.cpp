@@ -54,5 +54,6 @@ void PolygonCollider::update(float deltaTime)
 
 void PolygonCollider::load(json::JSON& componentData)
 {
-
+	//create ICollidable shape
+	//create ICollidable Fixture Definition
 }
