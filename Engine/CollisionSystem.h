@@ -1,9 +1,8 @@
 #pragma once
-#include "Core.h"
 #include "ISystem.h"
-#include "ICollidable.h"
-#include "RigidBody.h"
 
+class Rigidbody;
+class ICollidable;
 class CollisionSystem : public ISystem
 { 
 	friend class GameEngine;

@@ -1,8 +1,7 @@
 #pragma once
-#include "ICollidable.h"
-#include "GameObject.h"
 #include "Component.h"
 
+class ICollidable;
 class RigidBody : public Component
 {
 	friend class CollisionSystem;
