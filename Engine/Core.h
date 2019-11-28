@@ -7,9 +7,6 @@
 //#define NOMINMAX
 #define _WINSOCKAPI_
 
-#define PIXELS_TO_PHYSICS 0.01f
-#define PHYSICS_TO_PIXELS 100.f
-
 #include <algorithm>
 
 #pragma comment(lib, "rpcrt4.lib")
