@@ -13,9 +13,10 @@
 
 class Sprite : public Component, IRenderable
 {
-	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Component)
+	DECLARE_ABSTRACT_DERIVED_CLASS(Sprite, Component)
 
 public:
+	void update(float deltaTime) override;
     void initialize() override;
     virtual void render(sf::RenderWindow* _window) override;
 

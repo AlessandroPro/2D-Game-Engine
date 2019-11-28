@@ -24,7 +24,7 @@ protected:
 public:
 	Transform() ;
 	~Transform() = default;
-	void update(float deltaTime);
+	void update(float deltaTime) override;
 	void load(json::JSON& node);
 	const sf::Vector2f& getPosition();
 	const sf::Vector2f& getScale();

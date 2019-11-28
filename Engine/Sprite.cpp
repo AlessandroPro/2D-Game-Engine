@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "RenderSystem.h"
 
-IMPLEMENT_DYNAMIC_CLASS(Sprite)
+IMPLEMENT_ABSTRACT_CLASS(Sprite)
 
 void Sprite::initialize()
 {
