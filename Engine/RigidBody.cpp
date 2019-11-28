@@ -25,9 +25,12 @@ void RigidBody::addCollidable(ICollidable* collider)
 	{
 		return;
 	}
-	if (body != nullptr && !containsCollider(collider))
+	if (!containsCollider(collider))
 	{
-		body->CreateFixture(&collider->fixtureDefinition);
+		if (body != nullptr)
+		{
+			body->CreateFixture(&collider->fixtureDefinition);
+		}
 		colliders.push_back(collider);
 	}
 }
@@ -54,6 +57,11 @@ void RigidBody::removeCollidable(ICollidable* collider)
 	}
 }
 
+const b2Transform& RigidBody::getB2Transform()
+{
+	return body == nullptr ? b2Transform() : body->GetTransform();
+}
+
 void RigidBody::onCollisionEnter(const ICollidable* const other)
 {
 
@@ -71,6 +79,8 @@ void RigidBody::onCollisionExit(const ICollidable* const other)
 
 void RigidBody::initialize()
 {
+	//create body in world
+	body = CollisionSystem::instance().CreateRigidBodyInWorld(bodyDef);
 
 }
 
