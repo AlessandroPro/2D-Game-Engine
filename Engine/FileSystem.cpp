@@ -66,7 +66,6 @@ void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method t
 void FileSystem::unload(std::string& fileName)												//Method to unload a file
 {
 	STRCODE fileID = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
-	bool isSafe = true;																		// A check to see if file is safe to unload
 
 	if (fileID == currentLevel)
 	{
@@ -79,26 +78,6 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 		{
 			currentLevel = 0;
 		}
-	}
-	//------------------------------------
-
-
-
-
-	//Remove the Protected Logic-------------
-	for (auto iter : protectedFiles)														// Iterate through 'protectedFiles' list to check if the file is protected
-	{
-		if (iter == fileId)																	// If file is present in the list i.e protected file then dont unload
-		{
-			isSafe = false;
-			std::cout << "store the files to be removed in the removeFiles List and remove it in the next update" << std::endl;
-			break;
-		}
-	}
-
-	if (isSafe)						// if file is safe to unload then add to the 'removeFile' list which will be deleted on update
-	{
-		removeFiles.push_back(fileID);
 	}
 }
 
