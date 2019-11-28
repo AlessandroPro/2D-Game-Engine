@@ -17,5 +17,8 @@ protected:
 public:
 	Animator();
 	~Animator();
+	void setCurrentAnimationInPlay(std::string animation) { currentAnimationInPlay = animation; }
+	void addAnimation(Animation* animation);
+	void removeAnimation(Animation* animation);
 };
 

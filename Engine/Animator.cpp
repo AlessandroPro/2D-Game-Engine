@@ -16,3 +16,11 @@ Animator::Animator()
 Animator::~Animator()
 {
 }
+
+void Animator::addAnimation(Animation* animation)
+{
+}
+
+void Animator::removeAnimation(Animation* animation)
+{
+}
