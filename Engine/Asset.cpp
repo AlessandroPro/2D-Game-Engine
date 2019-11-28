@@ -1,7 +1,7 @@
 #include "Core.h"
 #include "Asset.h"
 
-IMPLEMENT_DYNAMIC_CLASS(Asset)
+IMPLEMENT_ABSTRACT_CLASS(Asset)
 
 Asset::~Asset()
 {

@@ -3,14 +3,15 @@
 
 class Asset : public Object
 {
-	DECLARE_DYNAMIC_DERIVED_CLASS(Asset,Object)
-
+	DECLARE_ABSTRACT_DERIVED_CLASS(Asset, Object)
 protected:
 	Asset() = default;
 	~Asset();
 
-virtual	void initialize();
-virtual void load(std::string GUID, std::string assetPath);
+	std::list<STRCODE> references;
 
-friend class AssetManager;
+	virtual	void initialize();
+	virtual void load(std::string GUID, std::string assetPath) = 0;
+
+	friend class AssetManager;
 };
