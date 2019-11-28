@@ -4,7 +4,7 @@
 #include "RenderSystem.h"
 #include "AssetManager.h"
 
-IMPLEMENT_DYNAMIC_CLASS(Sprite)
+IMPLEMENT_ABSTRACT_CLASS(Sprite)
 
 sf::Texture Sprite::findTexture(STRCODE guid)
 {
