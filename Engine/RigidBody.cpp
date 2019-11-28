@@ -81,7 +81,10 @@ void RigidBody::initialize()
 {
 	//create body in world
 	body = CollisionSystem::instance().CreateRigidBodyInWorld(bodyDef);
-
+	for (auto collider : colliders)
+	{
+		body->CreateFixture(&collider->fixtureDefinition);
+	}
 }
 
 void RigidBody::update(float deltaTime)
