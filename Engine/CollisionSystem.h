@@ -36,12 +36,12 @@ private:
 public:
 	struct Collision
 	{
-		ICollidable* colliders[2];
-		b2Manifold* collisionManifold;
+		const ICollidable* colliders[2];
+		const b2Manifold* collisionManifold;
 	};
 
 private:
-	std::map<STRCODE, CollisionSystem::Collision> activeCollisions;
+	std::map<STRCODE, CollisionSystem::Collision*> activeCollisions;
 
 private:
 	CollisionSystem();
@@ -50,7 +50,7 @@ private:
 	CollisionSystem& operator= (const CollisionSystem& other) = default;
 
 	void checkCollision(RigidBody*, ICollidable*);
-	void checkCollision(CollisionSystem::Collision& collisionData);
+	void checkCollision(CollisionSystem::Collision* collisionData);
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
