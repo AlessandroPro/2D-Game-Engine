@@ -63,17 +63,17 @@ const b2Transform& RigidBody::getB2Transform()
 	return body->GetTransform();
 }
 
-void RigidBody::onCollisionEnter(const ICollidable* const other)
+void RigidBody::onCollisionEnter(const CollisionSystem::Collision* const other)
 {
 
 }
 
-void RigidBody::onCollisionStay(const ICollidable* const other)
+void RigidBody::onCollisionStay(const CollisionSystem::Collision* const other)
 {
 
 }
 
-void RigidBody::onCollisionExit(const ICollidable* const other)
+void RigidBody::onCollisionExit(const CollisionSystem::Collision* const other)
 {
 
 }
