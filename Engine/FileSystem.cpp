@@ -16,58 +16,69 @@ void FileSystem::update(float deltaTime)
 		{
 			//GameObjectManager::instance().unloadFile(fileData.find(iter)->second);
 			//AssetManager::instance().unloadFile(fileData.find(iter)->second);
-			fileData.erase(fileData.find(iter));											// find the file in the cached data and removed it
+			fileData.erase(iter);															// find the file in the cached data and removed it
 		}
 		removeFiles.clear();																// clear the list used to store remove fileIds
 	}
-}
 
-void FileSystem::loadRenderSystem(std::string& fileName)									//Method to load a RenderSystem file
-{
-	json::JSON fileJSON = parseJSON(fileName);
-
-	if (isEmptyJSON != true)
+	if (loadFiles.size() > 0)																// if there is any file to unload
 	{
-		fileId = getHashCode(fileName.c_str());
-		fileData.emplace(fileId, fileJSON);
-		//RenderSystem::instance().loadFile(fileJSON , fileId);
-	}
-	else
-	{
-		std::cout << " JSON is empty , not in .json format or File doesn't exist" << std::endl;
+		for (auto iter : loadFiles)
+		{
+			//AssetManager::instance().loadFile(fileJSON , fileId);
+			//GameObjectManager::instance().loadFile(fileJSON , fileId);
+			//RenderSystem::instance().loadFile(fileJSON , fileId);
+			fileData.emplace(iter.first, iter.second);										// find the file in the cached data and removed it
+		}
+		loadFiles.clear();																	// clear the list used to store remove fileIds
 	}
 }
+
 
 void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method to load a file
 {
-	json::JSON fileJSON = parseJSON(fileName);
-
+	fileJSON = parseJSON(fileName);
+	bool isLoaded = false;
 	if (isEmptyJSON != true)
 	{
-		fileId = getHashCode(fileName.c_str());
-		fileData.emplace(fileId, fileJSON);
+		STRCODE fileId = getHashCode(fileName.c_str());
+
+		for (auto itr : removeFiles)
+		{
+			if (itr == fileId)
+			{
+				isLoaded = true;
+			}
+		}
+
+		if (fileData.count(fileId) == 0 || isLoaded == true)
+		{
+			loadFiles.emplace(fileId,fileJSON);
+			isLoaded = false;
+		}
+		else
+		{
+			LOG("File Already Loaded  , please Unload First")
+		}
 
 		if (isLevelFile == true)			// check if the file is a level file and not protected. Then set it as current level
 		{
-			
 			levels.push_back(currentLevel);
 			currentLevel = fileId;
 		}
 
-		//GameObjectManager::instance().loadFile(fileJSON , fileId);
-		//AssetManager::instance().loadFile(fileJSON , fileId);
 	}
 	else
 	{
-		std::cout << " JSON is empty , not in .json format or File doesn't exist" << std::endl;
+		LOG(" JSON is empty , not in .json format or File doesn't exist");
 	}
 }
 
 void FileSystem::unload(std::string& fileName)												//Method to unload a file
 {
-	STRCODE fileID = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
+	STRCODE fileId = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
 
-	if (fileID == currentLevel)
+	if (fileId == currentLevel)
 	{
 		if (levels.empty() != true)
 		{
@@ -79,6 +90,8 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 			currentLevel = 0;
 		}
 	}
+
+	removeFiles.push_back(fileId);
 }
 
 json::JSON FileSystem::loadAsset(std::string& fileName)										//pass the Json file to the Asset Manager
@@ -110,6 +123,6 @@ STRCODE FileSystem::getCurrentLevel()														//returns current loaded leve
 	}
 	else
 	{
-		std::cout << "No level has been loaded" << std::endl;
+		LOG("No level has been loaded");
 	}
 }

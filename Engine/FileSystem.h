@@ -16,12 +16,12 @@ class FileSystem final : public ISystem
 {
 private:
 	std::map<STRCODE, json::JSON> fileData;
-	std::list<STRCODE> protectedFiles;
+	std::map<STRCODE, json::JSON> loadFiles;
 	std::list<STRCODE> removeFiles;
 	std::vector<STRCODE> levels;
+	json::JSON fileJSON;
 
 	STRCODE currentLevel = 0;
-	STRCODE fileId;
 	bool isEmptyJSON = false;
 
 	json::JSON parseJSON(std::string& fileName);
@@ -39,7 +39,7 @@ protected:
 
 
 public:
-	void loadRenderSystem(std::string& fileName);
+
 
 	void load(std::string& fileName, bool isLevelFile);
 	void unload(std::string& fileName);
