@@ -27,8 +27,9 @@ protected:
     DECLARE_SINGLETON(AssetManager)
 
 public:
-	void loadLevelAssets(json::JSON& node);
-	void unloadLevelAssets();
+	void loadLevelAssets(json::JSON& node, STRCODE fileID);
+	
+	void unloadLevelAssets(STRCODE fileID);
 
 	Asset* CreateAssetT(std::string& className, std::string& guid, std::string& assetPath);
 
