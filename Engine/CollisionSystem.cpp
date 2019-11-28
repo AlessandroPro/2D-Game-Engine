@@ -25,6 +25,23 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 
 void CollisionSystem::checkCollision(ICollidable* checkingCollider, ICollidable* otherCollider,bool newCollision)
 {
+	if (checkingCollider->shape->GetType() == b2Shape::Type::e_circle && otherCollider->shape->GetType() == b2Shape::Type::e_circle)
+	{
+
+	}
+	else if (checkingCollider->shape->GetType() == b2Shape::Type::e_circle && otherCollider->shape->GetType() == b2Shape::Type::e_polygon)
+	{
+
+	}
+	else if (checkingCollider->shape->GetType() == b2Shape::Type::e_polygon && otherCollider->shape->GetType() == b2Shape::Type::e_circle)
+	{
+
+	}
+	else if (checkingCollider->shape->GetType() == b2Shape::Type::e_polygon && otherCollider->shape->GetType() == b2Shape::Type::e_polygon)
+	{
+
+	}
+
 
 }
 
