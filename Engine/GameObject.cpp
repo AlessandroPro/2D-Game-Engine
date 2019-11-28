@@ -98,6 +98,7 @@ void GameObject::deleteFromRemoveList()
 	{
 		if (component != nullptr)
 		{
+			components.erase(component->getID());
 			delete component;
 		}
 	}
@@ -112,9 +113,11 @@ void GameObject::addComponent(Component* component)
 
 void GameObject::removeComponent(STRCODE compID)
 {
-	if (components.find(compID) != components.end())
+	Component* component = getComponent(compID);
+
+	if (component != nullptr)
 	{
-		componentsToRemove.push_back(components[compID]);
+		componentsToRemove.push_back(component);
 	}
 }
 
@@ -125,9 +128,11 @@ std::map<STRCODE, Component*>& GameObject::getAllComponents()
 
 Component* GameObject::getComponent(STRCODE compID)
 {
-	if (components.find(compID) != components.end())
+	auto iter = components.find(compID);
+
+	if (iter != components.end())
 	{
-		return components[compID];
+		return iter->second;
 	}
 
 	return nullptr;
@@ -152,7 +157,7 @@ Component* GameObject::getComponent(const std::string& compType)
 	return nullptr;
 }
 
-// Retuns the first component found that matches the given compType
+// Retuns all components found in this game object that match the given compType
 std::list<Component*> GameObject::getComponents(const std::string& compType)
 {
 	STRCODE compTypeID = getHashCode(compType.c_str());

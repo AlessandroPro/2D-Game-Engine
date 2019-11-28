@@ -6,8 +6,6 @@
 #define _OBJECT_H_
 #pragma once
 
-#include "json.hpp"
-
 class Object
 {
 	DECLARE_ABSTRACT_BASE_CLASS(Object)
