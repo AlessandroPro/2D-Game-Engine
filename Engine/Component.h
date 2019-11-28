@@ -12,7 +12,10 @@
 
 #include "Object.h"
 #include <string>
-class ICollidable;
+class CollisionSystem {
+public:
+	struct Collision;
+};
 class GameObject;
 
 class Component : public Object
@@ -35,12 +38,12 @@ protected:
 public:
     void setGameObject(GameObject* _gameObject);
 	GameObject* getGameObject();
-	virtual void onCollisionEnter(const ICollidable* const other);
-	virtual void onCollisionStay(const ICollidable* const other);
-	virtual void onCollisionExit(const ICollidable* const other);
-	virtual void onTriggerEnter(const ICollidable* const other);
-	virtual void onTriggerStay(const ICollidable* const other);
-	virtual void onTriggerExit(const ICollidable* const other);
+	virtual void onCollisionEnter(const CollisionSystem::Collision* const other);
+	virtual void onCollisionStay(const CollisionSystem::Collision* const other);
+	virtual void onCollisionExit(const CollisionSystem::Collision* const other);
+	virtual void onTriggerEnter(const CollisionSystem::Collision* const other);
+	virtual void onTriggerStay(const CollisionSystem::Collision* const other);
+	virtual void onTriggerExit(const CollisionSystem::Collision* const other);
 };
 
 #endif 
