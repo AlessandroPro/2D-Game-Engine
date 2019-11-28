@@ -44,30 +44,30 @@ void CollisionSystem::checkCollision(CollisionSystem::Collision* collisionData)
 	bool newCollision = collisionData->collisionManifold != nullptr;
 
 	b2Manifold* newManifold = new b2Manifold();
-	if (collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_circle && 
-		collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_circle)
+	bool isShapeOneCircle = collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_circle;
+	bool isShapeTwoCircle = collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_circle;
+	bool isShapeOnePolygon = collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_polygon;
+	bool isShapeTwoPolygon = collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_polygon;
+	if (isShapeOneCircle && isShapeTwoCircle)
 	{
 		b2CollideCircles(newManifold, 
 			(b2CircleShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform, 
 			(b2CircleShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform);
 	}
-	else if (collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_circle && 
-		collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_polygon)
+	else if (isShapeOneCircle && isShapeTwoPolygon)
 	{
 		b2CollidePolygonAndCircle(newManifold,
 			(b2PolygonShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform,
 			(b2CircleShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform);
 	}
-	else if (collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_polygon && 
-		collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_circle)
+	else if (isShapeOnePolygon && isShapeTwoCircle)
 	{
 		b2CollidePolygonAndCircle(newManifold,
 			(b2PolygonShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform,
 			(b2CircleShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform);
 
 	}
-	else if (collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_polygon && 
-		collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_polygon)
+	else if (isShapeOnePolygon && isShapeTwoPolygon)
 	{
 		b2CollidePolygons(newManifold,
 			(b2PolygonShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform,
@@ -85,6 +85,14 @@ void CollisionSystem::checkCollision(CollisionSystem::Collision* collisionData)
 			activeCollisions.emplace(uidStrCode, collisionData);
 			collisionData->colliders[0]->collisionIDs.push_back(uidStrCode);
 			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
+			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
+			{
+				
+			}
+			else
+			{
+
+			}
 		}
 		else
 		{
