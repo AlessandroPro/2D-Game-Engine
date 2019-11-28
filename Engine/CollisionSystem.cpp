@@ -12,6 +12,11 @@ CollisionSystem::~CollisionSystem()
 	}
 }
 
+void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider)
+{
+
+}
+
 void CollisionSystem::initialize()
 {
 	physicsWorld = new b2World(GRAVITY);
@@ -25,9 +30,7 @@ void CollisionSystem::update(float deltaTime)
 		{
 			if (!rigidBody->containsCollider(collider))
 			{
-				//check collision
-				//set collision states
-				//call all callbacks
+				checkCollision(rigidBody, collider);
 			}
 		}
 	}
