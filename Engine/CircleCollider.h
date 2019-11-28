@@ -23,6 +23,7 @@ protected:
 public:
 	CircleCollider();
 	~CircleCollider();
+	void setTrigger(bool b) override;
 };
 
 #endif

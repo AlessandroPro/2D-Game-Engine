@@ -23,16 +23,16 @@ protected:
 	std::list<STRCODE> collisionIDs;
 protected:
 	ICollidable();
+	bool trigger;
 	//inline const b2Transform& getB2Transform() { return b2transform; }
 	//inline const b2Shape* const getShape() { return shape; }
 	//inline const b2FixtureDef& getFixtureDefinition() { return fixtureDefinition; }
 public:
-	bool trigger;
 
 public:
 	virtual ~ICollidable();
+	virtual void setTrigger(bool b) = 0;
 	//inline const b2Manifold* const getManifold() { return manifold; }
-
 };
 
 #endif

@@ -23,5 +23,6 @@ protected:
 public:
 	PolygonCollider();
 	~PolygonCollider();
+	void setTrigger(bool b) override;
 };
 #endif
