@@ -26,6 +26,10 @@ void CircleCollider::initialize()
 	//	rb->addCollidable(this);
 	//	b2transform = rb->getB2Transform();
 	//}
+	//else
+	//{
+	//	staticCollider =  true;
+	//}
 	
 }
 
@@ -43,8 +47,8 @@ void CircleCollider::update(float deltaTime)
 
 	//	//convert transform to b2Transform
 	//	b2Vec2 position = b2Vec2(
-	//		gameObject.getTransform().getPosition().x * 0.01f, 
-	//		gameObject.getTransform().getPosition().y * 0.01f);
+		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
+		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y);
 	//	
 	//	//convert degrees to radians
 	//	float rotation = DEG_TO_RAD(gameObject.getTransform().getRotation());
