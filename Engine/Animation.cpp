@@ -60,7 +60,10 @@ void Animation::removeSpriteFromAnimation(int orderInAnimation)
 		{
 			if (spriteInAnimation.first > orderInAnimation)
 			{
-				spritesInAnimation[spriteInAnimation.first] = spritesInAnimation[spriteInAnimation.first - 1];
+				int tempOrderNumber = spriteInAnimation.first;
+				Sprite* tempSprite = spriteInAnimation.second;
+				spritesInAnimation.erase(spriteInAnimation.first);
+				spritesInAnimation.emplace(tempOrderNumber - 1, tempSprite);
 			}
 		}
 	}
@@ -72,4 +75,17 @@ void Animation::removeSpriteFromAnimation(int orderInAnimation)
 
 void Animation::swapSpriteOrderInAnimation(int orderInAnimation1, int orderInAnimation2)
 {
+	if (doesOrderNumberExist(orderInAnimation1) && doesOrderNumberExist(orderInAnimation2))
+	{
+		Sprite* tempSprite1 = spritesInAnimation[orderInAnimation1];
+		Sprite* tempSprite2 = spritesInAnimation[orderInAnimation2];
+		spritesInAnimation.erase(orderInAnimation1);
+		spritesInAnimation.erase(orderInAnimation2);
+		spritesInAnimation.emplace(orderInAnimation1, tempSprite2);
+		spritesInAnimation.emplace(orderInAnimation2, tempSprite1);
+	}
+	else
+	{
+		LOG("One (or both) of the order numbers you entered does not exist (not a key for a sprite in the map for an animation).")
+	}
 }
