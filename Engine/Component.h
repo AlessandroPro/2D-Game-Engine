@@ -1,9 +1,6 @@
 ///-------------------------------------------------------------------------------------------------
 // file: Component.h
 //
-// 
-// 
-//
 // summary:	Component
 ///-------------------------------------------------------------------------------------------------
 #ifndef _COMPONENT_H_
@@ -11,7 +8,7 @@
 #pragma once
 
 #include "Object.h"
-#include <string>
+
 class CollisionSystem {
 public:
 	struct Collision;
@@ -32,12 +29,12 @@ public:
 	
 private:
 	void setGameObject(GameObject* _gameObject);
-	virtual void onCollisionEnter(const CollisionSystem::Collision* const other);
-	virtual void onCollisionStay(const CollisionSystem::Collision* const other);
-	virtual void onCollisionExit(const CollisionSystem::Collision* const other);
-	virtual void onTriggerEnter(const CollisionSystem::Collision* const other);
-	virtual void onTriggerStay(const CollisionSystem::Collision* const other);
-	virtual void onTriggerExit(const CollisionSystem::Collision* const other);
+	virtual void onCollisionEnter(const CollisionSystem::Collision* const collisionData);
+	virtual void onCollisionStay(const CollisionSystem::Collision* const collisionData);
+	virtual void onCollisionExit(const CollisionSystem::Collision* const collisionData);
+	virtual void onTriggerEnter(const CollisionSystem::Collision* const collisionData);
+	virtual void onTriggerStay(const CollisionSystem::Collision* const collisionData);
+	virtual void onTriggerExit(const CollisionSystem::Collision* const collisionData);
 
 protected:
 	Component();
