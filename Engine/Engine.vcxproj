@@ -67,6 +67,9 @@
     <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{3A4DF7E4-2BDD-4D94-B632-D6F5A7111BDF}</ProjectGuid>
