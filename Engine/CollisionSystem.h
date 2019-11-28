@@ -36,8 +36,8 @@ private:
 public:
 	struct Collision
 	{
-		const ICollidable* colliders[2];
-		const b2Manifold* collisionManifold;
+		ICollidable* colliders[2];
+		b2Manifold* collisionManifold;
 	};
 
 private:
