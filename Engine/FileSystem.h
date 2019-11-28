@@ -14,12 +14,35 @@
 
 class FileSystem final : public ISystem
 {
+private:
+	std::map<STRCODE, json::JSON> fileData;
+	std::map<STRCODE, json::JSON> loadFiles;
+	std::list<STRCODE> removeFiles;
+	std::vector<STRCODE> levels;
+	json::JSON fileJSON;
+
+	STRCODE currentLevel = 0;
+	bool isEmptyJSON = false;
+
+	json::JSON parseJSON(std::string& fileName);
+
 protected:
     void initialize() override;
     void update(float deltaTime) override;
+	
+	json::JSON loadAsset(std::string& fileName);
+	STRCODE getCurrentLevel();
 
     friend class GameEngine;
-    DECLARE_SINGLETON(FileSystem)
-};
+	friend class AssetManager;
+	friend class GameObjectManager;
 
+
+public:
+
+
+	void load(std::string& fileName, bool isLevelFile);
+	void unload(std::string& fileName);
+	DECLARE_SINGLETON(FileSystem)
+};
 #endif
