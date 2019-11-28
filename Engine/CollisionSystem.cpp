@@ -16,33 +16,43 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 {
 	for (auto rbCollider : rigidBody->colliders)
 	{
-		if (rbCollider->collisionIDs.begin() == rbCollider->collisionIDs.end())
+		CollisionSystem::Collision collisionData;
+		collisionData.colliders[0] = rbCollider;
+		collisionData.colliders[1] = collider;
+		collisionData.collisionManifold = nullptr;
+		if (rbCollider->collisionIDs.begin() != rbCollider->collisionIDs.end())
 		{
-			checkCollision(rbCollider, collider,true);
+			for (auto collisionID : rbCollider->collisionIDs)
+			{
+				if (std::count(collider->collisionIDs.begin(), collider->collisionIDs.end(), collisionID) == 1)
+				{
+					collisionData = activeCollisions[collisionID];
+					break;
+				}
+			}
 		}
+		checkCollision(collisionData);
 	}
 }
 
-void CollisionSystem::checkCollision(ICollidable* checkingCollider, ICollidable* otherCollider,bool newCollision)
+void CollisionSystem::checkCollision(CollisionSystem::Collision& collisionData)
 {
-	if (checkingCollider->shape->GetType() == b2Shape::Type::e_circle && otherCollider->shape->GetType() == b2Shape::Type::e_circle)
-	{
+	//if (checkingCollider->shape->GetType() == b2Shape::Type::e_circle && otherCollider->shape->GetType() == b2Shape::Type::e_circle)
+	//{
 
-	}
-	else if (checkingCollider->shape->GetType() == b2Shape::Type::e_circle && otherCollider->shape->GetType() == b2Shape::Type::e_polygon)
-	{
+	//}
+	//else if (checkingCollider->shape->GetType() == b2Shape::Type::e_circle && otherCollider->shape->GetType() == b2Shape::Type::e_polygon)
+	//{
 
-	}
-	else if (checkingCollider->shape->GetType() == b2Shape::Type::e_polygon && otherCollider->shape->GetType() == b2Shape::Type::e_circle)
-	{
+	//}
+	//else if (checkingCollider->shape->GetType() == b2Shape::Type::e_polygon && otherCollider->shape->GetType() == b2Shape::Type::e_circle)
+	//{
 
-	}
-	else if (checkingCollider->shape->GetType() == b2Shape::Type::e_polygon && otherCollider->shape->GetType() == b2Shape::Type::e_polygon)
-	{
+	//}
+	//else if (checkingCollider->shape->GetType() == b2Shape::Type::e_polygon && otherCollider->shape->GetType() == b2Shape::Type::e_polygon)
+	//{
 
-	}
-
-
+	//}
 }
 
 void CollisionSystem::initialize()
