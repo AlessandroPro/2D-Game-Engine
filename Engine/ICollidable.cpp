@@ -10,7 +10,6 @@ ICollidable::ICollidable()
 	CollisionSystem::instance().addCollidable(this);
 	staticCollider = false;
 	trigger = false;
-	shape = nullptr;
 	manifold = nullptr;
 }
 
@@ -19,7 +18,10 @@ ICollidable::~ICollidable()
 	//remove on destruction
 	CollisionSystem::instance().removeCollidable(this);
 	
-	delete shape;
+	if (staticCollider)
+	{
+		delete fixtureDefinition.shape;
+	}
 	delete manifold;
 }
 
