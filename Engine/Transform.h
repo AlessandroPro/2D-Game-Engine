@@ -1,17 +1,19 @@
 #pragma once
 #include "Component.h"
 
-enum class Direction
-{
-	Up,
-	Down,
-	Left,
-	Right
-};
 
 class Transform : public Component
 {
 	DECLARE_ABSTRACT_DERIVED_CLASS(Transform, Component)
+
+public:
+	enum class Direction
+	{
+		Up,
+		Down,
+		Left,
+		Right
+	};
 
 private:
 	sf::Transformable transform;
@@ -22,6 +24,7 @@ protected:
 	void initialize() override;
 
 public:
+
 	Transform() ;
 	~Transform() = default;
 	void update(float deltaTime) override;

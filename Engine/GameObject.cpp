@@ -6,8 +6,10 @@ IMPLEMENT_DYNAMIC_CLASS(GameObject)
 
 GameObject::GameObject()
 {
+	// Add the Transform component
 	transform = new Transform();
-	addComponent(transform);
+	components.emplace(transform->getID(), transform);
+	transform->setGameObject(this);
 
 	name = "Game Object";
 }
@@ -107,17 +109,25 @@ void GameObject::deleteFromRemoveList()
 
 void GameObject::addComponent(Component* component)
 {
-	components.emplace(component->getID(), component);
-	component->setGameObject(this);
+	// Add the component if it is not a Transform, since there is already a Transform
+	if (component->getDerivedClassHashCode() != Transform::getClassHashCode())
+	{
+		components.emplace(component->getID(), component);
+		component->setGameObject(this);
+	}
 }
 
 void GameObject::removeComponent(STRCODE compID)
 {
-	Component* component = getComponent(compID);
-
-	if (component != nullptr)
+	// Prevents removal of the Transform component
+	if (transform->getID() != compID)
 	{
-		componentsToRemove.push_back(component);
+		Component* component = getComponent(compID);
+
+		if (component != nullptr)
+		{
+			componentsToRemove.push_back(component);
+		}
 	}
 }
 

@@ -25,6 +25,7 @@ private:
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
+	void addGameObject(GameObject* gameObject);
 
 public:
 	static GameObjectManager& instance()
@@ -33,7 +34,6 @@ public:
 		return _instance;
 	}
 
-	void addGameObject(GameObject* gameObject);
 	void removeGameObject(STRCODE gameObjectUID);
 	void removeGameObject(GameObject* gameObject);
 	GameObject* findGameObject(STRCODE gameObjectUID);

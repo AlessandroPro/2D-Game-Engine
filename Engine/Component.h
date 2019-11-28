@@ -23,6 +23,7 @@ class Component : public Object
 	DECLARE_ABSTRACT_DERIVED_CLASS(Component, Object)
 
 	friend class GameObject;
+	friend class CollisionSystem;
 
 private:
 	GameObject* gameObject = nullptr;
@@ -31,6 +32,12 @@ public:
 	
 private:
 	void setGameObject(GameObject* _gameObject);
+	virtual void onCollisionEnter(const CollisionSystem::Collision* const other);
+	virtual void onCollisionStay(const CollisionSystem::Collision* const other);
+	virtual void onCollisionExit(const CollisionSystem::Collision* const other);
+	virtual void onTriggerEnter(const CollisionSystem::Collision* const other);
+	virtual void onTriggerStay(const CollisionSystem::Collision* const other);
+	virtual void onTriggerExit(const CollisionSystem::Collision* const other);
 
 protected:
 	Component();
@@ -41,12 +48,6 @@ protected:
 
 public:
 	GameObject* getGameObject();
-	virtual void onCollisionEnter(const CollisionSystem::Collision* const other);
-	virtual void onCollisionStay(const CollisionSystem::Collision* const other);
-	virtual void onCollisionExit(const CollisionSystem::Collision* const other);
-	virtual void onTriggerEnter(const CollisionSystem::Collision* const other);
-	virtual void onTriggerStay(const CollisionSystem::Collision* const other);
-	virtual void onTriggerExit(const CollisionSystem::Collision* const other);
 };
 
 #endif 

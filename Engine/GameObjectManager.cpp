@@ -27,10 +27,6 @@ void GameObjectManager::load(json::JSON& node, STRCODE levelID)
 		json::JSON gameObjectsNode = node["GameObjects"];
 		for (auto& gameObjectNode : gameObjectsNode.ArrayRange())
 		{
-			_ASSERT_EXPR(gameObjectNode.hasKey("class"), "Missing class name");
-
-			std::string className = gameObjectNode["class"].ToString();
-
 			GameObject* newGameObject = new GameObject();
 			
 			newGameObject->levelID = currentLevel;
@@ -125,7 +121,6 @@ void GameObjectManager::removeGameObject(GameObject* gameObject)
 	if (toRemove != nullptr)
 	{
 		gameObjectsToRemove.push_back(toRemove);
-		gameObjects.erase(gameObject->id);
 	}
 }
 
@@ -155,7 +150,6 @@ std::list<GameObject*> GameObjectManager::getGameObjectsWithComponent(std::strin
 			returnList.push_back(gameObject.second);
 		}
 	}
-
 	return returnList;
 }
 
