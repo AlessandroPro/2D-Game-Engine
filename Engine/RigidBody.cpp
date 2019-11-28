@@ -57,9 +57,10 @@ void RigidBody::removeCollidable(ICollidable* collider)
 	}
 }
 
+//Will return garbage when body is null
 const b2Transform& RigidBody::getB2Transform()
 {
-	return body == nullptr ? b2Transform() : body->GetTransform();
+	return body->GetTransform();
 }
 
 void RigidBody::onCollisionEnter(const ICollidable* const other)
@@ -89,11 +90,22 @@ void RigidBody::initialize()
 
 void RigidBody::update(float deltaTime)
 {
+	if (body != nullptr)
+	{
+		//b2Vec2 position = b2Vec2(
+		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
+		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y);
 
+		////convert degrees to radians
+		//float rotation = DEG_TO_RAD(gameObject.getTransform().getRotation());
+
+		////set transform
+		//body->SetTransform(position, rotation);
+	}
 }
 
 void RigidBody::load(json::JSON& componentData)
 {
-
+	//create b2BodyDef from componentData
 }
 
