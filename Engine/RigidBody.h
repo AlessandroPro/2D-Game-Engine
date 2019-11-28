@@ -34,8 +34,8 @@ public:
 
 	const b2Transform& getB2Transform();
 
-	void onCollisionEnter(const ICollidable* const other);
-	void onCollisionStay(const ICollidable* const other);
-	void onCollisionExit(const ICollidable* const other);
+	void onCollisionEnter(const CollisionSystem::Collision* const other);
+	void onCollisionStay(const CollisionSystem::Collision* const other);
+	void onCollisionExit(const CollisionSystem::Collision* const other);
 };
 #endif

@@ -16,10 +16,7 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 {
 	for (auto rbCollider : rigidBody->colliders)
 	{
-		CollisionSystem::Collision collisionData;
-		collisionData.colliders[0] = rbCollider;
-		collisionData.colliders[1] = collider;
-		collisionData.collisionManifold = nullptr;
+		CollisionSystem::Collision* collisionData = nullptr;
 		if (rbCollider->collisionIDs.begin() != rbCollider->collisionIDs.end())
 		{
 			for (auto collisionID : rbCollider->collisionIDs)
@@ -31,53 +28,71 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 				}
 			}
 		}
+		if (collisionData == nullptr)
+		{
+			collisionData = new CollisionSystem::Collision();
+			collisionData->colliders[0] = rbCollider;
+			collisionData->colliders[1] = collider;
+			collisionData->collisionManifold = nullptr;
+		}
 		checkCollision(collisionData);
 	}
 }
 
-void CollisionSystem::checkCollision(CollisionSystem::Collision& collisionData)
+void CollisionSystem::checkCollision(CollisionSystem::Collision* collisionData)
 {
-	bool newCollision = collisionData.collisionManifold != nullptr;
-	collisionData.collisionManifold = new b2Manifold();
-	if (collisionData.colliders[0]->shape->GetType() == b2Shape::Type::e_circle && 
-		collisionData.colliders[1]->shape->GetType() == b2Shape::Type::e_circle)
+	bool newCollision = collisionData->collisionManifold != nullptr;
+
+	b2Manifold* newManifold = new b2Manifold();
+	bool isShapeOneCircle = collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_circle;
+	bool isShapeTwoCircle = collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_circle;
+	bool isShapeOnePolygon = collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_polygon;
+	bool isShapeTwoPolygon = collisionData->colliders[1]->shape->GetType() == b2Shape::Type::e_polygon;
+	if (isShapeOneCircle && isShapeTwoCircle)
 	{
-		b2CollideCircles(collisionData.collisionManifold, 
-			(b2CircleShape*)(collisionData.colliders[0]->shape), collisionData.colliders[0]->b2transform, 
-			(b2CircleShape*)(collisionData.colliders[1]->shape), collisionData.colliders[1]->b2transform);
+		b2CollideCircles(newManifold, 
+			(b2CircleShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform, 
+			(b2CircleShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform);
 	}
-	else if (collisionData.colliders[0]->shape->GetType() == b2Shape::Type::e_circle && 
-		collisionData.colliders[1]->shape->GetType() == b2Shape::Type::e_polygon)
+	else if (isShapeOneCircle && isShapeTwoPolygon)
 	{
-		b2CollidePolygonAndCircle(collisionData.collisionManifold,
-			(b2PolygonShape*)(collisionData.colliders[1]->shape), collisionData.colliders[1]->b2transform,
-			(b2CircleShape*)(collisionData.colliders[0]->shape), collisionData.colliders[0]->b2transform);
+		b2CollidePolygonAndCircle(newManifold,
+			(b2PolygonShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform,
+			(b2CircleShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform);
 	}
-	else if (collisionData.colliders[0]->shape->GetType() == b2Shape::Type::e_polygon && 
-		collisionData.colliders[1]->shape->GetType() == b2Shape::Type::e_circle)
+	else if (isShapeOnePolygon && isShapeTwoCircle)
 	{
-		b2CollidePolygonAndCircle(collisionData.collisionManifold,
-			(b2PolygonShape*)(collisionData.colliders[0]->shape), collisionData.colliders[0]->b2transform,
-			(b2CircleShape*)(collisionData.colliders[1]->shape), collisionData.colliders[1]->b2transform);
+		b2CollidePolygonAndCircle(newManifold,
+			(b2PolygonShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform,
+			(b2CircleShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform);
 
 	}
-	else if (collisionData.colliders[0]->shape->GetType() == b2Shape::Type::e_polygon && 
-		collisionData.colliders[1]->shape->GetType() == b2Shape::Type::e_polygon)
+	else if (isShapeOnePolygon && isShapeTwoPolygon)
 	{
-		b2CollidePolygons(collisionData.collisionManifold,
-			(b2PolygonShape*)(collisionData.colliders[0]->shape), collisionData.colliders[0]->b2transform,
-			(b2PolygonShape*)(collisionData.colliders[1]->shape), collisionData.colliders[1]->b2transform);
+		b2CollidePolygons(newManifold,
+			(b2PolygonShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform,
+			(b2PolygonShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform);
 	}
-
+	collisionData->collisionManifold = newManifold;
 	//this means that collision just happened
-	if (collisionData.collisionManifold->pointCount > 0)
+	if (collisionData->collisionManifold->pointCount > 0)
 	{
 		if (newCollision)
 		{
-			//create a strcode
-			//add to activeCollisions
-			//add to each collider's list
-			//call on collision enter/ on trigger enter
+			UUID newUUID;
+			CreateUUID(&newUUID);
+			STRCODE uidStrCode = GUIDToSTRCODE(newUUID);
+			activeCollisions.emplace(uidStrCode, collisionData);
+			collisionData->colliders[0]->collisionIDs.push_back(uidStrCode);
+			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
+			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
+			{
+				
+			}
+			else
+			{
+
+			}
 		}
 		else
 		{
