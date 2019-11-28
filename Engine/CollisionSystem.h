@@ -33,6 +33,16 @@ private:
 	std::list<RigidBody*> rigidbodies;
 	b2World* physicsWorld = nullptr;
 
+public:
+	struct Collision
+	{
+		ICollidable* colliders[2];
+		b2Manifold* collisionManifold;
+	};
+
+private:
+	std::map<STRCODE, CollisionSystem::Collision> activeCollisions;
+
 private:
 	CollisionSystem();
 	~CollisionSystem();
@@ -40,7 +50,7 @@ private:
 	CollisionSystem& operator= (const CollisionSystem& other) = default;
 
 	void checkCollision(RigidBody*, ICollidable*);
-	void checkCollision(ICollidable*, ICollidable*, bool);
+	void checkCollision(CollisionSystem::Collision& collisionData);
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
@@ -56,11 +66,6 @@ public:
 		return _instance;
 	}
 
-	struct Collision
-	{
-		ICollidable* colliders[2];
-		b2Manifold* collisionManifold;
-	};
 
 	//Adders and removers for lists of Icollidables and rigidbodies
 	inline void addCollidable(ICollidable* collider) { colliders.push_back(collider); }
@@ -68,9 +73,6 @@ public:
 
 	inline void addRigidBody(RigidBody* rigidBody) { rigidbodies.push_back(rigidBody); }
 	inline void removeRigidBody(RigidBody* rigidBody) { rigidbodies.remove(rigidBody); }
-
-private:
-	std::map<STRCODE, CollisionSystem::Collision> activeCollisions;
 };
 
 #endif
