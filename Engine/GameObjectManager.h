@@ -42,9 +42,6 @@ public:
 	//GameObject* instantiatePrefab(STRCODE prefabUID);
 	GameObject* createGameObjectWithComponents(std::list<std::string>& comTypes);
 
-
-
-
 private:
 	GameObjectManager() = default;
 	~GameObjectManager();

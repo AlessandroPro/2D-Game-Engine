@@ -121,7 +121,7 @@ void GameObject::removeComponent(STRCODE compID)
 	}
 }
 
-std::map<STRCODE, Component*>& GameObject::getAllComponents()
+const std::map<STRCODE, Component*>& GameObject::getAllComponents()
 {
 	return components;
 }

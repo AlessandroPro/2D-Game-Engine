@@ -29,14 +29,17 @@ private:
 public:
 	bool enabled=true;
 	
+private:
+	void setGameObject(GameObject* _gameObject);
+
 protected:
 	Component();
 	virtual ~Component();
     virtual void initialize() override;
 	virtual void update(float deltaTime)=0;
 	virtual void load(json::JSON& node) override;
+
 public:
-    void setGameObject(GameObject* _gameObject);
 	GameObject* getGameObject();
 	virtual void onCollisionEnter(const CollisionSystem::Collision* const other);
 	virtual void onCollisionStay(const CollisionSystem::Collision* const other);

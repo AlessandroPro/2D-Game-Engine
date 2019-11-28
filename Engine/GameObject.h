@@ -40,7 +40,7 @@ protected:
 public:
 	void addComponent(Component* component);
 	void removeComponent(STRCODE compID);
-	std::map<STRCODE, Component*>& getAllComponents();
+	const std::map<STRCODE, Component*>& getAllComponents();
 	Component* getComponent(STRCODE compID);
 	Component* getComponent(const std::string& compType);
 	std::list<Component*> getComponents(const std::string& compType);
