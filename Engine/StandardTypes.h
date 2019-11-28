@@ -97,6 +97,11 @@ inline STRCODE GUIDToSTRCODE(UUID& guid)
 	return getHashCode(GUIDTostring(guid).c_str());
 }
 
+inline STRCODE GUIDToSTRCODE(std::string& guid)
+{
+	return getHashCode(guid.c_str());
+}
+
 #define THROW_RUNTIME_ERROR(condition, message)		\
 	if (condition)								\
 	{											\
