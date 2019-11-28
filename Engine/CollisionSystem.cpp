@@ -14,6 +14,17 @@ CollisionSystem::~CollisionSystem()
 
 void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider)
 {
+	for (auto rbCollider : rigidBody->colliders)
+	{
+		if (rbCollider->collisionIDs.begin() == rbCollider->collisionIDs.end())
+		{
+			checkCollision(rbCollider, collider,true);
+		}
+	}
+}
+
+void CollisionSystem::checkCollision(ICollidable* checkingCollider, ICollidable* otherCollider,bool newCollision)
+{
 
 }
 

@@ -41,7 +41,7 @@ private:
 	CollisionSystem& operator= (const CollisionSystem& other) = default;
 
 	void checkCollision(RigidBody*, ICollidable*);
-
+	void checkCollision(ICollidable*, ICollidable*);
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
