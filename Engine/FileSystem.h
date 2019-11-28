@@ -21,6 +21,7 @@ private:
 	std::vector<STRCODE> levels;
 	json::JSON fileJSON;
 
+	STRCODE fileId = 0;
 	STRCODE currentLevel = 0;
 	bool isEmptyJSON = false;
 

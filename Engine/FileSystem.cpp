@@ -14,23 +14,23 @@ void FileSystem::update(float deltaTime)
 	{
 		for (auto iter : removeFiles)
 		{
-			//GameObjectManager::instance().unloadFile(fileData.find(iter)->second);
-			//AssetManager::instance().unloadFile(fileData.find(iter)->second);
+			GameObjectManager::instance().unload(fileData.find(iter)->first);
+			//AssetManager::instance().unloadFile(fileData.find(iter)->first);
 			fileData.erase(iter);															// find the file in the cached data and removed it
 		}
 		removeFiles.clear();																// clear the list used to store remove fileIds
 	}
 
-	if (loadFiles.size() > 0)																// if there is any file to unload
+	if (loadFiles.size() > 0)																// if there is any file to load
 	{
 		for (auto iter : loadFiles)
 		{
-			//AssetManager::instance().loadFile(fileJSON , fileId);
-			//GameObjectManager::instance().loadFile(fileJSON , fileId);
-			//RenderSystem::instance().loadFile(fileJSON , fileId);
-			fileData.emplace(iter.first, iter.second);										// find the file in the cached data and removed it
+			//AssetManager::instance().load(fileJSON , fileId);
+			GameObjectManager::instance().load(fileJSON , fileId);
+			//RenderSystem::instance().load(fileJSON , fileId);
+			fileData.emplace(iter.first, iter.second);										// add the loaded files to the fileData map
 		}
-		loadFiles.clear();																	// clear the list used to store remove fileIds
+		loadFiles.clear();																	// clear the list used to store loadFiles
 	}
 }
 
@@ -41,7 +41,7 @@ void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method t
 	bool isLoaded = false;
 	if (isEmptyJSON != true)
 	{
-		STRCODE fileId = getHashCode(fileName.c_str());
+		fileId = getHashCode(fileName.c_str());
 
 		for (auto itr : removeFiles)
 		{
@@ -79,7 +79,7 @@ void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method t
 
 void FileSystem::unload(std::string& fileName)												//Method to unload a file
 {
-	STRCODE fileId = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
+	fileId = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
 
 	if (fileId == currentLevel)
 	{
