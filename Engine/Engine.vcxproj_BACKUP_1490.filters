@@ -87,11 +87,16 @@
     <ClCompile Include="ISystem.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files\Components</Filter>
+=======
     <ClCompile Include="Animator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
+>>>>>>> c0b9d42040bb5f56bddf69d36063542311fe6c15
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,11 +151,16 @@
     <ClInclude Include="ISystem.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files\Components</Filter>
+=======
     <ClInclude Include="Animator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
+>>>>>>> c0b9d42040bb5f56bddf69d36063542311fe6c15
     </ClInclude>
   </ItemGroup>
 </Project>
