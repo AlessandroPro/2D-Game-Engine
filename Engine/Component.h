@@ -12,6 +12,7 @@
 
 #include "Object.h"
 #include <string>
+class ICollidable;
 class GameObject;
 
 class Component : public Object
@@ -34,12 +35,12 @@ protected:
 public:
     void setGameObject(GameObject* _gameObject);
 	GameObject* getGameObject();
-	virtual void onCollisionEnter(STRCODE);
-	virtual void onCollisionStay(STRCODE);
-	virtual void onCollisionExit(STRCODE);
-	virtual void onTriggerEnter(STRCODE);
-	virtual void onTriggerStay(STRCODE);
-	virtual void onTriggerExit(STRCODE);
+	virtual void onCollisionEnter(const ICollidable* const other);
+	virtual void onCollisionStay(const ICollidable* const other);
+	virtual void onCollisionExit(const ICollidable* const other);
+	virtual void onTriggerEnter(const ICollidable* const other);
+	virtual void onTriggerStay(const ICollidable* const other);
+	virtual void onTriggerExit(const ICollidable* const other);
 };
 
 #endif 
