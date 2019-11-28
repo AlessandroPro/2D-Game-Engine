@@ -1,7 +1,7 @@
 #include "Core.h"
+#include "CollisionSystem.h"
 #include "ICollidable.h"
 #include "RigidBody.h"
-#include "CollisionSystem.h"
 
 IMPLEMENT_DYNAMIC_CLASS(RigidBody)
 
@@ -63,17 +63,17 @@ const b2Transform& RigidBody::getB2Transform()
 	return body->GetTransform();
 }
 
-void RigidBody::onCollisionEnter(const CollisionSystem::Collision* const other)
+void RigidBody::onCollisionEnter(const CollisionSystem::Collision* const collisionData)
 {
 
 }
 
-void RigidBody::onCollisionStay(const CollisionSystem::Collision* const other)
+void RigidBody::onCollisionStay(const CollisionSystem::Collision* const collisionData)
 {
 
 }
 
-void RigidBody::onCollisionExit(const CollisionSystem::Collision* const other)
+void RigidBody::onCollisionExit(const CollisionSystem::Collision* const collisionData)
 {
 
 }
@@ -112,9 +112,9 @@ void RigidBody::load(json::JSON& componentData)
 		bodyDef.type = (b2BodyType)componentData["BodyType"].ToInt();
 	}
 
-	bodyDef.position.Set(
-		PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
-		PIXEL_TO_METER(gameObject.getTransform().getPosition().y)
-	);
+	//bodyDef.position.Set(
+	//	PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
+	//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y)
+	//);
 }
 

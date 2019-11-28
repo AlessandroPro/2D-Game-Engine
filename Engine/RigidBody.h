@@ -9,7 +9,9 @@
 #ifndef _RIGID_BODY_H_
 #define _RIGID_BODY_H_
 #include "Component.h"
+
 class ICollidable;
+class CollisionSystem::Collision;
 class RigidBody : public Component
 {
 	friend class CollisionSystem;
@@ -34,8 +36,8 @@ public:
 
 	const b2Transform& getB2Transform();
 
-	void onCollisionEnter(const CollisionSystem::Collision* const other);
-	void onCollisionStay(const CollisionSystem::Collision* const other);
-	void onCollisionExit(const CollisionSystem::Collision* const other);
+	void onCollisionEnter(const CollisionSystem::Collision* const collisionData);
+	void onCollisionStay(const CollisionSystem::Collision* const collisionData);
+	void onCollisionExit(const CollisionSystem::Collision* const collisionData);
 };
 #endif

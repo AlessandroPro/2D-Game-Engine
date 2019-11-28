@@ -87,24 +87,43 @@ void CollisionSystem::checkCollision(CollisionSystem::Collision* collisionData)
 			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				
+				//getAllComponents of both gameObjects and loop through them
+				//call onTriggerEnter for all
 			}
 			else
 			{
-
+				//getAllComponents of both gameObjects and loop through them
+				//call onCollisionEnter for all
 			}
 		}
 		else
 		{
-			//call on collision stay
+			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
+			{
+				//getAllComponents of both gameObjects and loop through them
+				//call onTriggerStay for all
+			}
+			else
+			{
+				//getAllComponents of both gameObjects and loop through them
+				//call onCollisionStay for all
+			}
 		}
 	}
 	else
 	{
 		if (!newCollision)
 		{
-			//add to remove list for next update
-			//call on collision exit/ on trigger exit
+			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
+			{
+				//getAllComponents of both gameObjects and loop through them
+				//call onTriggerExit for all
+			}
+			else
+			{
+				//getAllComponents of both gameObjects and loop through them
+				//call onCollisionExit for all
+			}
 		}
 	}
 }

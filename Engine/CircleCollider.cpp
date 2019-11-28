@@ -13,9 +13,28 @@ CircleCollider::~CircleCollider()
 {
 }
 
-void CircleCollider::setTrigger(bool b)
+void CircleCollider::setTrigger(bool isTrigger)
 {
-	trigger = b;
+	trigger = isTrigger;
+	if (!staticCollider)
+	{
+		if (trigger)
+		{
+			//	RigidBody* rigidBody = getGameObject()->getComponent("RigidBody");
+			//	if (rigidBody != nullptr) 
+			//	{
+			//		rigidBody->removeCollidable(this);
+			//		b2transform = b2Transform(b2Vec2(
+	//					PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().x),
+	//					PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().y)), 
+	//					DEG_TO_RAD(getGameObject()->getTransform()->getRotation()));
+			//	}
+		}
+	}
+	else
+	{
+
+	}
 }
 
 void CircleCollider::initialize()
@@ -25,11 +44,18 @@ void CircleCollider::initialize()
 	//get gameobject of component
 	//if current gameobject has a rigidbody component
 	//add this to that rigidbody
-
-	//RigidBody* rb = getComponent("RigidBody");
-	//if (rb != nullptr) {
-	//	rb->addCollidable(this);
-	//	b2transform = rb->getB2Transform();
+	//if (!trigger)
+	//{
+	//	RigidBody* rigidBody = getGameObject()->getComponent("RigidBody");
+	//	if (rigidBody != nullptr) 
+	//	{
+	//		rigidBody->addCollidable(this);
+	//		b2transform = rigidBody->getB2Transform();
+	//	}
+	//	else
+	//	{
+	//		staticCollider = true;
+	//	}
 	//}
 	//else
 	//{
@@ -52,11 +78,11 @@ void CircleCollider::update(float deltaTime)
 
 	//	//convert transform to b2Transform
 	//	b2Vec2 position = b2Vec2(
-		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
-		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y));
+		//	PIXEL_TO_METER(getGameObject()->getTransform()->getPosition()->x),
+		//	PIXEL_TO_METER(getGameObject()->getTransform()->getPosition()->y));
 	//	
 	//	//convert degrees to radians
-	//	float rotation = DEG_TO_RAD(gameObject.getTransform().getRotation());
+	//	float rotation = DEG_TO_RAD(getGameObject()->getTransform()->getRotation());
 
 	//	//set transform
 	//	b2transform.Set(position, rotation);
@@ -68,25 +94,26 @@ void CircleCollider::load(json::JSON& componentData)
 	//create ICollidable shape
 	//create ICollidable Fixture Definition
 
-	/*b2CircleShape* circle = new b2CircleShape();
-	circle->m_p.Set(
-		PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
-		PIXEL_TO_METER(gameObject.getTransform().getPosition().y));
+	//b2CircleShape* circle = new b2CircleShape();
+	//circle->m_p.Set(
+	//	PIXEL_TO_METER(getGameObject()->getTransform()->getPosition()->x),
+	//	PIXEL_TO_METER(getGameObject()->getTransform()->getPosition()->y));
 
-	if (componentData.hasKey("radius")) {
-		circle->m_radius = componentData["radius"].ToFloat();
-	}
-	else
-	{
-		circle->m_radius = 0.5f;
-	}
+	//if (componentData.hasKey("radius")) 
+	//{
+	//	circle->m_radius = componentData["radius"].ToFloat();
+	//}
+	//else
+	//{
+	//	circle->m_radius = 0.5f;
+	//}
 
-	shape = circle;
-	fixtureDefinition.shape = circle;
-	fixtureDefinition.density = componentData["density"].ToFloat();
-	fixtureDefinition.friction = componentData["friction"].ToFloat();
-	fixtureDefinition.restitution = componentData["restitution"].ToFloat();
-	trigger = componentData["trigger"].ToBool();*/
+	//shape = circle;
+	//fixtureDefinition.shape = circle;
+	//fixtureDefinition.density = componentData["density"].ToFloat();
+	//fixtureDefinition.friction = componentData["friction"].ToFloat();
+	//fixtureDefinition.restitution = componentData["restitution"].ToFloat();
+	//trigger = componentData["trigger"].ToBool();
 	
 }
 

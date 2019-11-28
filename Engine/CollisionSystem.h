@@ -23,7 +23,7 @@
 
 class RigidBody;
 class ICollidable;
-class CollisionSystem : public ISystem
+class CollisionSystem final : public ISystem
 { 
 	friend class GameEngine;
 	friend class RigidBody;
