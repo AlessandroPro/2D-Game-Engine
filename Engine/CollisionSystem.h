@@ -31,7 +31,6 @@ private:
 	//keep a list of all colliders and rigidbodies in the engine world
 	std::list<ICollidable*> colliders; 
 	std::list<RigidBody*> rigidbodies;
-
 	b2World* physicsWorld = nullptr;
 
 private:
@@ -57,12 +56,21 @@ public:
 		return _instance;
 	}
 
+	struct Collision
+	{
+		ICollidable* colliders[2];
+		b2Manifold* collisionManifold;
+	};
+
 	//Adders and removers for lists of Icollidables and rigidbodies
 	inline void addCollidable(ICollidable* collider) { colliders.push_back(collider); }
 	inline void removeCollidable(ICollidable* collider) { colliders.remove(collider); }
 
 	inline void addRigidBody(RigidBody* rigidBody) { rigidbodies.push_back(rigidBody); }
 	inline void removeRigidBody(RigidBody* rigidBody) { rigidbodies.remove(rigidBody); }
+
+private:
+	std::map<STRCODE, CollisionSystem::Collision> activeCollisions;
 };
 
 #endif

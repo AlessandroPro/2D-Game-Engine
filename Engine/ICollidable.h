@@ -19,7 +19,7 @@ protected:
 	b2Transform b2transform;
 	b2FixtureDef fixtureDefinition;
 	b2Shape* shape;
-	b2Manifold* manifold;
+	//b2Manifold* manifold;
 	std::list<STRCODE> collisionIDs;
 protected:
 	ICollidable();
@@ -31,7 +31,7 @@ public:
 
 public:
 	virtual ~ICollidable();
-	inline const b2Manifold* const getManifold() { return manifold; }
+	//inline const b2Manifold* const getManifold() { return manifold; }
 
 };
 
