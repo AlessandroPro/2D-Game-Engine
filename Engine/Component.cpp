@@ -41,26 +41,26 @@ GameObject* Component::getGameObject()
 	return gameObject;
 }
 
-void Component::onCollisionEnter(const ICollidable* const other)
+void Component::onCollisionEnter(STRCODE)
 {
 }
 
-void Component::onCollisionStay(const ICollidable* const other)
+void Component::onCollisionStay(STRCODE)
 {
 }
 
-void Component::onCollisionExit(const ICollidable* const other)
+void Component::onCollisionExit(STRCODE)
 {
 }
 
-void Component::onTriggerEnter(const ICollidable* const other)
+void Component::onTriggerEnter(STRCODE)
 {
 }
 
-void Component::onTriggerStay(const ICollidable* const other)
+void Component::onTriggerStay(STRCODE)
 {
 }
 
-void Component::onTriggerExit(const ICollidable* const other)
+void Component::onTriggerExit(STRCODE)
 {
 }
