@@ -11,7 +11,7 @@ enum class Direction
 
 class Transform : public Component
 {
-	DECLARE_DYNAMIC_DERIVED_CLASS(Transform, Component)
+	DECLARE_ABSTRACT_DERIVED_CLASS(Transform, Component)
 
 private:
 	sf::Transformable transform;
@@ -24,7 +24,7 @@ protected:
 public:
 	Transform() ;
 	~Transform() = default;
-
+	void update(float deltaTime);
 	void load(json::JSON& node);
 	const sf::Vector2f& getPosition();
 	const sf::Vector2f& getScale();

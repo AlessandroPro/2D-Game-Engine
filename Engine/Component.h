@@ -30,7 +30,7 @@ protected:
 	Component();
 	virtual ~Component();
     virtual void initialize() override;
-	virtual void update(float deltaTime);
+	virtual void update(float deltaTime)=0;
 	virtual void load(json::JSON& node) override;
 public:
     void setGameObject(GameObject* _gameObject);
@@ -40,7 +40,7 @@ public:
 	virtual void onCollisionExit(const ICollidable* const other);
 	virtual void onTriggerEnter(const ICollidable* const other);
 	virtual void onTriggerStay(const ICollidable* const other);
-	virtual void onTriggerEXit(const ICollidable* const other);
+	virtual void onTriggerExit(const ICollidable* const other);
 };
 
 #endif 

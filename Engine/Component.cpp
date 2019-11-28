@@ -18,13 +18,13 @@ void Component::initialize()
 	Object::initialize();
 }
 
-void Component::update(float deltaTime)
-{
-	if (!enabled)
-	{
-		return;
-	}
-}
+//void Component::update(float deltaTime)
+//{
+//	if (!enabled)
+//	{
+//		return;
+//	}
+//}
 
 void Component::load(json::JSON& node)
 {
@@ -61,6 +61,6 @@ void Component::onTriggerStay(const ICollidable* const other)
 {
 }
 
-void Component::onTriggerEXit(const ICollidable* const other)
+void Component::onTriggerExit(const ICollidable* const other)
 {
 }

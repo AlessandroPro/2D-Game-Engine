@@ -1,7 +1,7 @@
 #include "Core.h"
 #include "Transform.h"
 
-IMPLEMENT_DYNAMIC_CLASS(Transform)
+IMPLEMENT_ABSTRACT_CLASS(Transform)
 
 void Transform::initialize()
 {
@@ -19,6 +19,10 @@ Transform::Transform()
 	lockedDirections[Direction::Down] = false;
 	lockedDirections[Direction::Right] = false;
 	lockedDirections[Direction::Left] = false;
+}
+
+void Transform::update(float deltaTime)
+{
 }
 
 void Transform::load(json::JSON& node)
@@ -106,28 +110,28 @@ void Transform::translate(const sf::Vector2f& offset)
 	sf::Vector2f newOffset = offset;
 	if (newOffset.x > 0)
 	{
-		if (lockedDirections.find(Direction::Right)->second)
+		if (lockedDirections[Direction::Right])
 		{
 			newOffset.x = 0;
 		}	
 	}
 	else if (newOffset.x < 0)
 	{
-		if (lockedDirections.find(Direction::Left)->second)
+		if (lockedDirections[Direction::Left])
 		{
 			newOffset.x = 0;	
 		}
 	}
 	if (newOffset.y > 0)
 	{
-		if (lockedDirections.find(Direction::Up)->second)
+		if (lockedDirections[Direction::Up])
 		{
 			newOffset.y = 0;
 		}
 	}
 	else if (newOffset.y < 0)
 	{
-		if (lockedDirections.find(Direction::Down)->second)
+		if (lockedDirections[Direction::Down])
 		{
 			newOffset.y = 0;
 		}
@@ -142,5 +146,5 @@ void Transform::setDirectionLock(Direction direction, bool locked)
 
 bool Transform::checkDirectionLocked(Direction direction)
 {
-	return lockedDirections.find(direction)->second;
+	return lockedDirections[direction];
 }
