@@ -12,6 +12,11 @@ PolygonCollider::~PolygonCollider()
 {
 }
 
+void PolygonCollider::setTrigger(bool b)
+{
+	trigger = b;
+}
+
 void PolygonCollider::initialize()
 {
 	Component::initialize();
@@ -60,4 +65,33 @@ void PolygonCollider::load(json::JSON& componentData)
 {
 	//create ICollidable shape
 	//create ICollidable Fixture Definition
+
+	b2PolygonShape* polygon = new b2PolygonShape();
+
+	//if (componentData.hasKey("vertices")) {
+	//	//convert json list into a list of b2Vec2
+	//	b2Vec2 vertices[b2_maxPolygonVertices];
+	//	int count = 0;
+	//	for (int i = 0; i < componentData["vertices"].length(); i++)
+	//	{
+	//		vertices[i].Set(
+	//			PIXEL_TO_METER(componentData["vertices"][i]["x"].ToFloat()),
+	//			PIXEL_TO_METER(componentData["vertices"][i]["y"].ToFloat())
+	//			);
+	//		count++;
+	//	}
+	//	polygon->Set(vertices, count);
+	//}
+	//else
+	//{
+	//	//if no vertices are given, create a default box
+	//	polygon->SetAsBox(0.5f, 0.5f);
+	//}
+
+	//shape = polygon;
+	//fixtureDefinition.shape = polygon;
+	//fixtureDefinition.density = componentData["density"].ToFloat();
+	//fixtureDefinition.friction = componentData["friction"].ToFloat();
+	//fixtureDefinition.restitution = componentData["restitution"].ToFloat();
+	//trigger = componentData["trigger"].ToBool();
 }

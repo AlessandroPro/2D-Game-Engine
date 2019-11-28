@@ -13,6 +13,11 @@ CircleCollider::~CircleCollider()
 {
 }
 
+void CircleCollider::setTrigger(bool b)
+{
+	trigger = b;
+}
+
 void CircleCollider::initialize()
 {
 	Component::initialize();
@@ -48,7 +53,7 @@ void CircleCollider::update(float deltaTime)
 	//	//convert transform to b2Transform
 	//	b2Vec2 position = b2Vec2(
 		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
-		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y);
+		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y));
 	//	
 	//	//convert degrees to radians
 	//	float rotation = DEG_TO_RAD(gameObject.getTransform().getRotation());
@@ -62,5 +67,26 @@ void CircleCollider::load(json::JSON& componentData)
 {
 	//create ICollidable shape
 	//create ICollidable Fixture Definition
+
+	/*b2CircleShape* circle = new b2CircleShape();
+	circle->m_p.Set(
+		PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
+		PIXEL_TO_METER(gameObject.getTransform().getPosition().y));
+
+	if (componentData.hasKey("radius")) {
+		circle->m_radius = componentData["radius"].ToFloat();
+	}
+	else
+	{
+		circle->m_radius = 0.5f;
+	}
+
+	shape = circle;
+	fixtureDefinition.shape = circle;
+	fixtureDefinition.density = componentData["density"].ToFloat();
+	fixtureDefinition.friction = componentData["friction"].ToFloat();
+	fixtureDefinition.restitution = componentData["restitution"].ToFloat();
+	trigger = componentData["trigger"].ToBool();*/
+	
 }
 

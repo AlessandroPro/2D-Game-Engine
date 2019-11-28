@@ -107,5 +107,14 @@ void RigidBody::update(float deltaTime)
 void RigidBody::load(json::JSON& componentData)
 {
 	//create b2BodyDef from componentData
+
+	if (componentData.hasKey("BodyType")) {
+		bodyDef.type = (b2BodyType)componentData["BodyType"].ToInt();
+	}
+
+	bodyDef.position.Set(
+		PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
+		PIXEL_TO_METER(gameObject.getTransform().getPosition().y)
+	);
 }
 
