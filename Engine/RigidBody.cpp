@@ -45,7 +45,7 @@ void RigidBody::removeCollidable(ICollidable* collider)
 	{
 		for (b2Fixture* currentFixture = body->GetFixtureList(); currentFixture != nullptr; currentFixture = currentFixture->GetNext())
 		{
-			if (currentFixture->GetShape() == collider->fixtureDefinition.shape)
+			if (currentFixture->GetShape() == collider->shape)
 			{
 				b2Fixture* fixtureToDestroy = currentFixture;
 				currentFixture = currentFixture->GetNext();

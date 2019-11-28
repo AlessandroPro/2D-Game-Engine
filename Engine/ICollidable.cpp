@@ -20,7 +20,7 @@ ICollidable::~ICollidable()
 	
 	if (staticCollider)
 	{
-		delete fixtureDefinition.shape;
+		delete shape;
 	}
 	delete manifold;
 }
