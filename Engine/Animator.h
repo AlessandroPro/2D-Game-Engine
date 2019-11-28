@@ -1,9 +1,22 @@
+///-------------------------------------------------------------------------------------------------
+// file: Animator.h
+//
+// author: Justin Hole
+// date: 11/28/2019
+//
+// summary:	Component that switches between (controls) the different animations of a character
+///-------------------------------------------------------------------------------------------------
+#ifndef _ANIMATOR_H_
+#define _ANIMATOR_H_
 #pragma once
+
 #include "Component.h"
 #include "Animation.h"
 
 class Animator: public Component
 {
+	DECLARE_DYNAMIC_DERIVED_CLASS(Animator, Component)
+
 private:
 	std::string currentAnimationInPlay;
 	std::list<Animation*> animations; //all animations that this animator can choose from to play
@@ -22,3 +35,4 @@ public:
 	void removeAnimation(Animation* animation);
 };
 
+#endif

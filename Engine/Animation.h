@@ -1,9 +1,22 @@
+///-------------------------------------------------------------------------------------------------
+// file: Animation.h
+//
+// author: Justin Hole
+// date: 11/28/2019
+//
+// summary:	Component that animates a character onto the screen
+///-------------------------------------------------------------------------------------------------
+#ifndef _ANIMATION_H_
+#define _ANIMATION_H_
 #pragma once
+
 #include "Sprite.h"
 #include "Component.h"
 
 class Animation: public Component
 {
+	DECLARE_DYNAMIC_DERIVED_CLASS(Animation, Component)
+
 private:
 	std::string animationName;
 	time_t timeBeforeSpriteSwitch = 1; //a default value of 1 second is set, but it can be changed if the designer prefers a longer or shorter time between parts of an animation
@@ -35,3 +48,4 @@ public:
 	void removeSpriteFromAnimation(int orderInAnimation);
 };
 
+#endif

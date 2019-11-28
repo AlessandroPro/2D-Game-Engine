@@ -1,11 +1,13 @@
 ///-------------------------------------------------------------------------------------------------
 // file: Sprite.h
 //
-// author: William Barry
-// date: 10/28/2019
+// author: Justin Hole
+// date: 11/28/2019
 //
-// summary:	Component
+// summary:	Component that renders a texture onto the screen
 ///-------------------------------------------------------------------------------------------------
+#ifndef _SPRITE_H_
+#define _SPRITE_H_
 #pragma once
 
 #include "Component.h"
@@ -34,6 +36,8 @@ protected:
 public:
 	Sprite();
 	~Sprite();
-	void setTextureAssetGUID(STRCODE guid);
-	void setTextureAssetGUID(std::string guid);
+	void setTextureAssetGUID(STRCODE guid) { textureAssetGUID_STRCODE = guid; }
+	void setTextureAssetGUID(std::string guid) { textureAssetGUID_String = guid; }
 };
+
+#endif

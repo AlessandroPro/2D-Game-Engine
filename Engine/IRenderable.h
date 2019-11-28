@@ -1,3 +1,5 @@
+#ifndef _IRENDERABLE_H_
+#define _IRENDERABLE_H_
 #pragma once
 
 class IRenderable
@@ -12,3 +14,4 @@ protected:
 	friend class RenderSystem;
 };
 
+#endif

@@ -52,13 +52,3 @@ Sprite::Sprite()
 Sprite::~Sprite()
 {
 }
-
-void Sprite::setTextureAssetGUID(STRCODE guid)
-{
-	textureAssetGUID_STRCODE = guid;
-}
-
-void Sprite::setTextureAssetGUID(std::string guid)
-{
-	textureAssetGUID_String = guid;
-}
