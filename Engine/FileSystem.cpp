@@ -63,7 +63,10 @@ void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method t
 
 		if (isLevelFile == true)			// check if the file is a level file and not protected. Then set it as current level
 		{
-			levels.push_back(currentLevel);
+			if (currentLevel != NULL)
+			{
+				levels.push_back(currentLevel);
+			}
 			currentLevel = fileId;
 		}
 
@@ -90,7 +93,17 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 			currentLevel = 0;
 		}
 	}
-
+	else if(levels.empty() != true)
+	{
+		for (auto i = levels.begin(); i < levels.end(); i++)
+		{
+			if (*i == fileId)
+			{
+				i = levels.erase(i);
+				break;
+			}
+		}
+	}
 	removeFiles.push_back(fileId);
 }
 
@@ -124,5 +137,6 @@ STRCODE FileSystem::getCurrentLevel()														//returns current loaded leve
 	else
 	{
 		LOG("No level has been loaded");
+		return 0;
 	}
 }
