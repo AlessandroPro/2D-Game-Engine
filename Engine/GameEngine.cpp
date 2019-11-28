@@ -21,18 +21,18 @@ extern void registerEngineClasses();
 void GameEngine::initialize(ISystem* _projectEngine)
 {
     registerEngineClasses();
-    
-	AssetManager::instance().initialize();
-	FileSystem::instance().initialize();
+	
 	InputManager::instance().initialize();
-	RenderSystem::instance().initialize();
+	FileSystem::instance().initialize();
+	AssetManager::instance().initialize();
+	GameObjectManager::instance().initialize();
+	projectEngine = _projectEngine;
+	if (projectEngine != nullptr)
+	{
+		projectEngine->initialize();
+	}
 	CollisionSystem::instance().initialize();
-    GameObjectManager::instance().initialize();
-    projectEngine = _projectEngine;
-    if (projectEngine != nullptr)
-    {
-        projectEngine->initialize();
-    }
+	RenderSystem::instance().initialize();
 }
 
 void GameEngine::gameLoop()
