@@ -22,39 +22,44 @@ void FileSystem::update(float deltaTime)
 	}
 }
 
-void FileSystem::load(std::string& fileName, bool protectedFile, bool isLevelFile)			//Method to load a file
+void FileSystem::loadRenderSystem(std::string& fileName)									//Method to load a RenderSystem file
 {
-	if (protectedFile == true && isLevelFile == true)										//check if the file is a level file and protected? if so throw an error 
+	json::JSON fileJSON = parseJSON(fileName);
+
+	if (isEmptyJSON != true)
 	{
-		std::cout << "Level File Cannot Be Protected" << std::endl;
+		fileId = getHashCode(fileName.c_str());
+		fileData.emplace(fileId, fileJSON);
+		//RenderSystem::instance().loadFile(fileJSON , fileId);
 	}
 	else
 	{
-		json::JSON fileJSON = parseJSON(fileName);
+		std::cout << " JSON is empty , not in .json format or File doesn't exist" << std::endl;
+	}
+}
 
-		if (isEmptyJSON != true)
+void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method to load a file
+{
+	json::JSON fileJSON = parseJSON(fileName);
+
+	if (isEmptyJSON != true)
+	{
+		fileId = getHashCode(fileName.c_str());
+		fileData.emplace(fileId, fileJSON);
+
+		if (isLevelFile == true)			// check if the file is a level file and not protected. Then set it as current level
 		{
-			fileId = getHashCode(fileName.c_str());
-			fileData.emplace(fileId, fileJSON);
-
-			if (protectedFile == true && isLevelFile != true)				// check if the file is protected and not a level file
-			{
-				protectedFiles.push_back(fileId);
-			}
-			else if (isLevelFile == true && protectedFile != true)			// check if the file is a level file and not protected. Then set it as current level
-			{
-				currentLevel = fileId;
-			}
-
-			//RenderSystem::instance().loadFile(fileJSON , fileId);
-			//GameObjectManager::instance().loadFile(fileJSON , fileId);
-			//AssetManager::instance().loadFile(fileJSON , fileId);
-		}
-		else
-		{
-			std::cout << " JSON is empty , not in .json format or File doesn't exist" << std::endl;
+			
+			levels.push_back(currentLevel);
+			currentLevel = fileId;
 		}
 
+		//GameObjectManager::instance().loadFile(fileJSON , fileId);
+		//AssetManager::instance().loadFile(fileJSON , fileId);
+	}
+	else
+	{
+		std::cout << " JSON is empty , not in .json format or File doesn't exist" << std::endl;
 	}
 }
 
@@ -63,6 +68,24 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 	STRCODE fileID = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
 	bool isSafe = true;																		// A check to see if file is safe to unload
 
+	if (fileID == currentLevel)
+	{
+		if (levels.empty() != true)
+		{
+			levels.pop_back();
+			currentLevel = levels.back();
+		}
+		else
+		{
+			currentLevel = 0;
+		}
+	}
+	//------------------------------------
+
+
+
+
+	//Remove the Protected Logic-------------
 	for (auto iter : protectedFiles)														// Iterate through 'protectedFiles' list to check if the file is protected
 	{
 		if (iter == fileId)																	// If file is present in the list i.e protected file then dont unload
@@ -98,7 +121,6 @@ json::JSON FileSystem::parseJSON(std::string& fileName)										//Method to par
 	{
 		return (json::JSON::Load(JSONstr));
 	}
-
 }
 
 STRCODE FileSystem::getCurrentLevel()														//returns current loaded level

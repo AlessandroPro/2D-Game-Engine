@@ -18,7 +18,9 @@ private:
 	std::map<STRCODE, json::JSON> fileData;
 	std::list<STRCODE> protectedFiles;
 	std::list<STRCODE> removeFiles;
-	STRCODE currentLevel;
+	std::vector<STRCODE> levels;
+
+	STRCODE currentLevel = 0;
 	STRCODE fileId;
 	bool isEmptyJSON = false;
 
@@ -32,9 +34,14 @@ protected:
 	STRCODE getCurrentLevel();
 
     friend class GameEngine;
+	friend class AssetManager;
+	friend class GameObjectManager;
+
 
 public:
-	void load(std::string& fileName, bool protectedFile, bool isLevelFile);
+	void loadRenderSystem(std::string& fileName);
+
+	void load(std::string& fileName, bool isLevelFile);
 	void unload(std::string& fileName);
 	DECLARE_SINGLETON(FileSystem)
 };
