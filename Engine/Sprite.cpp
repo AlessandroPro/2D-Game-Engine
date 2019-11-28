@@ -44,11 +44,3 @@ void Sprite::render(sf::RenderWindow* _window)
 {
 	_window->draw(sprite);
 }
-
-Sprite::Sprite()
-{
-}
-
-Sprite::~Sprite()
-{
-}

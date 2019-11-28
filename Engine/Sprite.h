@@ -14,11 +14,18 @@
 class Sprite : public Component, IRenderable
 {
 	DECLARE_ABSTRACT_DERIVED_CLASS(Sprite, Component)
+	sf::Sprite sprite;
+	std::string textureAssetGUID_STRCODE;
+	std::string textureAssetGUID_String;
+	sf::Texture texture;
+	sf::IntRect& dimensions;
 
 public:
 	void update(float deltaTime) override;
     void initialize() override;
     virtual void render(sf::RenderWindow* _window) override;
+	sf::Texture findTexture(STRCODE guid);
+	sf::Texture findTexture(std::string guid);
 
 	friend class RenderSystem;
 };
