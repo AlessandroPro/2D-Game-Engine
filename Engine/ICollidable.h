@@ -20,7 +20,7 @@ protected:
 	b2FixtureDef fixtureDefinition;
 	//b2Shape* shape;
 	b2Manifold* manifold;
-
+	std::list<STRCODE> collisionIDs;
 protected:
 	ICollidable();
 	//inline const b2Transform& getB2Transform() { return b2transform; }
