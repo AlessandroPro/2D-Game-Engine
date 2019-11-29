@@ -26,13 +26,13 @@ void GameEngine::initialize(ISystem* _projectEngine)
 	FileSystem::instance().initialize();
 	AssetManager::instance().initialize();
 	GameObjectManager::instance().initialize();
+	CollisionSystem::instance().initialize();
+	RenderSystem::instance().initialize();
 	projectEngine = _projectEngine;
 	if (projectEngine != nullptr)
 	{
 		projectEngine->initialize();
 	}
-	CollisionSystem::instance().initialize();
-	RenderSystem::instance().initialize();
 }
 
 void GameEngine::gameLoop()
