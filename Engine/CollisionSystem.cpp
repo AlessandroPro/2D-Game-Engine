@@ -86,26 +86,26 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				//getAllComponents of both gameObjects and loop through them
-				//call onTriggerEnter for all
+				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerEnter, collisionData);
+				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerEnter, collisionData);
 			}
 			else
 			{
-				//getAllComponents of both gameObjects and loop through them
-				//call onCollisionEnter for all
+				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionEnter, collisionData);
+				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionEnter, collisionData);
 			}
 		}
 		else
 		{
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				//getAllComponents of both gameObjects and loop through them
-				//call onTriggerStay for all
+				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerStay, collisionData);
+				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerStay, collisionData);
 			}
 			else
 			{
-				//getAllComponents of both gameObjects and loop through them
-				//call onCollisionStay for all
+				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionStay, collisionData);
+				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionStay, collisionData);
 			}
 		}
 	}
@@ -115,13 +115,13 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 		{
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				//getAllComponents of both gameObjects and loop through them
-				//call onTriggerExit for all
+				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerExit, collisionData);
+				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerExit, collisionData);
 			}
 			else
 			{
-				//getAllComponents of both gameObjects and loop through them
-				//call onCollisionExit for all
+				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionExit, collisionData);
+				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionExit, collisionData);
 			}
 		}
 	}
