@@ -8,13 +8,12 @@
 #pragma once
 #ifndef _I_COLLIDABLE_H_
 #define _I_COLLIDABLE_H_
-class GameObject;
-class ICollidable
+#include "Component.h"
+class ICollidable : public Component
 {
+	DECLARE_ABSTRACT_DERIVED_CLASS(ICollidable,Component)
 	friend class CollisionSystem;
 	friend class RigidBody;
-private:
-	DECLARE_ABSTRACT_BASE_CLASS(ICollidable)
 protected:
 	bool staticCollider;
 	b2Transform b2transform;
@@ -24,7 +23,6 @@ protected:
 	bool trigger;
 protected:
 	ICollidable();
-	virtual GameObject* getCurrentGameObject() = 0;
 public:
 	virtual ~ICollidable();
 	virtual void setTrigger(bool isTrigger) = 0;

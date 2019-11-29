@@ -9,11 +9,10 @@
 #ifndef _POLYGON_COLLIDER_H_
 #define _POLYGON_COLLIDER_H_
 #include "ICollidable.h"
-#include "Component.h"
-class PolygonCollider : public ICollidable, public Component
+class PolygonCollider : public ICollidable
 {
 private:
-	DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,Component)
+	DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,ICollidable)
 	//DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,ICollidable)
 private:
 	b2Vec2 vertices[b2_maxPolygonVertices];
@@ -22,7 +21,6 @@ protected:
 	void initialize() override;
 	void update(float deltaTime) override;
 	void load(json::JSON& componentData) override;
-	GameObject* getCurrentGameObject() override;
 
 public:
 	PolygonCollider();
