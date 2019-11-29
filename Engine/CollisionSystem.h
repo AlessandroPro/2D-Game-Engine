@@ -28,7 +28,8 @@ class ICollidable;
 struct Collision
 {
 	ICollidable* colliders[2];
-	b2Manifold* collisionManifold;
+	b2Manifold* localCollisionManifold;
+	b2WorldManifold* collisionManifold;
 };
 
 class CollisionSystem final : public ISystem
