@@ -98,11 +98,10 @@ void Sprite::setImage(sf::Texture inTexture, sf::IntRect inDimensions)
 {
 	texture = inTexture;
 	dimensions = inDimensions;
-	bool validDimensions = true;
 
 	//Check the dimensions of the texture against the requested sprite dimensions to see if it can actually map them
 	if(texture.getSize().x < dimensions.left + dimensions.width ||
-		texture.getSize().y < dimensions.top + dimensions.height)\
+		texture.getSize().y < dimensions.top + dimensions.height)
 	{ 
 		return;
 	}
