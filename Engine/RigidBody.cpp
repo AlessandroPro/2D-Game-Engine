@@ -60,25 +60,43 @@ void RigidBody::removeCollidable(ICollidable* collider)
 	}
 }
 
-//Will return garbage when body is null
-const b2Transform& RigidBody::getB2Transform()
-{
-	return body->GetTransform();
-}
-
 void RigidBody::onCollisionEnter(const Collision* const collisionData)
 {
-	//figure out logic
+	int rigidBodyColliderIx = 0;
+	int otherColliderIx = 1;
+	if (collisionData->colliders[rigidBodyColliderIx]->getGameObject() != getGameObject())
+	{
+		rigidBodyColliderIx = 1;
+		otherColliderIx = 0;
+	}
+
+
 }
 
 void RigidBody::onCollisionStay(const Collision* const collisionData)
 {
-	//figure out logic
+	int rigidBodyColliderIx = 0;
+	int otherColliderIx = 1;
+	if (collisionData->colliders[rigidBodyColliderIx]->getGameObject() != getGameObject())
+	{
+		rigidBodyColliderIx = 1;
+		otherColliderIx = 0;
+	}
+
+
 }
 
 void RigidBody::onCollisionExit(const Collision* const collisionData)
 {
-	//figure out logic
+	int rigidBodyColliderIx = 0;
+	int otherColliderIx = 1;
+	if (collisionData->colliders[rigidBodyColliderIx]->getGameObject() != getGameObject())
+	{
+		rigidBodyColliderIx = 1;
+		otherColliderIx = 0;
+	}
+
+
 }
 
 void RigidBody::initialize()

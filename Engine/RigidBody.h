@@ -33,8 +33,6 @@ public:
 	void addCollidable(ICollidable* collider);
 	void removeCollidable(ICollidable* collider);
 
-	const b2Transform& getB2Transform();
-
 	void onCollisionEnter(const Collision* const collisionData) override;
 	void onCollisionStay(const Collision* const collisionData) override;
 	void onCollisionExit(const Collision* const collisionData) override;
