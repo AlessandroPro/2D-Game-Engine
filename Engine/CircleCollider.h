@@ -13,17 +13,18 @@
 class CircleCollider : public Component, public ICollidable
 {
 private:
+	float32 colliderRadius;
 	DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider, Component)
 	//DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider,ICollidable)
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
-	void load(json::JSON& componentData);
+	void load(json::JSON& componentData) override;
 
 public:
 	CircleCollider();
 	~CircleCollider();
-	void setTrigger(bool b) override;
+	void setTrigger(bool isTrigger) override;
 };
 
 #endif
