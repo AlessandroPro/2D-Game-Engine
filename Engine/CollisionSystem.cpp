@@ -172,7 +172,10 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 					component.second->onCollisionExit(collisionData);
 				}
 			}
-			collisionsToRemove.push_back(collisionData->collisionId);
+			if (std::count(collisionsToRemove.begin(), collisionsToRemove.end(), collisionData->collisionId) == 0)
+			{
+				collisionsToRemove.push_back(collisionData->collisionId);
+			}
 		}
 		else
 		{
@@ -194,6 +197,8 @@ void CollisionSystem::update(float deltaTime)
 	for (auto collisionId : collisionsToRemove)
 	{
 		Collision* collisionData = activeCollisions[collisionId];
+		collisionData->colliders[0]->collisionIDs.remove(collisionId);
+		collisionData->colliders[1]->collisionIDs.remove(collisionId);
 		delete collisionData->collisionManifold;
 		delete collisionData->localCollisionManifold;
 		delete collisionData;
