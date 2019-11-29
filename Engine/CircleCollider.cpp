@@ -108,6 +108,7 @@ void CircleCollider::update(float deltaTime)
 
 void CircleCollider::load(json::JSON& componentData)
 {
+	Component::load(componentData);
 	//create ICollidable Fixture Definition
 
 	if (componentData.hasKey("radius")) 
