@@ -15,6 +15,15 @@ class ICollidable
 private:
 	DECLARE_ABSTRACT_BASE_CLASS(ICollidable)
 protected:
+	enum CollisionType 
+	{
+		OnCollisionEnter,
+		OnCollisionStay,
+		OnCollisionExit,
+		OnTriggerEnter,
+		OnTriggerStay,
+		OnTriggerExit
+	};
 	bool staticCollider;
 	b2Transform b2transform;
 	b2FixtureDef fixtureDefinition;
@@ -23,7 +32,7 @@ protected:
 protected:
 	ICollidable();
 	bool trigger;
-public:
+	virtual void CallCollisionFunctions(CollisionType, const Collision* const) = 0;
 
 public:
 	virtual ~ICollidable();
