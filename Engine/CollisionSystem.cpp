@@ -72,9 +72,8 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 			(b2PolygonShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform,
 			(b2PolygonShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform);
 	}
-	collisionData->collisionManifold = newManifold;
 	//this means that collision just happened
-	if (collisionData->collisionManifold->pointCount > 0)
+	if (newManifold->pointCount > 0)
 	{
 		if (newCollision)
 		{
@@ -84,24 +83,29 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 			activeCollisions.emplace(uidStrCode, collisionData);
 			collisionData->colliders[0]->collisionIDs.push_back(uidStrCode);
 			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
+			collisionData->collisionManifold = new b2WorldManifold();
+			collisionData->collisionManifold->Initialize(newManifold,
+				collisionData->colliders[0]->b2transform, collisionData->colliders[0]->shape->m_radius,
+				collisionData->colliders[1]->b2transform, collisionData->colliders[1]->shape->m_radius);
+			collisionData->localCollisionManifold = newManifold;
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
 				{
 					component.second->onTriggerEnter(collisionData);
 				}
-				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
 				{
 					component.second->onTriggerEnter(collisionData);
 				}
 			}
 			else
 			{
-				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
 				{
 					component.second->onCollisionEnter(collisionData);
 				}
-				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
 				{
 					component.second->onCollisionEnter(collisionData);
 				}
@@ -111,22 +115,22 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 		{
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
 				{
 					component.second->onTriggerStay(collisionData);
 				}
-				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
 				{
 					component.second->onTriggerStay(collisionData);
 				}
 			}
 			else
 			{
-				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
 				{
 					component.second->onCollisionStay(collisionData);
 				}
-				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
 				{
 					component.second->onCollisionStay(collisionData);
 				}
@@ -139,22 +143,22 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 		{
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
 				{
 					component.second->onTriggerExit(collisionData);
 				}
-				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
 				{
 					component.second->onTriggerExit(collisionData);
 				}
 			}
 			else
 			{
-				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
 				{
 					component.second->onCollisionExit(collisionData);
 				}
-				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
 				{
 					component.second->onCollisionExit(collisionData);
 				}
