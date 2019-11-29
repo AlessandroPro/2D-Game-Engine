@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "CollisionSystem.h"
+#include "GameObject.h"
 #include "ICollidable.h"
 #include "RigidBody.h"
 
@@ -10,12 +11,12 @@ RigidBody::RigidBody()
 	//add this to collision system on construction
 	CollisionSystem::instance().addRigidBody(this);
 	body = nullptr;
-	//enabled = true;
 }
 
 RigidBody::~RigidBody()
 {
 	//remove on destruction
+	CollisionSystem::instance().removeRigidBodyFromWorld(body);
 	CollisionSystem::instance().removeRigidBody(this);
 }
 
@@ -63,17 +64,17 @@ const b2Transform& RigidBody::getB2Transform()
 	return body->GetTransform();
 }
 
-void RigidBody::onCollisionEnter(const CollisionSystem::Collision* const collisionData)
+void RigidBody::onCollisionEnter(const Collision* const collisionData)
 {
 
 }
 
-void RigidBody::onCollisionStay(const CollisionSystem::Collision* const collisionData)
+void RigidBody::onCollisionStay(const Collision* const collisionData)
 {
 
 }
 
-void RigidBody::onCollisionExit(const CollisionSystem::Collision* const collisionData)
+void RigidBody::onCollisionExit(const Collision* const collisionData)
 {
 
 }
@@ -81,7 +82,7 @@ void RigidBody::onCollisionExit(const CollisionSystem::Collision* const collisio
 void RigidBody::initialize()
 {
 	//create body in world
-	body = CollisionSystem::instance().CreateRigidBodyInWorld(bodyDef);
+	body = CollisionSystem::instance().createRigidBodyInWorld(bodyDef);
 	for (auto collider : colliders)
 	{
 		body->CreateFixture(&collider->fixtureDefinition);
@@ -92,15 +93,15 @@ void RigidBody::update(float deltaTime)
 {
 	if (body != nullptr)
 	{
-		//b2Vec2 position = b2Vec2(
-		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
-		//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y);
+		b2Vec2 position = b2Vec2(
+			PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().x),
+			PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().y));
 
-		////convert degrees to radians
-		//float rotation = DEG_TO_RAD(gameObject.getTransform().getRotation());
+		//convert degrees to radians
+		float rotation = DEG_TO_RAD(getGameObject()->getTransform()->getRotation());
 
-		////set transform
-		//body->SetTransform(position, rotation);
+		//set transform
+		body->SetTransform(position, rotation);
 	}
 }
 
@@ -109,12 +110,11 @@ void RigidBody::load(json::JSON& componentData)
 	//create b2BodyDef from componentData
 
 	if (componentData.hasKey("BodyType")) {
-		bodyDef.type = (b2BodyType)componentData["BodyType"].ToInt();
+		bodyDef.type = (b2BodyType)(componentData["BodyType"].ToInt());
 	}
 
-	//bodyDef.position.Set(
-	//	PIXEL_TO_METER(gameObject.getTransform().getPosition().x),
-	//	PIXEL_TO_METER(gameObject.getTransform().getPosition().y)
-	//);
+	bodyDef.position.Set(
+		PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().x),
+		PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().y));
 }
 

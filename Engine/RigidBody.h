@@ -11,7 +11,6 @@
 #include "Component.h"
 
 class ICollidable;
-class CollisionSystem::Collision;
 class RigidBody : public Component
 {
 	friend class CollisionSystem;
@@ -22,9 +21,9 @@ protected:
 	b2Body* body;
 	b2BodyDef bodyDef;
 protected:
-	void initialize();
-	void update(float deltaTime);
-	void load(json::JSON& componentData);
+	void initialize() override;
+	void update(float deltaTime) override;
+	void load(json::JSON& componentData) override;
 	//function to check if collidable is already in rigidbody
 	inline bool containsCollider(ICollidable* collider) { return std::count(colliders.begin(), colliders.end(),collider) == 1; }
 public:
@@ -36,8 +35,8 @@ public:
 
 	const b2Transform& getB2Transform();
 
-	void onCollisionEnter(const CollisionSystem::Collision* const collisionData);
-	void onCollisionStay(const CollisionSystem::Collision* const collisionData);
-	void onCollisionExit(const CollisionSystem::Collision* const collisionData);
+	void onCollisionEnter(const Collision* const collisionData) override;
+	void onCollisionStay(const Collision* const collisionData) override;
+	void onCollisionExit(const Collision* const collisionData) override;
 };
 #endif
