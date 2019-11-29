@@ -62,39 +62,38 @@ void RigidBody::removeCollidable(ICollidable* collider)
 
 void RigidBody::onCollisionEnter(const Collision* const collisionData)
 {
-	int rigidBodyColliderIx = 0;
 	int otherColliderIx = 1;
-	if (collisionData->colliders[rigidBodyColliderIx]->getGameObject() != getGameObject())
+	if (collisionData->colliders[otherColliderIx]->getGameObject() == getGameObject())
 	{
-		rigidBodyColliderIx = 1;
 		otherColliderIx = 0;
 	}
-
+	sf::Vector2f collisionDirection(collisionData->colliders[otherColliderIx]->getGameObject()->getTransform()->getPosition() -
+							getGameObject()->getTransform()->getPosition());
 
 }
 
 void RigidBody::onCollisionStay(const Collision* const collisionData)
 {
-	int rigidBodyColliderIx = 0;
 	int otherColliderIx = 1;
-	if (collisionData->colliders[rigidBodyColliderIx]->getGameObject() != getGameObject())
+	if (collisionData->colliders[otherColliderIx]->getGameObject() == getGameObject())
 	{
-		rigidBodyColliderIx = 1;
 		otherColliderIx = 0;
 	}
+	sf::Vector2f collisionDirection(collisionData->colliders[otherColliderIx]->getGameObject()->getTransform()->getPosition() -
+		getGameObject()->getTransform()->getPosition());
 
 
 }
 
 void RigidBody::onCollisionExit(const Collision* const collisionData)
 {
-	int rigidBodyColliderIx = 0;
 	int otherColliderIx = 1;
-	if (collisionData->colliders[rigidBodyColliderIx]->getGameObject() != getGameObject())
+	if (collisionData->colliders[otherColliderIx]->getGameObject() == getGameObject())
 	{
-		rigidBodyColliderIx = 1;
 		otherColliderIx = 0;
 	}
+	sf::Vector2f collisionDirection(collisionData->colliders[otherColliderIx]->getGameObject()->getTransform()->getPosition() -
+		getGameObject()->getTransform()->getPosition());
 
 
 }
