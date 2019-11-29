@@ -1,8 +1,9 @@
 #include "Core.h"
 #include "CollisionSystem.h"
+#include "RigidBody.h"
 #include "GameObject.h"
 #include "ICollidable.h"
-#include "RigidBody.h"
+#include "Transform.h"
 
 IMPLEMENT_DYNAMIC_CLASS(RigidBody)
 
