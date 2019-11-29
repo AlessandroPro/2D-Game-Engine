@@ -9,6 +9,7 @@
 #ifndef _RIGID_BODY_H_
 #define _RIGID_BODY_H_
 #include "Component.h"
+#include "Transform.h"
 
 class ICollidable;
 class RigidBody : public Component
@@ -16,6 +17,7 @@ class RigidBody : public Component
 	friend class CollisionSystem;
 private:
 	DECLARE_DYNAMIC_DERIVED_CLASS(RigidBody,Component)
+	std::map<Transform::Direction, std::list<STRCODE>> lockedDirections;
 protected:
 	std::list<ICollidable*> colliders;
 	b2Body* body;

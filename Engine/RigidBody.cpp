@@ -3,7 +3,6 @@
 #include "RigidBody.h"
 #include "GameObject.h"
 #include "ICollidable.h"
-#include "Transform.h"
 
 IMPLEMENT_DYNAMIC_CLASS(RigidBody)
 
@@ -12,6 +11,10 @@ RigidBody::RigidBody()
 	//add this to collision system on construction
 	CollisionSystem::instance().addRigidBody(this);
 	body = nullptr;
+	lockedDirections[Transform::Direction::Up];
+	lockedDirections[Transform::Direction::Down];
+	lockedDirections[Transform::Direction::Left];
+	lockedDirections[Transform::Direction::Right];
 }
 
 RigidBody::~RigidBody()
