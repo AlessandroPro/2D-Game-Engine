@@ -13,9 +13,10 @@
 class CircleCollider : public Component, public ICollidable
 {
 private:
-	float32 colliderRadius;
 	DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider, Component)
 	//DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider,ICollidable)
+private:
+	float32 colliderRadius;
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;

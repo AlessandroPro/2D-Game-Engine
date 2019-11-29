@@ -59,6 +59,7 @@ void CircleCollider::initialize()
 	circle->m_radius = colliderRadius;
 
 	shape = circle;
+	fixtureDefinition.shape = shape;
 	//get gameobject of component
 	//if current gameobject has a rigidbody component
 	//add this to that rigidbody
@@ -123,7 +124,6 @@ void CircleCollider::load(json::JSON& componentData)
 		fixtureDefinition.density = componentData["fixture"]["density"].ToFloat();
 		fixtureDefinition.friction = componentData["fixture"]["friction"].ToFloat();
 		fixtureDefinition.restitution = componentData["fixture"]["restitution"].ToFloat();
-
 	}
 }
 
