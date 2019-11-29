@@ -75,20 +75,20 @@ void RigidBody::onCollisionEnter(const Collision* const collisionData)
 	
 	if (collisionDirection.x > 0)
 	{
-		addCollisionToDirectionOnEnter(Transform::Direction::Right, collisionData->collisionId);
+		addCollisionToDirectionOnStay(Transform::Direction::Right, collisionData->collisionId);
 	}
 	else if (collisionDirection.x < 0)
 	{
-		addCollisionToDirectionOnEnter(Transform::Direction::Left, collisionData->collisionId);
+		addCollisionToDirectionOnStay(Transform::Direction::Left, collisionData->collisionId);
 	}
 
 	if (collisionDirection.y > 0)
 	{
-		addCollisionToDirectionOnEnter(Transform::Direction::Up, collisionData->collisionId);
+		addCollisionToDirectionOnStay(Transform::Direction::Up, collisionData->collisionId);
 	}
 	else if (collisionDirection.y < 0)
 	{
-		addCollisionToDirectionOnEnter(Transform::Direction::Down, collisionData->collisionId);
+		addCollisionToDirectionOnStay(Transform::Direction::Down, collisionData->collisionId);
 	}
 
 }
@@ -152,13 +152,6 @@ void RigidBody::onCollisionExit(const Collision* const collisionData)
 
 }
 
-
-void RigidBody::addCollisionToDirectionOnEnter(Transform::Direction direction, STRCODE collisionID)
-{
-	lockedDirections[Transform::Direction::Right].push_back(collisionID);
-	getGameObject()->getTransform()->setDirectionLock(direction, true);
-}
-
 void RigidBody::addCollisionToDirectionOnStay(Transform::Direction direction, STRCODE collisionID)
 {
 	if (std::count(lockedDirections[direction].begin(), lockedDirections[direction].end(), collisionID) == 0)
@@ -173,7 +166,7 @@ void RigidBody::addCollisionToDirectionOnStay(Transform::Direction direction, ST
 
 void RigidBody::removeCollisionFromDirectionOnExit(Transform::Direction direction, STRCODE collisionID)
 {
-	if (std::count(lockedDirections[direction].begin(), lockedDirections[direction].end(), collisionID) != 0)
+	if (std::count(lockedDirections[direction].begin(), lockedDirections[direction].end(), collisionID) > 0)
 	{
 		lockedDirections[direction].remove(collisionID);
 	}

@@ -23,7 +23,6 @@ protected:
 	b2Body* body;
 	b2BodyDef bodyDef;
 private:
-	void addCollisionToDirectionOnEnter(Transform::Direction,STRCODE);
 	void addCollisionToDirectionOnStay(Transform::Direction, STRCODE);
 	void removeCollisionFromDirectionOnExit(Transform::Direction, STRCODE);;
 protected:
