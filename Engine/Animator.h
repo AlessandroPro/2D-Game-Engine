@@ -18,8 +18,8 @@ class Animator: public Component
 	DECLARE_DYNAMIC_DERIVED_CLASS(Animator, Component)
 
 private:
-	std::string currentAnimationInPlay;
-	std::list<Animation*> animations; //all animations that this animator can choose from to play
+	std::string currentAnimationName;
+	std::map<std::string, Animation*> animations; //all animations that this animator can choose from to play
 
 protected:
 	void initialize() override;
@@ -30,9 +30,12 @@ protected:
 public:
 	Animator();
 	~Animator();
-	void setCurrentAnimationInPlay(std::string animation) { currentAnimationInPlay = animation; }
+	void setCurrentAnimation(std::string animation) { currentAnimationName = animation; }
 	void addAnimation(Animation* animation);
 	void removeAnimation(Animation* animation);
+	//void loadNode(json::JSON loadNode);
+	void playCurrentAnimation() { animations[currentAnimationName]->play(); }
+	void stopCurrentAnimation() { animations[currentAnimationName]->stop(); }
 };
 
 #endif

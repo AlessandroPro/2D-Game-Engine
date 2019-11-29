@@ -8,5 +8,6 @@ class Camera : public Component
 public:
 	void initialize() override;
 	void update(float deltaTime) override;
+	//void load(json::JSON loadNode);
 };
 

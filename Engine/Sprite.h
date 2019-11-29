@@ -27,6 +27,7 @@ public:
     virtual void render(sf::RenderWindow* _window) override;
 	void load(json::JSON& node);
 	void setImage(sf::Texture inTexture, sf::IntRect inDimensions);
+	void setImage(sf::Sprite inSprite) { sprite = inSprite; }
 
 	friend class RenderSystem;
 };

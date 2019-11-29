@@ -1,6 +1,8 @@
 #include "Core.h"
 #include "Animator.h"
 
+IMPLEMENT_DYNAMIC_CLASS(Animator)
+
 void Animator::initialize()
 {
 }
@@ -19,10 +21,10 @@ Animator::~Animator()
 
 void Animator::addAnimation(Animation* animation)
 {
-	animations.push_back(animation);
+	animations.emplace(animation->name,animation);
 }
 
 void Animator::removeAnimation(Animation* animation)
 {
-	animations.remove(animation);
+	animations.erase(animation->name);
 }

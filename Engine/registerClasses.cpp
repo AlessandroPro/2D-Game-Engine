@@ -6,6 +6,9 @@
 #include "Sprite.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "Animation.h"
+#include "Animator.h"
+
 
 void registerEngineClasses()
 {
@@ -15,4 +18,6 @@ void registerEngineClasses()
 	REGISTER_DYNAMIC_CLASS(Sprite);
 	REGISTER_DYNAMIC_CLASS(Transform);
 	REGISTER_DYNAMIC_CLASS(Camera);
+	REGISTER_DYNAMIC_CLASS(Animation);
+	REGISTER_DYNAMIC_CLASS(Animator);
 }
