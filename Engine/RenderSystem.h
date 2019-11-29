@@ -11,28 +11,53 @@
 #pragma once
 
 #include "ISystem.h"
+#include "GameObject.h"
 
+class Camera;
 class IRenderable;
 
 class RenderSystem final : public ISystem
 {
 private:
 	std::string name = "";
-	int width = 300;
-	int height = 300;
+
 	bool fullscreen = false;
 
-	sf::RenderWindow* window = nullptr;
+	class ViewPoint
+	{
+	private:
+		sf::Vector2f size = sf::Vector2f(350.f, 300.f);
+		sf::Vector2f position = sf::Vector2f(0.f, 0.f);
+		sf::View windowView = sf::View(position, size);
+	public:
+		ViewPoint()
+		{
+			windowView.setSize(size.x, -size.y);
+		}
+		void setCenter(sf::Vector2f newCenter) 
+		{
+			windowView.setCenter(newCenter); 
+		}
+		const sf::Vector2f& getSize() { return size; }
+		void setWindowView(sf::RenderWindow* window) 
+		{ 
+			window->setView(windowView); 
+		}
+	};
 
+	ViewPoint currentView;
+
+	sf::RenderWindow* window = nullptr;
 	std::list<IRenderable*> renderables;
 
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
 
-    friend class GameEngine;
+	friend class GameEngine;
 	friend class InputManager;
-    DECLARE_SINGLETON(RenderSystem)
+	friend class Camera;
+	DECLARE_SINGLETON(RenderSystem)
 
 public:
 	void closeWindow();
@@ -40,8 +65,7 @@ public:
 	void addRenderable(IRenderable* _renderable);
 	void removeRenderable(IRenderable* _renderable);
 
-	int getHeight() { return height; }
-	int getWidth() { return width; }
+	const sf::Vector2f& getViewSize() { return currentView.getSize(); }
 };
 
 #endif

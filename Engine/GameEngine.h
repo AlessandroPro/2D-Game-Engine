@@ -16,7 +16,7 @@ class GameEngine final
 {
 private:
     ISystem* projectEngine;
-
+	std::string spriteName = "Sprite";
 public:
 	void initialize(ISystem* _projectEngine = nullptr);
 	void gameLoop();

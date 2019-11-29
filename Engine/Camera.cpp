@@ -3,6 +3,7 @@
 #include "RenderSystem.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "Component.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Camera)
 
@@ -13,7 +14,7 @@ void Camera::initialize()
 
 void Camera::update(float deltaTime)
 {
-	Component::update(deltaTime);
 	GameObject* cameraObject = getGameObject();
-	//RenderSystem::instance().currentView.setCenter(cameraObject->getTransform()->getPosition());
+	sf::Vector2f cameraPosition = cameraObject->getTransform()->getPosition();
+	RenderSystem::instance().currentView.setCenter(cameraPosition);
 }

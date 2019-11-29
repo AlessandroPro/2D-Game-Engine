@@ -4,43 +4,87 @@
 #include "RenderSystem.h"
 #include "AssetManager.h"
 
-IMPLEMENT_ABSTRACT_CLASS(Sprite)
+IMPLEMENT_DYNAMIC_CLASS(Sprite)
 
-sf::Texture Sprite::findTexture(STRCODE guid)
+Sprite::Sprite()
 {
-	//texture = getAssetBySTRCODE(guid)->getTexture();
-	return sf::Texture();
+
 }
 
-sf::Texture Sprite::findTexture(std::string guid)
+Sprite::~Sprite()
 {
-	//texture = getAssetByGUID(guid)->getTexture();
-	return sf::Texture();
+
+}
+
+void Sprite::load(json::JSON& node)
+{
+	Component::load(node);
+	if (node.hasKey("Texture"))
+	{
+		json::JSON textureNode = node["Texture"];
+
+		if (textureNode.hasKey("GUID"))
+		{
+			textureAssetGUID = textureNode["GUID"].ToInt();
+			//texture = AssetManager::instance().getAsset(textureAssetGUID);
+		}
+		else
+		{
+			return;
+		}
+	}
+	else
+	{
+		return;
+	}
+
+	if(node.hasKey("Dimensions"))
+	{
+		float w, h, t, l = 0.0f;
+		json::JSON dimensionNode = node["Dimensions"];
+
+		if(!dimensionNode.hasKey("Left") ||
+			!dimensionNode.hasKey("Top") ||
+			!dimensionNode.hasKey("Width") ||
+			!dimensionNode.hasKey("Height"))
+		{
+			return;
+		}
+
+		l = dimensionNode["Left"].ToFloat();
+		t = dimensionNode["Top"].ToFloat();
+		w = dimensionNode["Width"].ToFloat();
+		h = dimensionNode["Height"].ToFloat();
+		
+		dimensions = sf::IntRect(l,t,w,h);
+	}
+	else
+	{
+		return;
+	}
+
+	sprite = sf::Sprite(texture, dimensions);
 }
 
 void Sprite::initialize()
 {
-	if (textureAssetGUID_String != "" || textureAssetGUID_String != "\0")
-	{
-		findTexture(textureAssetGUID_String);
-	}
-	else
-	{
-		findTexture(textureAssetGUID_STRCODE);
-	}
-	sprite.setTexture(texture);
-	sprite.setTextureRect(dimensions); //might not be implementing this in later versions
-	//sprite.setPosition(gameObject->getPosition());
-	//sprite.setOrigin(gameObject->getPosition());
 	Component::initialize();
 }
 
 void Sprite::update(float deltaTime)
 {
-	//sprite.setPosition(gameObject->getPosition());
+	sf::Vector2f inPosition = getGameObject()->getTransform()->getPosition();
+	sprite.setPosition(inPosition);
 }
 
 void Sprite::render(sf::RenderWindow* _window)
 {
 	_window->draw(sprite);
+}
+
+void Sprite::setImage(sf::Texture inTexture, sf::IntRect inDimensions)
+{
+	texture = inTexture;
+	dimensions = inDimensions;
+	sprite = sf::Sprite(texture, dimensions);
 }

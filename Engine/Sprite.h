@@ -13,19 +13,20 @@
 
 class Sprite : public Component, IRenderable
 {
-	DECLARE_ABSTRACT_DERIVED_CLASS(Sprite, Component)
+	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Component)
 	sf::Sprite sprite;
-	std::string textureAssetGUID_STRCODE;
-	std::string textureAssetGUID_String;
+	STRCODE textureAssetGUID;
 	sf::Texture texture;
-	sf::IntRect& dimensions;
+	sf::IntRect dimensions;
 
 public:
+	Sprite();
+	~Sprite();
 	void update(float deltaTime) override;
     void initialize() override;
     virtual void render(sf::RenderWindow* _window) override;
-	sf::Texture findTexture(STRCODE guid);
-	sf::Texture findTexture(std::string guid);
+	void load(json::JSON& node);
+	void setImage(sf::Texture inTexture, sf::IntRect inDimensions);
 
 	friend class RenderSystem;
 };

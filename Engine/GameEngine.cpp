@@ -14,6 +14,7 @@
 #include "GameObjectManager.h"
 #include "InputManager.h"
 #include "RenderSystem.h"
+#include "Camera.h"
 
 extern void registerEngineClasses();
 
@@ -55,6 +56,29 @@ void GameEngine::gameLoop()
         {
             projectEngine->update(deltaTime.count());
         }
+
+
+		std::string& sprName = spriteName;
+		GameObject* spriteObject = GameObjectManager::instance().getGameObjectsWithComponent(sprName).front();
+		sf::Vector2f position = spriteObject->getTransform()->getPosition();
+
+		if(InputManager::instance().getKeyState(sf::Keyboard::Down) == InputManager::PushState::Held)
+		{
+			position.y--;
+		}
+		if (InputManager::instance().getKeyState(sf::Keyboard::Up) == InputManager::PushState::Held)
+		{
+			position.y++;
+		}
+		if (InputManager::instance().getKeyState(sf::Keyboard::Left) == InputManager::PushState::Held)
+		{
+			position.x--;
+		}
+		if (InputManager::instance().getKeyState(sf::Keyboard::Right) == InputManager::PushState::Held)
+		{
+			position.x++;
+		}
+		spriteObject->getTransform()->setPosition(position);
 
         RenderSystem::instance().update(deltaTime.count());
 

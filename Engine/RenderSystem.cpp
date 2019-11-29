@@ -1,18 +1,22 @@
 #include "Core.h"
 #include "RenderSystem.h"
 #include "IRenderable.h"
+#include "GameObject.h"
+#include "Camera.h"
 
 
 void RenderSystem::initialize()
 {
-	window = new sf::RenderWindow(sf::VideoMode(width, height), name);
+	window = new sf::RenderWindow(sf::VideoMode(currentView.getSize().x, currentView.getSize().y), name);
 	window->setFramerateLimit(60);
+	
 }
 
 void RenderSystem::update(float deltaTime)
 {
 	if (window != nullptr)
 	{
+		currentView.setWindowView(window);
 		window->clear();
 
 		for (auto renderable : renderables)
