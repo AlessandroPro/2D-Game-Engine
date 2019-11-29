@@ -45,6 +45,7 @@ private:
 
 private:
 	std::map<STRCODE, Collision*> activeCollisions;
+	std::list<STRCODE> collisionsToRemove;
 
 private:
 	CollisionSystem() = default;

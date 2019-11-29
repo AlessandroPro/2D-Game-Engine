@@ -9,6 +9,13 @@ CollisionSystem::~CollisionSystem()
 	{
 		delete physicsWorld;
 	}
+	for (auto activeCollision : activeCollisions)
+	{
+		if (activeCollision.second != nullptr)
+		{
+			delete activeCollision.second;
+		}
+	}
 }
 
 void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider)
@@ -33,6 +40,7 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 			collisionData->colliders[0] = rbCollider;
 			collisionData->colliders[1] = collider;
 			collisionData->collisionManifold = nullptr;
+			collisionData->localCollisionManifold = nullptr;
 		}
 		checkCollision(collisionData);
 	}
@@ -164,6 +172,14 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 					component.second->onCollisionExit(collisionData);
 				}
 			}
+			collisionsToRemove.push_back(collisionData->collisionId);
+		}
+		else
+		{
+			delete newManifold;
+			delete collisionData;
+			newManifold = nullptr;
+			collisionData = nullptr;
 		}
 	}
 }
@@ -175,6 +191,16 @@ void CollisionSystem::initialize()
 
 void CollisionSystem::update(float deltaTime)
 {
+	for (auto collisionId : collisionsToRemove)
+	{
+		Collision* collisionData = activeCollisions[collisionId];
+		delete collisionData->collisionManifold;
+		delete collisionData->localCollisionManifold;
+		delete collisionData;
+		activeCollisions.erase(collisionId);
+	}
+	collisionsToRemove.clear();
+
 	for (auto rigidBody : rigidbodies)
 	{
 		for (auto collider : colliders)
