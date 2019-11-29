@@ -80,6 +80,7 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 			UUID newUUID;
 			CreateUUID(&newUUID);
 			STRCODE uidStrCode = GUIDToSTRCODE(newUUID);
+			collisionData->collisionId = uidStrCode;
 			activeCollisions.emplace(uidStrCode, collisionData);
 			collisionData->colliders[0]->collisionIDs.push_back(uidStrCode);
 			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);

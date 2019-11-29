@@ -27,6 +27,7 @@ class ICollidable;
 
 struct Collision
 {
+	STRCODE collisionId;
 	ICollidable* colliders[2];
 	b2Manifold* localCollisionManifold;
 	b2WorldManifold* collisionManifold;

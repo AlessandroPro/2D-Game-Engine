@@ -22,6 +22,10 @@ protected:
 	std::list<ICollidable*> colliders;
 	b2Body* body;
 	b2BodyDef bodyDef;
+private:
+	void addCollisionToDirectionOnEnter(Transform::Direction,STRCODE);
+	void addCollisionToDirectionOnStay(Transform::Direction, STRCODE);
+	void removeCollisionFromDirectionOnExit(Transform::Direction, STRCODE);;
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
