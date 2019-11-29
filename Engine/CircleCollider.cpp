@@ -53,9 +53,10 @@ void CircleCollider::initialize()
 
 	b2CircleShape* circle = new b2CircleShape();
 
-	circle->m_p.Set(
+	b2transform.Set(b2Vec2(
 		PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().x),
-		PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().y));
+		PIXEL_TO_METER(getGameObject()->getTransform()->getPosition().y)),
+		DEG_TO_RAD(getGameObject()->getTransform()->getRotation()));
 	circle->m_radius = colliderRadius;
 
 	shape = circle;

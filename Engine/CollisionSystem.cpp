@@ -40,7 +40,7 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 
 void CollisionSystem::checkCollision(Collision* collisionData)
 {
-	bool newCollision = collisionData->collisionManifold != nullptr;
+	bool newCollision = collisionData->collisionManifold == nullptr;
 
 	b2Manifold* newManifold = new b2Manifold();
 	bool isShapeOneCircle = collisionData->colliders[0]->shape->GetType() == b2Shape::Type::e_circle;
