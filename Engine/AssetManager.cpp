@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "AssetManager.h"
+#include "FileSystem.h"
 
 void AssetManager::initialize()
 {
@@ -18,10 +19,8 @@ void AssetManager::loadLevelAssets(json::JSON& node, STRCODE fileID)
 		for (auto& assetMeta : levelResourcesNode.ArrayRange())
 		{
 			//Fetch AssetData for the current meta from FileManager
-			std::ifstream assetMetaInputStream(assetMeta.ToString());
-			std::string assetMetaStr((std::istreambuf_iterator<char>(assetMetaInputStream)), std::istreambuf_iterator<char>());
-			json::JSON assetInformation = json::JSON::Load(assetMetaStr);
-
+			std::string assetFile = assetMeta.ToString();
+			json::JSON assetInformation = FileSystem::instance().loadAsset(assetFile);
 
 			//Fetch the required asset data
 			_ASSERT_EXPR(assetInformation.hasKey("class"), "asset Meta Node missing class Name");
@@ -34,7 +33,7 @@ void AssetManager::loadLevelAssets(json::JSON& node, STRCODE fileID)
 			std::string assetPath = assetInformation["path"].ToString();
 
 			//Create STRCODE from the guid for the asset
-			STRCODE uid = getHashCode(guid.c_str());
+			STRCODE uid = GUIDToSTRCODE(guid);
 
 			//Check if the asset already exists, if it does not, create new
 			if (!assets.count(uid))
