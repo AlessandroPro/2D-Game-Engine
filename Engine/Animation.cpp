@@ -1,27 +1,86 @@
 #include "Core.h"
 #include "Animation.h"
+#include "GameObject.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Animation)
 
+Animation::Animation()
+{
+}
+
+Animation::~Animation()
+{
+}
+
+void Animation::load(json::JSON loadNode)
+{
+	Component::load(loadNode);
+
+	if (loadNode.hasKey("Name"))
+	{
+		name = loadNode["Name"].ToString();
+	}
+	if(loadNode.hasKey("Speed"))
+	{
+		speed = loadNode["Speed"].ToFloat();
+	}
+	if(loadNode.hasKey("SpriteID"))
+	{
+		spriteID = loadNode["SpriteID"].ToInt();
+	}
+	if(loadNode.hasKey("Frames"))
+	{
+		json::JSON framesNode = loadNode["Frames"];
+		for(auto& frameNode : framesNode.ArrayRange())
+		{
+			if(!frameNode.hasKey("Left") ||
+				!frameNode.hasKey("Top") ||
+				!frameNode.hasKey("Width") ||
+				!frameNode.hasKey("Height"))
+			{
+				continue;
+			}
+			frames.push_back(sf::IntRect(frameNode["Left"].ToInt(), frameNode["Top"].ToInt(), frameNode["Width"].ToInt(), frameNode["Height"].ToInt()));
+		}
+	}
+	if(loadNode.hasKey("SpriteSheetID"))
+	{
+		spriteSheetID = loadNode["SpriteSheetID"].ToInt();
+	}
+	if(loadNode.hasKey("Loopable"))
+	{
+		isLoopable = loadNode["Loopable"].ToBool();
+	}
+}
+
 void Animation::initialize()
 {
-	currentSpriteIndex = 0;
+	if(sprite == nullptr && spriteID != -1)
+	{
+		sprite = (Sprite*)getGameObject()->getComponent(spriteID);
+	}
+
+	//Load sprite sheet via asset manager
 }
 
 void Animation::update(float deltaTime)
 {
 	if(isPlaying && sprite != nullptr)
 	{
-		if(timeClipChanged < 0)
+		if(timeSinceLastFrame < 0)
 		{
-			timeClipChanged = time(0);
+			timeSinceLastFrame = clock();
 			return;
 		} 
 
-		if(difftime(time(0), timeClipChanged) > speed)
+		//If the most recent iteration of the clock() is greater than the frame switching speed
+		//then the frame is updated for the animation
+		if((double(clock()) - double(timeSinceLastFrame)) / double(CLOCKS_PER_SEC) > speed)
 		{
 			currentSpriteIndex++;
-			timeClipChanged = time(0);
+			timeSinceLastFrame = clock();
+
+			//Behaviour for reaching the end of the clip
 			if (currentSpriteIndex >= frames.size())
 			{
 				if (isLoopable)
@@ -31,22 +90,15 @@ void Animation::update(float deltaTime)
 				else
 				{
 					isPlaying = false;
-					timeClipChanged = -1;
+					timeSinceLastFrame = -1;
 					return;
 				}
 			}
 
-			sprite->setImage(spriteSheet,frames[currentSpriteIndex]);
+
+			sprite->setImage(spriteSheet, frames[currentSpriteIndex]);
+			
 		}
 		
 	}
-}
-
-
-Animation::Animation()
-{
-}
-
-Animation::~Animation()
-{
 }

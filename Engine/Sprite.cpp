@@ -13,7 +13,10 @@ Sprite::Sprite()
 
 Sprite::~Sprite()
 {
-
+	if(sprite != nullptr)
+	{
+		delete sprite;
+	}
 }
 
 void Sprite::load(json::JSON& node)
@@ -23,9 +26,10 @@ void Sprite::load(json::JSON& node)
 	{
 		json::JSON textureNode = node["Texture"];
 
-		if (textureNode.hasKey("GUID"))
+		if (textureNode.hasKey("ID"))
 		{
-			textureAssetGUID = textureNode["GUID"].ToInt();
+			textureAssetID = textureNode["ID"].ToInt();
+			//Load asset via asset manager
 			//texture = AssetManager::instance().getAsset(textureAssetGUID);
 		}
 		else
@@ -63,7 +67,7 @@ void Sprite::load(json::JSON& node)
 		return;
 	}
 
-	sprite = sf::Sprite(texture, dimensions);
+	sprite = new sf::Sprite(texture, dimensions);
 }
 
 void Sprite::initialize()
@@ -73,18 +77,35 @@ void Sprite::initialize()
 
 void Sprite::update(float deltaTime)
 {
-	sf::Vector2f inPosition = getGameObject()->getTransform()->getPosition();
-	sprite.setPosition(inPosition);
+	if(transform == nullptr)
+	{
+		transform = getGameObject()->getTransform();
+	}
+	sprite->setPosition(transform->getPosition());
 }
 
 void Sprite::render(sf::RenderWindow* _window)
 {
-	_window->draw(sprite);
+	if(sprite != nullptr && 
+		_window != nullptr)
+	{
+		_window->draw(*sprite);
+	}
+	
 }
 
 void Sprite::setImage(sf::Texture inTexture, sf::IntRect inDimensions)
 {
 	texture = inTexture;
 	dimensions = inDimensions;
-	sprite = sf::Sprite(texture, dimensions);
+	bool validDimensions = true;
+
+	//Check the dimensions of the texture against the requested sprite dimensions to see if it can actually map them
+	if(texture.getSize().x < dimensions.left + dimensions.width ||
+		texture.getSize().y < dimensions.top + dimensions.height)\
+	{ 
+		return;
+	}
+
+	sprite = new sf::Sprite(texture, dimensions);
 }

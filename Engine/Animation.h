@@ -19,12 +19,14 @@ class Animation: public Component
 
 private:
 	std::string name = "";
-	time_t speed = 1;
-	time_t timeClipChanged = -1;
+	float speed = 1.0f;
+	clock_t timeSinceLastFrame = -1;
 	sf::Texture spriteSheet;
 	std::vector<sf::IntRect> frames;
-	Sprite* sprite;
-	int currentSpriteIndex;
+	STRCODE spriteSheetID = -1;
+	STRCODE spriteID = -1;
+	Sprite* sprite = nullptr;
+	int currentSpriteIndex = -1;
 	bool isPlaying = false;
 	bool isLoopable = false;
 
@@ -35,7 +37,7 @@ protected:
 	void stop() 
 	{ 
 		isPlaying = false; 
-		timeClipChanged = -1;
+		timeSinceLastFrame = -1;
 	}
 
 	friend class Animator;
@@ -48,9 +50,16 @@ public:
 	void setSpeed(time_t inSpeed) { speed = inSpeed; }
 	void setFrames(std::vector<sf::IntRect> inFrames) { frames = inFrames; }
 	void setLoopingStatus(bool inLoopable) { isLoopable = inLoopable; }
-	void setSprite(Sprite* inSprite) { sprite = inSprite; }
-	void setSpriteSheet(sf::Texture inSpriteSheet) { spriteSheet = inSpriteSheet; }
-	//void loadNode(json::JSON loadNode);
+	void setSprite(Sprite* inSprite) {
+		sprite = inSprite;
+		spriteID = sprite->getID();
+	}
+	void setSpriteSheet(sf::Texture inSpriteSheet, STRCODE inID) 
+	{ 
+		spriteSheet = inSpriteSheet; 
+		spriteSheetID = inID;
+	}
+	void load(json::JSON loadNode);
 };
 
 #endif

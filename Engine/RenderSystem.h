@@ -19,10 +19,7 @@ class IRenderable;
 class RenderSystem final : public ISystem
 {
 private:
-	std::string name = "";
-
-	bool fullscreen = false;
-
+	//Used for controlling the dimensions/positioning of the screen.
 	class ViewPoint
 	{
 	private:
@@ -32,7 +29,12 @@ private:
 	public:
 		ViewPoint()
 		{
-			windowView.setSize(size.x, -size.y);
+			setSize(size);
+		}
+		void setSize(sf::Vector2f inSize)
+		{
+			size = inSize;
+			windowView.setSize(inSize.x, -inSize.y);
 		}
 		void setCenter(sf::Vector2f newCenter) 
 		{
@@ -47,6 +49,8 @@ private:
 
 	ViewPoint currentView;
 
+	std::string name = "";
+	bool fullscreen = false;
 	sf::RenderWindow* window = nullptr;
 	std::list<IRenderable*> renderables;
 
@@ -64,7 +68,7 @@ public:
 	sf::RenderWindow* getRenderWindow() { return window; }
 	void addRenderable(IRenderable* _renderable);
 	void removeRenderable(IRenderable* _renderable);
-
+	void load(json::JSON loadNode, STRCODE fileId);
 	const sf::Vector2f& getViewSize() { return currentView.getSize(); }
 };
 
