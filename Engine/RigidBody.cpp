@@ -32,6 +32,7 @@ void RigidBody::addCollidable(ICollidable* collider)
 		if (body != nullptr)
 		{
 			body->CreateFixture(&collider->fixtureDefinition);
+			collider->b2transform = body->GetTransform();
 		}
 		colliders.push_back(collider);
 	}
@@ -67,17 +68,17 @@ const b2Transform& RigidBody::getB2Transform()
 
 void RigidBody::onCollisionEnter(const Collision* const collisionData)
 {
-
+	//figure out logic
 }
 
 void RigidBody::onCollisionStay(const Collision* const collisionData)
 {
-
+	//figure out logic
 }
 
 void RigidBody::onCollisionExit(const Collision* const collisionData)
 {
-
+	//figure out logic
 }
 
 void RigidBody::initialize()
@@ -87,6 +88,7 @@ void RigidBody::initialize()
 	for (auto collider : colliders)
 	{
 		body->CreateFixture(&collider->fixtureDefinition);
+		collider->b2transform = body->GetTransform();
 	}
 }
 
@@ -103,6 +105,10 @@ void RigidBody::update(float deltaTime)
 
 		//set transform
 		body->SetTransform(position, rotation);
+		for (auto collider : colliders)
+		{
+			collider->b2transform = body->GetTransform();
+		}
 	}
 }
 
