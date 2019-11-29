@@ -47,6 +47,11 @@ void CircleCollider::setTrigger(bool isTrigger)
 	}
 }
 
+GameObject* CircleCollider::getCurrentGameObject()
+{
+	return getGameObject();
+}
+
 void CircleCollider::initialize()
 {
 	Component::initialize();

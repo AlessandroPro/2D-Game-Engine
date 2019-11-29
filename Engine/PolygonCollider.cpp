@@ -12,6 +12,7 @@ PolygonCollider::PolygonCollider()
 
 PolygonCollider::~PolygonCollider()
 {
+
 }
 
 void PolygonCollider::setTrigger(bool isTrigger)
@@ -44,6 +45,11 @@ void PolygonCollider::setTrigger(bool isTrigger)
 			}
 		}
 	}
+}
+
+GameObject* PolygonCollider::getCurrentGameObject()
+{
+	return getGameObject();
 }
 
 void PolygonCollider::initialize()
