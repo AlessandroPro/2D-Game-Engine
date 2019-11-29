@@ -1,5 +1,4 @@
 #include "Core.h"
-#include "ISystem.h"
 #include "CollisionSystem.h"
 #include "ICollidable.h"
 #include "RigidBody.h"
@@ -16,7 +15,7 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 {
 	for (auto rbCollider : rigidBody->colliders)
 	{
-		CollisionSystem::Collision* collisionData = nullptr;
+		Collision* collisionData = nullptr;
 		if (rbCollider->collisionIDs.begin() != rbCollider->collisionIDs.end())
 		{
 			for (auto collisionID : rbCollider->collisionIDs)
@@ -30,7 +29,7 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 		}
 		if (collisionData == nullptr)
 		{
-			collisionData = new CollisionSystem::Collision();
+			collisionData = new Collision();
 			collisionData->colliders[0] = rbCollider;
 			collisionData->colliders[1] = collider;
 			collisionData->collisionManifold = nullptr;
@@ -39,7 +38,7 @@ void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider
 	}
 }
 
-void CollisionSystem::checkCollision(CollisionSystem::Collision* collisionData)
+void CollisionSystem::checkCollision(Collision* collisionData)
 {
 	bool newCollision = collisionData->collisionManifold != nullptr;
 
@@ -149,13 +148,13 @@ void CollisionSystem::update(float deltaTime)
 }
 
 //Returns the created b2Body if physicsWorld is not null else returns null
-b2Body* CollisionSystem::CreateRigidBodyInWorld(b2BodyDef& bodyDefinition)
+b2Body* CollisionSystem::createRigidBodyInWorld(b2BodyDef& bodyDefinition)
 {
 	return physicsWorld == nullptr ? nullptr : physicsWorld->CreateBody(&bodyDefinition);
 }
 
 //Removes the b2Body from physicsWorld
-void CollisionSystem::RemoveRigidBodyFromWorld(b2Body* rigidBody)
+void CollisionSystem::removeRigidBodyFromWorld(b2Body* rigidBody)
 {
 	if (physicsWorld != nullptr)
 	{

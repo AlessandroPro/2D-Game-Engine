@@ -90,9 +90,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
@@ -106,7 +103,7 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ICollidable.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Aspects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -21,8 +21,16 @@
 //Lower it if game performance is affected
 #define PHYSICS_POSITION_ITERATIONS 3
 
+
 class RigidBody;
 class ICollidable;
+
+struct Collision
+{
+	ICollidable* colliders[2];
+	b2Manifold* collisionManifold;
+};
+
 class CollisionSystem final : public ISystem
 { 
 	friend class GameEngine;
@@ -33,32 +41,27 @@ private:
 	std::list<RigidBody*> rigidbodies;
 	b2World* physicsWorld = nullptr;
 
-public:
-	struct Collision
-	{
-		ICollidable* colliders[2];
-		b2Manifold* collisionManifold;
-	};
+private:
+	std::map<STRCODE, Collision*> activeCollisions;
 
 private:
-	std::map<STRCODE, CollisionSystem::Collision*> activeCollisions;
-
-private:
-	CollisionSystem();
+	CollisionSystem() = default;
 	~CollisionSystem();
 	CollisionSystem(const CollisionSystem& other) = default;
 	CollisionSystem& operator= (const CollisionSystem& other) = default;
 
 	void checkCollision(RigidBody*, ICollidable*);
-	void checkCollision(CollisionSystem::Collision* collisionData);
+	void checkCollision(Collision* collisionData);
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
 
 	//RigidBody Helper functions
 protected:
-	b2Body* CreateRigidBodyInWorld(b2BodyDef& bodyDefinition);
-	void RemoveRigidBodyFromWorld(b2Body* rigidBody);
+	b2Body* createRigidBodyInWorld(b2BodyDef& bodyDefinition);
+	void removeRigidBodyFromWorld(b2Body* rigidBody);
+	inline void addRigidBody(RigidBody* rigidBody) { rigidbodies.push_back(rigidBody); }
+	inline void removeRigidBody(RigidBody* rigidBody) { rigidbodies.remove(rigidBody); }
 public:
 	static CollisionSystem& instance()
 	{
@@ -67,12 +70,9 @@ public:
 	}
 
 
-	//Adders and removers for lists of Icollidables and rigidbodies
+	//Adders and removers for lists of Icollidables
 	inline void addCollidable(ICollidable* collider) { colliders.push_back(collider); }
 	inline void removeCollidable(ICollidable* collider) { colliders.remove(collider); }
-
-	inline void addRigidBody(RigidBody* rigidBody) { rigidbodies.push_back(rigidBody); }
-	inline void removeRigidBody(RigidBody* rigidBody) { rigidbodies.remove(rigidBody); }
 };
 
 #endif
