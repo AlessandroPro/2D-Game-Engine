@@ -1,3 +1,5 @@
+#ifndef _PREFABASSET_H
+#define _PREFABASSET_H
 #pragma once
 #include "Asset.h"
 class PrefabAsset : public Asset
@@ -16,3 +18,5 @@ protected:
 public:
 	json::JSON& getPrefab();
 };
+
+#endif

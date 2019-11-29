@@ -1,3 +1,5 @@
+#ifndef _AUDIOASSET_H
+#define _AUDIOASSET_H
 #pragma once
 #include "Asset.h"
 class AudioAsset : public Asset
@@ -16,3 +18,5 @@ protected:
 public:
 	sf::SoundBuffer getAudio();
 };
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef _TEXTUREASSET_H
+#define _TEXTUREASSET_H
 #pragma once
 #include "Asset.h"
 class TextureAsset : public Asset
@@ -16,3 +18,5 @@ protected:
 public:
 	sf::Texture	getTexture();
 };
+
+#endif

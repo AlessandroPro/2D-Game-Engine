@@ -17,6 +17,8 @@ void PrefabAsset::initialize()
 
 void PrefabAsset::load(std::string GUID, std::string assetPath)
 {
+	guid = GUID;
+	id = GUIDToSTRCODE(GUID);
 	std::ifstream prefabMetaInputStream(assetPath);
 	std::string prefabMetaString((std::istreambuf_iterator<char>(prefabMetaInputStream)), std::istreambuf_iterator<char>());
 	gameObjectInfo = json::JSON::Load(prefabMetaString);

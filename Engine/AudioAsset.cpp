@@ -17,6 +17,8 @@ void AudioAsset::initialize()
 
 void AudioAsset::load(std::string GUID, std::string assetPath)
 {
+	guid = GUID;
+	id = GUIDToSTRCODE(GUID);
 	audio.loadFromFile(assetPath);
 }
 

@@ -17,6 +17,8 @@ void FontAsset::initialize()
 
 void FontAsset::load(std::string GUID, std::string assetPath)
 {
+	guid = GUID;
+	id = GUIDToSTRCODE(GUID);
 	font.loadFromFile(assetPath);
 }
 

@@ -1,3 +1,5 @@
+#ifndef _FONTASSET_H
+#define _FONTASSET_H
 #pragma once
 #include "Asset.h"
 class FontAsset : public Asset
@@ -16,3 +18,5 @@ protected:
 public:
 	sf::Font getFont();
 };
+
+#endif
