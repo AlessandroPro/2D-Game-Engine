@@ -47,11 +47,6 @@ void PolygonCollider::setTrigger(bool isTrigger)
 	}
 }
 
-GameObject* PolygonCollider::getCurrentGameObject()
-{
-	return getGameObject();
-}
-
 void PolygonCollider::initialize()
 {
 	Component::initialize();
