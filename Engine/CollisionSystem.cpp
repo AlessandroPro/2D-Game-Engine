@@ -2,7 +2,7 @@
 #include "CollisionSystem.h"
 #include "ICollidable.h"
 #include "RigidBody.h"
-
+#include "GameObject.h"
 CollisionSystem::~CollisionSystem()
 {
 	if (physicsWorld != nullptr)
@@ -86,26 +86,50 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerEnter, collisionData);
-				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerEnter, collisionData);
+				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onTriggerEnter(collisionData);
+				}
+				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onTriggerEnter(collisionData);
+				}
 			}
 			else
 			{
-				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionEnter, collisionData);
-				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionEnter, collisionData);
+				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onCollisionEnter(collisionData);
+				}
+				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onCollisionEnter(collisionData);
+				}
 			}
 		}
 		else
 		{
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerStay, collisionData);
-				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerStay, collisionData);
+				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onTriggerStay(collisionData);
+				}
+				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onTriggerStay(collisionData);
+				}
 			}
 			else
 			{
-				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionStay, collisionData);
-				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionStay, collisionData);
+				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onCollisionStay(collisionData);
+				}
+				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onCollisionStay(collisionData);
+				}
 			}
 		}
 	}
@@ -115,13 +139,25 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 		{
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
-				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerExit, collisionData);
-				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnTriggerExit, collisionData);
+				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onTriggerExit(collisionData);
+				}
+				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onTriggerExit(collisionData);
+				}
 			}
 			else
 			{
-				collisionData->colliders[0]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionExit, collisionData);
-				collisionData->colliders[1]->CallCollisionFunctions(ICollidable::CollisionType::OnCollisionExit, collisionData);
+				for (auto component : collisionData->colliders[0]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onCollisionExit(collisionData);
+				}
+				for (auto component : collisionData->colliders[1]->getCurrentGameObject()->getAllComponents())
+				{
+					component.second->onCollisionExit(collisionData);
+				}
 			}
 		}
 	}
