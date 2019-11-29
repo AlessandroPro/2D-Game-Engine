@@ -1,6 +1,6 @@
 #include "Core.h"
-#include "ICollidable.h"
 #include "CollisionSystem.h"
+#include "ICollidable.h"
 
 IMPLEMENT_ABSTRACT_CLASS(ICollidable)
 
