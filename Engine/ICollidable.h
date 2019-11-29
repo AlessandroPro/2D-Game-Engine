@@ -15,11 +15,11 @@ class ICollidable : public Component
 	friend class CollisionSystem;
 	friend class RigidBody;
 protected:
-	bool staticCollider;
-	b2Transform b2transform;
-	b2FixtureDef fixtureDefinition;
-	b2Shape* shape;
-	std::list<STRCODE> collisionIDs;
+	bool staticCollider; //colliders with no rigidBody
+	b2Transform b2transform; //position of collider in the world
+	b2FixtureDef fixtureDefinition; //internal definition so that the collider can be added to the rigidBody
+	b2Shape* shape; //the shape of the collider
+	std::list<STRCODE> collisionIDs; //current active collisions of this collider
 	bool trigger;
 protected:
 	ICollidable();

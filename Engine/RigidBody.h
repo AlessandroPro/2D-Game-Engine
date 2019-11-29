@@ -17,14 +17,15 @@ class RigidBody : public Component
 	friend class CollisionSystem;
 private:
 	DECLARE_DYNAMIC_DERIVED_CLASS(RigidBody,Component)
-	std::map<Transform::Direction, std::list<STRCODE>> lockedDirections;
+	std::map<Transform::Direction, std::list<STRCODE>> lockedDirections; //helper map to ensure that if a direction has multiple
+																		//collisions the direction stays locked
 protected:
-	std::list<ICollidable*> colliders;
-	b2Body* body;
-	b2BodyDef bodyDef;
+	std::list<ICollidable*> colliders; //colliders in the rigidbody
+	b2Body* body; //actual rigidBody in the physics system
+	b2BodyDef bodyDef; //the definition using which the rigidBody will be changed
 private:
-	void addCollisionToDirectionOnStay(Transform::Direction, STRCODE);
-	void removeCollisionFromDirectionOnExit(Transform::Direction, STRCODE);;
+	void addCollisionToDirectionOnStay(Transform::Direction, STRCODE); //helper function for direction locking
+	void removeCollisionFromDirectionOnExit(Transform::Direction, STRCODE);; //helper function for direction unlocking
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;

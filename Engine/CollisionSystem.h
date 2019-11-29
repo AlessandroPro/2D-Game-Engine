@@ -41,11 +41,11 @@ private:
 	//keep a list of all colliders and rigidbodies in the engine world
 	std::list<ICollidable*> colliders; 
 	std::list<RigidBody*> rigidbodies;
-	b2World* physicsWorld = nullptr;
+	b2World* physicsWorld = nullptr; //actualy physics world
 
 private:
-	std::map<STRCODE, Collision*> activeCollisions;
-	std::list<STRCODE> collisionsToRemove;
+	std::map<STRCODE, Collision*> activeCollisions; //current collisions in the physics world
+	std::list<STRCODE> collisionsToRemove; //collisions that have been exited
 
 private:
 	CollisionSystem() = default;
@@ -53,8 +53,10 @@ private:
 	CollisionSystem(const CollisionSystem& other) = default;
 	CollisionSystem& operator= (const CollisionSystem& other) = default;
 
-	void checkCollision(RigidBody*, ICollidable*);
-	void checkCollision(Collision* collisionData);
+	void checkCollision(RigidBody*, ICollidable*); // function to check collision between a rigidbody and collider
+	void checkCollision(Collision* collisionData); // function to check collision betwen two colliders
+	void createNewCollisionId(Collision* collisionData); //function to create new ID for collision and set manifold
+	void sendEvents(Collision* collisionData, bool newCollision); //function to send all collision events to components
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;

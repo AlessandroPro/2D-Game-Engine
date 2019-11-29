@@ -13,9 +13,8 @@ class CircleCollider :public ICollidable
 {
 private:
 	DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider, ICollidable)
-	//DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider,ICollidable)
 private:
-	float32 colliderRadius;
+	float32 colliderRadius; //variable to set the radius of the circle collider
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;

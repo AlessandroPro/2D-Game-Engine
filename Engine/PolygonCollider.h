@@ -15,8 +15,8 @@ private:
 	DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,ICollidable)
 	//DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,ICollidable)
 private:
-	b2Vec2 vertices[b2_maxPolygonVertices];
-	int vertCount;
+	b2Vec2 vertices[b2_maxPolygonVertices]; //vertices array that take in the maximum polygon vertices
+	int vertCount; //the number of vertices
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;

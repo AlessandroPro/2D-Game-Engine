@@ -80,23 +80,32 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 			(b2PolygonShape*)(collisionData->colliders[0]->shape), collisionData->colliders[0]->b2transform,
 			(b2PolygonShape*)(collisionData->colliders[1]->shape), collisionData->colliders[1]->b2transform);
 	}
-	//this means that collision just happened
-	if (newManifold->pointCount > 0)
+	collisionData->localCollisionManifold = newManifold;
+	sendEvents(collisionData, newCollision);
+}
+
+void CollisionSystem::createNewCollisionId(Collision* collisionData)
+{
+	UUID newUUID;
+	CreateUUID(&newUUID);
+	STRCODE uidStrCode = GUIDToSTRCODE(newUUID);
+	collisionData->collisionId = uidStrCode;
+	activeCollisions.emplace(uidStrCode, collisionData);
+	collisionData->colliders[0]->collisionIDs.push_back(uidStrCode);
+	collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
+	collisionData->collisionManifold = new b2WorldManifold();
+	collisionData->collisionManifold->Initialize(collisionData->localCollisionManifold,
+		collisionData->colliders[0]->b2transform, collisionData->colliders[0]->shape->m_radius,
+		collisionData->colliders[1]->b2transform, collisionData->colliders[1]->shape->m_radius);
+}
+
+void CollisionSystem::sendEvents(Collision* collisionData, bool newCollision)
+{
+	if (collisionData->localCollisionManifold->pointCount > 0)
 	{
 		if (newCollision)
 		{
-			UUID newUUID;
-			CreateUUID(&newUUID);
-			STRCODE uidStrCode = GUIDToSTRCODE(newUUID);
-			collisionData->collisionId = uidStrCode;
-			activeCollisions.emplace(uidStrCode, collisionData);
-			collisionData->colliders[0]->collisionIDs.push_back(uidStrCode);
-			collisionData->colliders[1]->collisionIDs.push_back(uidStrCode);
-			collisionData->collisionManifold = new b2WorldManifold();
-			collisionData->collisionManifold->Initialize(newManifold,
-				collisionData->colliders[0]->b2transform, collisionData->colliders[0]->shape->m_radius,
-				collisionData->colliders[1]->b2transform, collisionData->colliders[1]->shape->m_radius);
-			collisionData->localCollisionManifold = newManifold;
+			createNewCollisionId(collisionData);
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
 				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
@@ -179,12 +188,19 @@ void CollisionSystem::checkCollision(Collision* collisionData)
 		}
 		else
 		{
-			delete newManifold;
+			if (collisionData->localCollisionManifold != nullptr)
+			{
+				delete collisionData->localCollisionManifold;
+			}
+			if (collisionData->collisionManifold != nullptr)
+			{
+				delete collisionData->collisionManifold;
+			}
 			delete collisionData;
-			newManifold = nullptr;
 			collisionData = nullptr;
 		}
 	}
+
 }
 
 void CollisionSystem::initialize()
