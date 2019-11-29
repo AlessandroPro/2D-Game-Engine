@@ -25,9 +25,9 @@ void FileSystem::update(float deltaTime)
 	{
 		for (auto iter : loadFiles)
 		{
-			//AssetManager::instance().load(fileJSON , fileId);
-			GameObjectManager::instance().load(fileJSON , fileId);
-			//RenderSystem::instance().load(fileJSON , fileId);
+			//AssetManager::instance().load(iter.second, iter.first);
+			GameObjectManager::instance().load(iter.second, iter.first);
+			//RenderSystem::instance().load(iter.second, iter.first);
 			fileData.emplace(iter.first, iter.second);										// add the loaded files to the fileData map
 		}
 		loadFiles.clear();																	// clear the list used to store loadFiles
@@ -41,7 +41,7 @@ void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method t
 	bool isLoaded = false;
 	if (isEmptyJSON != true)
 	{
-		fileId = getHashCode(fileName.c_str());
+		STRCODE fileId = getHashCode(fileName.c_str());
 
 		for (auto itr : removeFiles)
 		{
@@ -79,7 +79,7 @@ void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method t
 
 void FileSystem::unload(std::string& fileName)												//Method to unload a file
 {
-	fileId = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
+	STRCODE fileId = getHashCode(fileName.c_str());											// Convert filepath to STRCODE
 
 	if (fileId == currentLevel)
 	{
