@@ -15,14 +15,17 @@ class PolygonCollider : public ICollidable, public Component
 private:
 	DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,Component)
 	//DECLARE_DYNAMIC_DERIVED_CLASS(PolygonCollider,ICollidable)
+private:
+	b2Vec2 vertices[b2_maxPolygonVertices];
+	int vertCount;
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
-	void load(json::JSON& componentData);
+	void load(json::JSON& componentData) override;
 
 public:
 	PolygonCollider();
 	~PolygonCollider();
-	void setTrigger(bool b) override;
+	void setTrigger(bool isTrigger) override;
 };
 #endif
