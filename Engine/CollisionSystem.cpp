@@ -12,7 +12,15 @@ CollisionSystem::~CollisionSystem()
 	for (auto activeCollision : activeCollisions)
 	{
 		if (activeCollision.second != nullptr)
-		{
+		{ 
+			if (activeCollision.second->collisionManifold != nullptr) 
+			{
+				delete activeCollision.second->collisionManifold;
+			}
+			if (activeCollision.second->localCollisionManifold != nullptr) 
+			{
+				delete activeCollision.second->localCollisionManifold;
+			}
 			delete activeCollision.second;
 		}
 	}
