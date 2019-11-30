@@ -17,6 +17,12 @@ class AssetManager final : public ISystem
 {
 private:
 	std::map<STRCODE, Asset*> assets;
+	std::map<STRCODE, Asset*> defaultAssets;
+
+	AssetManager() = default;
+	~AssetManager();
+	AssetManager(const AssetManager& other) = default;
+	AssetManager& operator= (const AssetManager& other) = default;
 
 protected:
 
@@ -24,17 +30,25 @@ protected:
     void update(float deltaTime) override;
 
     friend class GameEngine;
-    DECLARE_SINGLETON(AssetManager)
 
 public:
-	void loadLevelAssets(json::JSON& node, STRCODE fileID);
+	static AssetManager& instance()
+	{
+		static AssetManager _instance;
+		return _instance;
+	}
+
+	void LoadDefaultAssets(json::JSON& node, STRCODE fileID);
+
+	void LoadLevelAssets(json::JSON& node, STRCODE fileID);
 	
-	void unloadLevelAssets(STRCODE fileID);
+	void UnloadLevelAssets(STRCODE fileID);
 
 	Asset* CreateAssetT(std::string& className, std::string& guid, std::string& assetPath);
 
-	Asset* getAssetByGUID(std::string guid);
-	Asset* getAssetBySTRCODE(STRCODE);
+	Asset*const GetAssetByGUID(std::string guid);
+	Asset* GetAssetBySTRCODE(STRCODE);
+	Asset* GetDefaultAssetOfType(std::string classType);
 };
 
 #endif
