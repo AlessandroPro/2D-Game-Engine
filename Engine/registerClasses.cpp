@@ -5,6 +5,11 @@
 #include "Component.h"
 #include "Sprite.h"
 #include "Transform.h"
+#include "Asset.h"
+#include "PrefabAsset.h"
+#include "TextureAsset.h"
+#include "AudioAsset.h"
+#include "FontAsset.h"
 
 #include "ICollidable.h"
 #include "CircleCollider.h"
@@ -18,8 +23,11 @@ void registerEngineClasses()
 	REGISTER_DYNAMIC_CLASS(GameObject);
 	REGISTER_DYNAMIC_CLASS(Sprite);
 	REGISTER_DYNAMIC_CLASS(Transform);
-
-
+	REGISTER_ABSTRACT_CLASS(Asset);
+	REGISTER_DYNAMIC_CLASS(PrefabAsset);
+	REGISTER_DYNAMIC_CLASS(TextureAsset);
+	REGISTER_DYNAMIC_CLASS(AudioAsset);
+	REGISTER_DYNAMIC_CLASS(FontAsset);
 
 	//Collision Classes
 	REGISTER_ABSTRACT_CLASS(ICollidable);

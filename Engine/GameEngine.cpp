@@ -21,6 +21,9 @@ extern void registerEngineClasses();
 void GameEngine::initialize(ISystem* _projectEngine)
 {
     registerEngineClasses();
+    
+	FileSystem::instance().initialize();
+	AssetManager::instance().initialize();
 	
 	InputManager::instance().initialize();
 	FileSystem::instance().initialize();
