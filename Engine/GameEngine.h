@@ -16,6 +16,7 @@ class GameEngine final
 {
 private:
     ISystem* projectEngine;
+
 public:
 	void initialize(ISystem* _projectEngine = nullptr);
 	void gameLoop();

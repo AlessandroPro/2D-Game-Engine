@@ -1,10 +1,9 @@
 #pragma once
 #include "Component.h"
 
-
 class Transform : public Component
 {
-	DECLARE_ABSTRACT_DERIVED_CLASS(Transform, Component)
+	DECLARE_DYNAMIC_DERIVED_CLASS(Transform, Component)
 
 public:
 	enum class Direction
