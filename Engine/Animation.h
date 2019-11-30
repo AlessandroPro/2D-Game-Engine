@@ -47,7 +47,7 @@ public:
 	~Animation();
 	std::string& getName() { return name; }
 	void setName(std::string inName) { name = inName; }
-	void setSpeed(time_t inSpeed) { speed = inSpeed; }
+	void setSpeed(float inSpeed) { speed = inSpeed; }
 	void setFrames(std::vector<sf::IntRect> inFrames) { frames = inFrames; }
 	void setLoopingStatus(bool inLoopable) { isLoopable = inLoopable; }
 	void setSprite(Sprite* inSprite) {
