@@ -11,6 +11,11 @@
 #include "AudioAsset.h"
 #include "FontAsset.h"
 
+#include "ICollidable.h"
+#include "CircleCollider.h"
+#include "PolygonCollider.h"
+#include "RigidBody.h"
+
 void registerEngineClasses()
 {
 	REGISTER_ABSTRACT_CLASS(Object);
@@ -23,4 +28,10 @@ void registerEngineClasses()
 	REGISTER_DYNAMIC_CLASS(TextureAsset);
 	REGISTER_DYNAMIC_CLASS(AudioAsset);
 	REGISTER_DYNAMIC_CLASS(FontAsset);
+
+	//Collision Classes
+	REGISTER_ABSTRACT_CLASS(ICollidable);
+	REGISTER_DYNAMIC_CLASS(CircleCollider);
+	REGISTER_DYNAMIC_CLASS(PolygonCollider);
+	REGISTER_DYNAMIC_CLASS(RigidBody);
 }

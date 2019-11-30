@@ -1,7 +1,7 @@
 #include "Core.h"
 #include "Transform.h"
 
-IMPLEMENT_ABSTRACT_CLASS(Transform)
+IMPLEMENT_DYNAMIC_CLASS(Transform)
 
 void Transform::initialize()
 {
