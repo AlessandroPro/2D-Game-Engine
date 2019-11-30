@@ -7,12 +7,12 @@ Asset::~Asset()
 {
 }
 
-void Asset::initialize()
-{
-	Object::initialize();
-}
-
-void Asset::load(std::string GUID, std::string assetPath)
-{
-
-}
+//void Asset::initialize()
+//{
+//	Object::initialize();
+//}
+//
+//void Asset::load(std::string GUID, std::string assetPath)
+//{
+//
+//}

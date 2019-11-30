@@ -16,7 +16,7 @@ protected:
 	void load(std::string GUID, std::string assetPath) override;
 
 public:
-	//sf::SoundBuffer getAudio();
+	//const sf::SoundBuffer& getAudio();
 };
 
 #endif

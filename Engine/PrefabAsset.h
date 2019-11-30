@@ -16,7 +16,7 @@ protected:
 	void load(std::string GUID, std::string assetPath) override;
 
 public:
-	json::JSON& getPrefab();
+	const json::JSON& getPrefab();
 };
 
 #endif

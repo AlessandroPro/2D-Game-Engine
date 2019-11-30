@@ -16,7 +16,7 @@ protected:
 	void load(std::string GUID, std::string assetPath) override;
 
 public:
-	sf::Texture	getTexture();
+	const sf::Texture&	getTexture();
 };
 
 #endif

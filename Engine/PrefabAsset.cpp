@@ -26,7 +26,7 @@ void PrefabAsset::load(std::string GUID, std::string assetPath)
 }
 
 
-json::JSON& PrefabAsset::getPrefab()
+const json::JSON& PrefabAsset::getPrefab()
 {
 	return gameObjectInfo;
 }

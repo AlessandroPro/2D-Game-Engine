@@ -23,7 +23,7 @@ void FontAsset::load(std::string GUID, std::string assetPath)
 	font.loadFromFile(assetPath);
 }
 
-sf::Font FontAsset::getFont()
+const sf::Font& FontAsset::getFont()
 {
 	return font;
 }

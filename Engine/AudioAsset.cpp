@@ -23,7 +23,7 @@ void AudioAsset::load(std::string GUID, std::string assetPath)
 	//audio.loadFromFile(assetPath);
 }
 
-//sf::SoundBuffer AudioAsset::getAudio()
+//const sf::SoundBuffer& AudioAsset::getAudio()
 //{
 //	return audio;
 //}

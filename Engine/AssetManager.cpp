@@ -126,7 +126,7 @@ void AssetManager::UnloadLevelAssets(STRCODE fileID)
 		}
 
 		//If there is no reference to any file, remove the asset
-		if (iteratorAsset->second->references.size() <= 0)
+		if (iteratorAsset->second->references.empty())
 		{
 			delete iteratorAsset->second;
 			iteratorAsset = assets.erase(iteratorAsset);

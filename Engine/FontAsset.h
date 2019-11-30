@@ -16,7 +16,7 @@ protected:
 	void load(std::string GUID, std::string assetPath) override;
 
 public:
-	sf::Font getFont();
+	const sf::Font& getFont();
 };
 
 #endif
