@@ -17,6 +17,9 @@ private:
 private:
 	b2Vec2 vertices[b2_maxPolygonVertices]; //vertices array that take in the maximum polygon vertices
 	int vertCount; //the number of vertices
+	//sizes for box collider
+	float width;
+	float height;
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;

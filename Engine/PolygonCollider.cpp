@@ -8,6 +8,8 @@ IMPLEMENT_DYNAMIC_CLASS(PolygonCollider)
 PolygonCollider::PolygonCollider()
 {
 	vertCount = 0;
+	height = 0.5f;
+	width = 0.5f;
 }
 
 PolygonCollider::~PolygonCollider()
@@ -57,7 +59,7 @@ void PolygonCollider::initialize()
 	b2PolygonShape* polygonShape = new b2PolygonShape();
 	if (vertCount < 3)
 	{
-		polygonShape->SetAsBox(0.5, 0.5);
+		polygonShape->SetAsBox(height * 0.5f, width * 0.5f);
 	}
 	else
 	{
@@ -125,8 +127,18 @@ void PolygonCollider::load(json::JSON& componentData)
 				PIXEL_TO_METER(componentData["vertices"][i]["y"].ToFloat())
 				);
 			vertCount++;
+			if (vertCount >= b2_maxPolygonVertices) 
+			{
+				break;
+			}
 		}
 	}
+	else if (componentData.hasKey("box"))
+	{
+		height = PIXEL_TO_METER(componentData["box"]["height"].ToFloat());
+		width = PIXEL_TO_METER(componentData["box"]["width"].ToFloat());
+	}
+
 	trigger = componentData["trigger"].ToBool();
 
 	fixtureDefinition.shape = nullptr;

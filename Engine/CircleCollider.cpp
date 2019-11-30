@@ -115,7 +115,7 @@ void CircleCollider::load(json::JSON& componentData)
 
 	if (componentData.hasKey("radius")) 
 	{
-		colliderRadius = componentData["radius"].ToFloat();
+		colliderRadius = PIXEL_TO_METER(componentData["radius"].ToFloat());
 	}
 	trigger = componentData["trigger"].ToBool();
 
