@@ -20,10 +20,10 @@ void AudioAsset::load(std::string GUID, std::string assetPath)
 {
 	guid = GUID;
 	id = GUIDToSTRCODE(GUID);
-	audio.loadFromFile(assetPath);
+	//audio.loadFromFile(assetPath);
 }
 
-sf::SoundBuffer AudioAsset::getAudio()
-{
-	return audio;
-}
+//sf::SoundBuffer AudioAsset::getAudio()
+//{
+//	return audio;
+//}

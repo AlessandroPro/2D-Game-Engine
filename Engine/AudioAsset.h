@@ -7,7 +7,7 @@ class AudioAsset : public Asset
 	DECLARE_DYNAMIC_DERIVED_CLASS(AudioAsset, Asset)
 
 private:
-	sf::SoundBuffer audio;
+	//sf::SoundBuffer audio;
 
 protected:
 	AudioAsset();
@@ -16,7 +16,7 @@ protected:
 	void load(std::string GUID, std::string assetPath) override;
 
 public:
-	sf::SoundBuffer getAudio();
+	//sf::SoundBuffer getAudio();
 };
 
 #endif
