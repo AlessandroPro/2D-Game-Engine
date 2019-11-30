@@ -20,9 +20,10 @@ class Text : public Component, IRenderable
 	STRCODE fontAssetID = -1;
 	sf::Font font;
 	std::string string;
-	int characterSize;
-	sf::Color fillColor;
-	sf::Text::Style style;
+	//the three text modification settings below have been given default values in case the designer does not want to provide their own
+	int characterSize = 24;
+	sf::Color fillColor = sf::Color::Black;
+	sf::Text::Style style = sf::Text::Regular;
 	//All possible style assignments are shown below:
 	//sf::Text::Style style = sf::Text::Bold;
 	//sf::Text::Style style = sf::Text::Italic;
