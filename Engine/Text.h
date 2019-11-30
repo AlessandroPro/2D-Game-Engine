@@ -11,14 +11,36 @@
 
 #include "Component.h"
 #include "IRenderable.h"
+#include "Transform.h"
 
 class Text : public Component, IRenderable
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Text, Component)
+	sf::Text* text = nullptr;
+	STRCODE fontAssetID = -1;
+	sf::Font font;
+	std::string string;
+	int characterSize;
+	sf::Color fillColor;
+	sf::Text::Style style;
+	//All possible style assignments are shown below:
+	//sf::Text::Style style = sf::Text::Bold;
+	//sf::Text::Style style = sf::Text::Italic;
+	//sf::Text::Style style = sf::Text::Regular;
+	//sf::Text::Style style = sf::Text::StrikeThrough;
+	//sf::Text::Style style = sf::Text::Underlined;
+	Transform* transform = nullptr;
 
 public:
+	Text();
+	~Text();
 	void update(float deltaTime) override;
 	void initialize() override;
 	virtual void render(sf::RenderWindow* _window) override;
+	void load(json::JSON& node);
+	void setText(sf::Font inFont, std::string inString, int inCharacterSize, sf::Color inFillColor, sf::Text::Style inStyle);
+	void setText(sf::Text* inText) { text = inText; }
+
+	friend class RenderSystem;
 };
 
