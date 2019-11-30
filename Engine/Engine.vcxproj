@@ -26,7 +26,6 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CRtti.cpp" />
     <ClCompile Include="FileSystem.cpp" />
-    <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -39,6 +38,7 @@
     <ClCompile Include="registerClasses.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +50,6 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="CRtti.h" />
     <ClInclude Include="FileSystem.h" />
-    <ClInclude Include="Font.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -63,6 +62,7 @@
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StandardTypes.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 ///-------------------------------------------------------------------------------------------------
-// file: Font.h
+// file: Text.h
 //
 // author: Justin Hole
 // date: 11/29/2019
@@ -12,9 +12,9 @@
 #include "Component.h"
 #include "IRenderable.h"
 
-class Font : public Component, IRenderable
+class Text : public Component, IRenderable
 {
-	DECLARE_DYNAMIC_DERIVED_CLASS(Font, Component)
+	DECLARE_DYNAMIC_DERIVED_CLASS(Text, Component)
 
 public:
 	void update(float deltaTime) override;
