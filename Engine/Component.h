@@ -9,9 +9,12 @@
 
 #include "Object.h"
 
-
+class CollisionSystem {
+public:
+	struct Collision;
+};
 class GameObject;
-struct Collision;
+
 class Component : public Object
 {
 	DECLARE_ABSTRACT_DERIVED_CLASS(Component, Object)
@@ -26,12 +29,12 @@ public:
 	
 private:
 	void setGameObject(GameObject* _gameObject);
-	virtual void onCollisionEnter(const Collision* const collisionData);
-	virtual void onCollisionStay(const Collision* const collisionData);
-	virtual void onCollisionExit(const Collision* const collisionData);
-	virtual void onTriggerEnter(const Collision* const collisionData);
-	virtual void onTriggerStay(const Collision* const collisionData);
-	virtual void onTriggerExit(const Collision* const collisionData);
+	virtual void onCollisionEnter(const CollisionSystem::Collision* const collisionData);
+	virtual void onCollisionStay(const CollisionSystem::Collision* const collisionData);
+	virtual void onCollisionExit(const CollisionSystem::Collision* const collisionData);
+	virtual void onTriggerEnter(const CollisionSystem::Collision* const collisionData);
+	virtual void onTriggerStay(const CollisionSystem::Collision* const collisionData);
+	virtual void onTriggerExit(const CollisionSystem::Collision* const collisionData);
 
 protected:
 	Component();

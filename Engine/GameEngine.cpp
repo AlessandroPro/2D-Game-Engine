@@ -11,14 +11,13 @@
 
 #include "AssetManager.h"
 #include "FileSystem.h"
+#include "GameObjectManager.h"
 #include "InputManager.h"
 #include "RenderSystem.h"
 #include "Camera.h"
 #include "Animation.h"
 #include "Animator.h"
 #include "Sprite.h"
-#include "CollisionSystem.h"
-#include "GameObjectManager.h"
 
 extern void registerEngineClasses();
 
@@ -26,20 +25,16 @@ void GameEngine::initialize(ISystem* _projectEngine)
 {
     registerEngineClasses();
     
-	FileSystem::instance().initialize();
 	AssetManager::instance().initialize();
-	
+	FileSystem::instance().initialize();
 	InputManager::instance().initialize();
-	FileSystem::instance().initialize();
-	AssetManager::instance().initialize();
-	GameObjectManager::instance().initialize();
-	CollisionSystem::instance().initialize();
 	RenderSystem::instance().initialize();
-	projectEngine = _projectEngine;
-	if (projectEngine != nullptr)
-	{
-		projectEngine->initialize();
-	}
+    GameObjectManager::instance().initialize();
+    projectEngine = _projectEngine;
+    if (projectEngine != nullptr)
+    {
+        projectEngine->initialize();
+    }
 }
 
 void GameEngine::gameLoop()
@@ -64,8 +59,6 @@ void GameEngine::gameLoop()
         {
             projectEngine->update(deltaTime.count());
         }
-
-		CollisionSystem::instance().update(deltaTime.count());
 
         RenderSystem::instance().update(deltaTime.count());
 
