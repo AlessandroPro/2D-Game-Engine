@@ -13,6 +13,7 @@ AudioAsset::~AudioAsset()
 
 void AudioAsset::initialize()
 {
+	initialized = true;
 }
 
 void AudioAsset::load(std::string GUID, std::string assetPath)

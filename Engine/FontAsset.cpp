@@ -13,6 +13,7 @@ FontAsset::~FontAsset()
 
 void FontAsset::initialize()
 {
+	initialized = true;
 }
 
 void FontAsset::load(std::string GUID, std::string assetPath)

@@ -13,6 +13,7 @@ PrefabAsset::~PrefabAsset()
 
 void PrefabAsset::initialize()
 {
+	initialized = true;
 }
 
 void PrefabAsset::load(std::string GUID, std::string assetPath)

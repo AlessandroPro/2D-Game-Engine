@@ -13,6 +13,7 @@ TextureAsset::~TextureAsset()
 
 void TextureAsset::initialize()
 {
+	initialized = true;
 }
 
 void TextureAsset::load(std::string GUID, std::string assetPath)
