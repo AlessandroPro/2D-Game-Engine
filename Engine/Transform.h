@@ -1,3 +1,10 @@
+///-------------------------------------------------------------------------------------------------
+// file: Transform.h
+//
+// author: Abishek Tippireddy
+//
+// summary:	Transform component, included with every game object
+///-------------------------------------------------------------------------------------------------
 #pragma once
 #include "Component.h"
 
