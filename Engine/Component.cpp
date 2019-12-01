@@ -22,6 +22,11 @@ void Component::initialize()
 void Component::load(json::JSON& node)
 {
 	Object::load(node);
+
+	if (node.hasKey("enabled"))
+	{
+		enabled = node["enabled"].ToBool();
+	}
 }
 
 void Component::setEnabled(bool _enabled)

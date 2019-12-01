@@ -49,6 +49,11 @@ void GameObject::load(json::JSON& node)
 		destroyOnUnload = node["destroyOnUnload"].ToBool();
 	}
 
+	if (node.hasKey("enabled"))
+	{
+		enabled = node["enabled"].ToBool();
+	}
+
 	if (node.hasKey("Components"))
 	{
 		json::JSON componentsNode = node["Components"];
