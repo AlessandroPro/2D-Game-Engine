@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "Component.h"
+#include "GameObject.h"
 
 IMPLEMENT_ABSTRACT_CLASS(Component)
 
@@ -21,6 +22,16 @@ void Component::initialize()
 void Component::load(json::JSON& node)
 {
 	Object::load(node);
+
+	if (node.hasKey("enabled"))
+	{
+		enabled = node["enabled"].ToBool();
+	}
+}
+
+bool Component::isEnabled()
+{
+	return enabled;
 }
 
 void Component::setGameObject(GameObject* _gameObject)

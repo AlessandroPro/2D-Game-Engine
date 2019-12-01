@@ -36,6 +36,7 @@ public:
 	void setCurrentAnimation(std::string animation) { currentAnimationName = animation; }
 	void playCurrentAnimation() { animations[currentAnimationName]->play(); }
 	void stopCurrentAnimation() { animations[currentAnimationName]->stop(); }
+	void setEnabled(bool _enabled) override;
 };
 
 #endif

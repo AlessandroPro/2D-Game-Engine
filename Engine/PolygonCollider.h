@@ -29,5 +29,6 @@ public:
 	PolygonCollider();
 	~PolygonCollider();
 	void setTrigger(bool isTrigger) override;
+	void setEnabled(bool _enabled) override;
 };
 #endif

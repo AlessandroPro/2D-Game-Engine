@@ -17,6 +17,15 @@ PolygonCollider::~PolygonCollider()
 
 }
 
+void PolygonCollider::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
+
 void PolygonCollider::setTrigger(bool isTrigger)
 {
 	trigger = isTrigger;
@@ -51,6 +60,10 @@ void PolygonCollider::setTrigger(bool isTrigger)
 
 void PolygonCollider::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
 	Component::initialize();
 
 	//get gameobject of component
@@ -90,6 +103,11 @@ void PolygonCollider::initialize()
 
 void PolygonCollider::update(float deltaTime)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
+
 	//move b2transform if and only if staticCollider is true
 
 	//use gameobjects getTransform function and use transform.getposition, and transform.getrotation

@@ -29,13 +29,20 @@ GameObject::~GameObject()
 
 void GameObject::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
 	Object::initialize();
 
 	for (auto component : components)
 	{
 		if (component.second != nullptr)
 		{
-			component.second->initialize();
+			if (!component.second->initialized)
+			{
+				component.second->initialize();
+			}
 		}
 	}
 }
@@ -47,6 +54,11 @@ void GameObject::load(json::JSON& node)
 	if (node.hasKey("destroyOnUnload"))
 	{
 		destroyOnUnload = node["destroyOnUnload"].ToBool();
+	}
+
+	if (node.hasKey("enabled"))
+	{
+		enabled = node["enabled"].ToBool();
 	}
 
 	if (node.hasKey("Components"))
@@ -207,5 +219,19 @@ Component* GameObject::createComponent(const std::string& compType)
 	addComponent(component);
 	component->initialize();
 	return component;
+}
+
+void GameObject::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && !initialized)
+	{
+		initialize();
+	}
+}
+
+bool GameObject::isEnabled()
+{
+	return enabled;
 }
 

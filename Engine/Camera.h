@@ -8,5 +8,7 @@ protected:
 	void initialize() override;
 	void update(float deltaTime) override;
 	void load(json::JSON& loadNode) override;
+public:
+	void setEnabled(bool _enabled) override;
 };
 

@@ -24,6 +24,15 @@ RigidBody::~RigidBody()
 	CollisionSystem::instance().removeRigidBody(this);
 }
 
+void RigidBody::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
+
 void RigidBody::addCollidable(ICollidable* collider)
 {
 	if (collider == nullptr)
@@ -180,6 +189,11 @@ void RigidBody::removeCollisionFromDirectionOnExit(Transform::Direction directio
 
 void RigidBody::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
+
 	//create body in world
 	body = CollisionSystem::instance().createRigidBodyInWorld(bodyDef);
 	for (auto collider : colliders)
@@ -191,6 +205,11 @@ void RigidBody::initialize()
 
 void RigidBody::update(float deltaTime)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
+
 	if (body != nullptr)
 	{
 		b2Vec2 position = b2Vec2(

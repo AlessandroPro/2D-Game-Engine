@@ -23,8 +23,7 @@ class Component : public Object
 
 private:
 	GameObject* gameObject = nullptr;
-public:
-	bool enabled=true;
+
 	
 private:
 	void setGameObject(GameObject* _gameObject);
@@ -34,7 +33,8 @@ private:
 	virtual void onTriggerEnter(const Collision* const collisionData);
 	virtual void onTriggerStay(const Collision* const collisionData);
 	virtual void onTriggerExit(const Collision* const collisionData);
-
+protected:
+	bool enabled = true;
 protected:
 	Component();
 	virtual ~Component();
@@ -44,6 +44,8 @@ protected:
 
 public:
 	GameObject* getGameObject();
+	virtual void setEnabled(bool _enabled) = 0;
+	bool isEnabled();
 };
 
 #endif 

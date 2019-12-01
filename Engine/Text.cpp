@@ -7,6 +7,14 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Text)
 
+void Text::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
 
 Text::~Text()
 {
@@ -125,6 +133,11 @@ void Text::load(json::JSON& node)
 
 void Text::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
+
 	Component::initialize();
 	FontAsset* asset = dynamic_cast<FontAsset*>(AssetManager::instance().GetAssetBySTRCODE(fontAssetID));
 	if (asset == nullptr)
@@ -136,6 +149,10 @@ void Text::initialize()
 
 void Text::update(float deltaTime)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
 	text->setPosition(getGameObject()->getTransform()->getPosition());
 	if (text->getString() != string)
 	{
@@ -145,6 +162,11 @@ void Text::update(float deltaTime)
 
 void Text::render(sf::RenderWindow* _window)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
+
 	if (text != nullptr && _window != nullptr)
 	{
 		_window->draw(*text);

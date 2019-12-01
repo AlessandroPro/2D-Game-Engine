@@ -46,6 +46,10 @@ void GameEngine::gameLoop()
 
     while (true)
     {
+		if (RenderSystem::instance().getRenderWindow() == nullptr)
+		{
+			break;
+		}
 		_time = std::chrono::system_clock::now();
 
 		InputManager::instance().update(deltaTime.count());
