@@ -12,15 +12,15 @@ void RenderSystem::initialize()
 	window->setFramerateLimit(60);
 	
 	sf::Vector2u windowSize = sf::Vector2u(currentView.getSize().x, currentView.getSize().y);
-	std::string defaultSettingsPath = "../Assets/DefaultSettings/renderSettings.json";
+	std::string defaultSettingsPath = "../Assets/SystemSettings/renderSettings.json";
 	json::JSON loadNode = FileSystem::instance().loadRenderSettings(defaultSettingsPath);
 	if (loadNode.hasKey("Width"))
 	{
-		windowSize.x = loadNode["Width"].ToFloat();
+		windowSize.x = loadNode["Width"].ToInt();
 	}
 	if (loadNode.hasKey("Height"))
 	{
-		windowSize.y = loadNode["Height"].ToFloat();
+		windowSize.y = loadNode["Height"].ToInt();
 	}
 	if (loadNode.hasKey("Name"))
 	{
