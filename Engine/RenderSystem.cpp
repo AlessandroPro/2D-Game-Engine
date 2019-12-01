@@ -3,25 +3,24 @@
 #include "IRenderable.h"
 #include "GameObject.h"
 #include "Camera.h"
-
+#include "FileSystem.h"
 
 void RenderSystem::initialize()
 {
+
 	window = new sf::RenderWindow(sf::VideoMode(currentView.getSize().x, currentView.getSize().y), name);
 	window->setFramerateLimit(60);
-}
-
-void RenderSystem::load(json::JSON loadNode, STRCODE fileId)
-{
-	sf::Vector2u dimensions = sf::Vector2u(currentView.getSize().x, currentView.getSize().y);
-
+	
+	sf::Vector2u windowSize = sf::Vector2u(currentView.getSize().x, currentView.getSize().y);
+	std::string defaultSettingsPath = "../Assets/DefaultSettings/renderSettings.json";
+	json::JSON loadNode = FileSystem::instance().loadRenderSettings(defaultSettingsPath);
 	if (loadNode.hasKey("Width"))
 	{
-		dimensions.x = loadNode["Width"].ToFloat();
+		windowSize.x = loadNode["Width"].ToFloat();
 	}
 	if (loadNode.hasKey("Height"))
 	{
-		dimensions.y = loadNode["Height"].ToFloat();
+		windowSize.y = loadNode["Height"].ToFloat();
 	}
 	if (loadNode.hasKey("Name"))
 	{
@@ -34,12 +33,21 @@ void RenderSystem::load(json::JSON loadNode, STRCODE fileId)
 
 	if (fullscreen)
 	{
-		window->create(sf::VideoMode(dimensions.x, dimensions.y, 60), name, sf::Style::Fullscreen);
+		window->create(sf::VideoMode(windowSize.x, windowSize.y, 60), name, sf::Style::Fullscreen);
 	}
 	else
 	{
 		window->setTitle(name);
-		window->setSize(dimensions);
+		window->setSize(windowSize);
+	}
+}
+
+void RenderSystem::load(json::JSON loadNode, STRCODE fileId)
+{
+	//add code to reset the view if there is no camera
+	if (loadNode.dump().find("Camera") == std::string::npos)
+	{
+		currentView.resetView(window);
 	}
 }
 

@@ -11,7 +11,6 @@
 #pragma once
 
 #include "ISystem.h"
-#include "GameObject.h"
 
 class Camera;
 class IRenderable;
@@ -44,6 +43,11 @@ private:
 		void setWindowView(sf::RenderWindow* window) 
 		{ 
 			window->setView(windowView); 
+		}
+		void resetView(sf::RenderWindow* window)
+		{
+			windowView = window->getDefaultView();
+			size = windowView.getSize();
 		}
 	};
 
