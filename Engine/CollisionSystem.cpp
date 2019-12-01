@@ -26,6 +26,20 @@ CollisionSystem::~CollisionSystem()
 	}
 }
 
+void CollisionSystem::deleteNewCollision(Collision* collisionData)
+{
+	if (collisionData->localCollisionManifold != nullptr)
+	{
+		delete collisionData->localCollisionManifold;
+	}
+	if (collisionData->collisionManifold != nullptr)
+	{
+		delete collisionData->collisionManifold;
+	}
+	delete collisionData;
+	collisionData = nullptr;
+}
+
 void CollisionSystem::checkCollision(RigidBody* rigidBody, ICollidable* collider)
 {
 	for (auto rbCollider : rigidBody->colliders)
@@ -113,6 +127,12 @@ void CollisionSystem::sendEvents(Collision* collisionData, bool newCollision)
 	{
 		if (newCollision)
 		{
+			if (!collisionData->colliders[0]->isEnabled() || !collisionData->colliders[0]->getGameObject()->isEnabled()
+				|| !collisionData->colliders[1]->isEnabled() || !collisionData->colliders[1]->getGameObject()->isEnabled())
+			{
+				deleteNewCollision(collisionData);
+				return;
+			}
 			createNewCollisionId(collisionData);
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
@@ -139,6 +159,13 @@ void CollisionSystem::sendEvents(Collision* collisionData, bool newCollision)
 		}
 		else
 		{
+			if (!collisionData->colliders[0]->isEnabled() || !collisionData->colliders[0]->getGameObject()->isEnabled()
+				|| !collisionData->colliders[1]->isEnabled() || !collisionData->colliders[1]->getGameObject()->isEnabled())
+			{
+
+				sendCollisionExitEvent(collisionData);
+				return;
+			}
 			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
 			{
 				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
@@ -167,48 +194,44 @@ void CollisionSystem::sendEvents(Collision* collisionData, bool newCollision)
 	{
 		if (!newCollision)
 		{
-			if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
-			{
-				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
-				{
-					component.second->onTriggerExit(collisionData);
-				}
-				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
-				{
-					component.second->onTriggerExit(collisionData);
-				}
-			}
-			else
-			{
-				for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
-				{
-					component.second->onCollisionExit(collisionData);
-				}
-				for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
-				{
-					component.second->onCollisionExit(collisionData);
-				}
-			}
-			if (std::count(collisionsToRemove.begin(), collisionsToRemove.end(), collisionData->collisionId) == 0)
-			{
-				collisionsToRemove.push_back(collisionData->collisionId);
-			}
+			sendCollisionExitEvent(collisionData);
 		}
 		else
 		{
-			if (collisionData->localCollisionManifold != nullptr)
-			{
-				delete collisionData->localCollisionManifold;
-			}
-			if (collisionData->collisionManifold != nullptr)
-			{
-				delete collisionData->collisionManifold;
-			}
-			delete collisionData;
-			collisionData = nullptr;
+			deleteNewCollision(collisionData);
 		}
 	}
 
+}
+
+void CollisionSystem::sendCollisionExitEvent(Collision* collisionData)
+{
+	if (collisionData->colliders[0]->trigger || collisionData->colliders[1]->trigger)
+	{
+		for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
+		{
+			component.second->onTriggerExit(collisionData);
+		}
+		for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
+		{
+			component.second->onTriggerExit(collisionData);
+		}
+	}
+	else
+	{
+		for (auto component : collisionData->colliders[0]->getGameObject()->getAllComponents())
+		{
+			component.second->onCollisionExit(collisionData);
+		}
+		for (auto component : collisionData->colliders[1]->getGameObject()->getAllComponents())
+		{
+			component.second->onCollisionExit(collisionData);
+		}
+	}
+	if (std::count(collisionsToRemove.begin(), collisionsToRemove.end(), collisionData->collisionId) == 0)
+	{
+		collisionsToRemove.push_back(collisionData->collisionId);
+	}
 }
 
 void CollisionSystem::initialize()

@@ -52,11 +52,12 @@ private:
 	~CollisionSystem();
 	CollisionSystem(const CollisionSystem& other) = default;
 	CollisionSystem& operator= (const CollisionSystem& other) = default;
-
+	void deleteNewCollision(Collision* collisionData);
 	void checkCollision(RigidBody*, ICollidable*); // function to check collision between a rigidbody and collider
 	void checkCollision(Collision* collisionData); // function to check collision betwen two colliders
 	void createNewCollisionId(Collision* collisionData); //function to create new ID for collision and set manifold
 	void sendEvents(Collision* collisionData, bool newCollision); //function to send all collision events to components
+	void sendCollisionExitEvent(Collision* collisionData);
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
