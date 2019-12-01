@@ -1,15 +1,10 @@
 #include "Core.h"
 #include "Sprite.h"
 #include "GameObject.h"
-#include "RenderSystem.h"
 #include "AssetManager.h"
+#include "TextureAsset.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Sprite)
-
-Sprite::Sprite()
-{
-
-}
 
 Sprite::~Sprite()
 {
@@ -25,23 +20,12 @@ void Sprite::load(json::JSON& node)
 	if (node.hasKey("Texture"))
 	{
 		json::JSON textureNode = node["Texture"];
-
-		if (textureNode.hasKey("ID"))
+		if (textureNode.hasKey("textureAssetGUID"))
 		{
-			textureAssetID = textureNode["ID"].ToInt();
-			//Load asset via asset manager
-			//texture = AssetManager::instance().getAsset(textureAssetGUID);
-		}
-		else
-		{
-			return;
+			textureAssetGUID = textureNode["textureAssetGUID"].ToString();
+			textureAssetID = GUIDToSTRCODE(textureAssetGUID);
 		}
 	}
-	else
-	{
-		return;
-	}
-
 	if(node.hasKey("Dimensions"))
 	{
 		float w, h, t, l = 0.0f;
@@ -62,49 +46,45 @@ void Sprite::load(json::JSON& node)
 		
 		dimensions = sf::IntRect(l,t,w,h);
 	}
-	else
+	TextureAsset* asset = static_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
+	if (asset != nullptr)
 	{
-		return;
+		delete sprite;
+		sprite = new sf::Sprite(asset->getTexture(), dimensions);
 	}
-
-	sprite = new sf::Sprite(texture, dimensions);
 }
 
 void Sprite::initialize()
 {
 	Component::initialize();
+	TextureAsset* asset = static_cast<TextureAsset*>(AssetManager::instance().GetDefaultAssetOfType("TextureAsset"));
+	sprite = new sf::Sprite(asset->getTexture());
 }
 
 void Sprite::update(float deltaTime)
 {
-	if(transform == nullptr)
-	{
-		transform = getGameObject()->getTransform();
-	}
-	sprite->setPosition(transform->getPosition());
+	sprite->setPosition(getGameObject()->getTransform()->getPosition());
 }
 
 void Sprite::render(sf::RenderWindow* _window)
 {
-	if(sprite != nullptr && 
-		_window != nullptr)
+	if(sprite != nullptr && _window != nullptr)
 	{
 		_window->draw(*sprite);
 	}
-	
 }
 
 void Sprite::setImage(sf::Texture inTexture, sf::IntRect inDimensions)
 {
-	texture = inTexture;
 	dimensions = inDimensions;
 
 	//Check the dimensions of the texture against the requested sprite dimensions to see if it can actually map them
-	if(texture.getSize().x < dimensions.left + dimensions.width ||
-		texture.getSize().y < dimensions.top + dimensions.height)
+	if(inTexture.getSize().x < (dimensions.left + dimensions.width) ||
+		inTexture.getSize().y < (dimensions.top + dimensions.height))
 	{ 
 		return;
 	}
 
-	sprite = new sf::Sprite(texture, dimensions);
+	sprite->setTexture(inTexture);
+	sprite->setTextureRect(inDimensions);
 }
