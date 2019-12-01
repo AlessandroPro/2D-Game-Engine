@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "AssetManager.h"
 #include "FileSystem.h"
+#include "PrefabAsset.h"
 
 GameObjectManager::~GameObjectManager()
 {
@@ -18,6 +19,8 @@ GameObjectManager::~GameObjectManager()
 	deleteFromRemoveList();
 }
 
+
+//Used to load a file, and cache the level id 
 void GameObjectManager::load(json::JSON& node, STRCODE levelID)
 {
 	if (node.hasKey("GameObjects"))
@@ -39,12 +42,14 @@ void GameObjectManager::load(json::JSON& node, STRCODE levelID)
 	}
 }
 
+//delete all game objects that match the levelid sent
 void GameObjectManager::unload(STRCODE levelID)
 {
 	for (auto gameObject : gameObjects)
 	{
 		if (gameObject.second != nullptr && gameObject.second->levelID == levelID)
 		{
+			//If destoryOnUnload is true, destroy the gameobject
 			if (gameObject.second->destroyOnUnload)
 			{
 				removeGameObject(gameObject.second);
@@ -70,6 +75,7 @@ void GameObjectManager::deleteFromRemoveList()
 	gameObjectsToRemove.clear();
 }
 
+//Initialize all gameobjects. Currently called in load()
 void GameObjectManager::initializeAllGameObjects()
 {
 	for (auto gameObject : gameObjects)
@@ -175,15 +181,15 @@ GameObject* GameObjectManager::createGameObjectWithComponents(std::list<std::str
 	return newGameObject;
 }
 
-//GameObject* GameObjectManager::instantiatePrefab(STRCODE prefabUID)
-//{
-//	//PrefabAsset* prefab = AssetManager::instance().getAssetByUUID(prefabUID);
-//
-//	GameObject* newGameObject = new GameObject();
-//	//newGameobject->load(prefab.getPrefab());
-//	newGameObject->initialize();
-//	addGameObject(newGameObject);
-//
-//	return newGameObject;
-//}
+GameObject* GameObjectManager::instantiatePrefab(STRCODE prefabUID)
+{
+	Asset* asset = AssetManager::instance().GetAssetBySTRCODE(prefabUID);
+
+	GameObject* newGameObject = new GameObject();
+	newGameObject->load(static_cast<PrefabAsset*>(asset)->getPrefab());
+	newGameObject->initialize();
+	addGameObject(newGameObject);
+
+	return newGameObject;
+}
 
