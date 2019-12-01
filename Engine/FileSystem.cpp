@@ -14,7 +14,7 @@ void FileSystem::update(float deltaTime)
 	{
 		for (auto iter : removeFiles)
 		{
-			//GameObjectManager::instance().unloadFile(fileData.find(iter)->second);
+			GameObjectManager::instance().unload(iter);
 			AssetManager::instance().UnloadLevelAssets(iter);
 			fileData.erase(iter);															// find the file in the cached data and removed it
 		}
@@ -26,7 +26,7 @@ void FileSystem::update(float deltaTime)
 		for (auto iter : loadFiles)
 		{
 			AssetManager::instance().LoadLevelAssets(iter.second , iter.first);
-			//GameObjectManager::instance().loadFile(fileJSON , fileId);
+			GameObjectManager::instance().load(iter.second, iter.first);
 			if (iter.first == currentLevel)
 			{
 				RenderSystem::instance().load(iter.second, iter.first);
