@@ -40,6 +40,7 @@ void RenderSystem::initialize()
 		window->setTitle(name);
 		window->setSize(windowSize);
 	}
+	currentView.resetView(window);
 }
 
 void RenderSystem::load(json::JSON loadNode, STRCODE fileId)
