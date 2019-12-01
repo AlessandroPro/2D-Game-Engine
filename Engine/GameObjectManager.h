@@ -1,8 +1,8 @@
 ///-------------------------------------------------------------------------------------------------
-// file: GameObjectManager.h
+// file: GameObjectManager.h 
 //
-// author: William Barry
-// date: 10/28/2019
+// author: Jesse Berube
+// documentation date: 11/30/2019
 //
 // summary:	The Game Object Manager
 ///-------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ public:
 	GameObject* findGameObject(STRCODE gameObjectUID);
 	std::list<GameObject*> getGameObjectsWithComponent(std::string& compType);
 	GameObject* createGameObject();
-	//GameObject* instantiatePrefab(STRCODE prefabUID);
+	GameObject* instantiatePrefab(STRCODE prefabUID);
 	GameObject* createGameObjectWithComponents(std::list<std::string>& comTypes);
 
 private:
