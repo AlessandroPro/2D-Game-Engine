@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "AssetManager.h"
+#include "Animator.h"
 #include "GameObject.h"
 #include "TextureAsset.h"
 #include "Sprite.h"
@@ -9,10 +10,12 @@ IMPLEMENT_DYNAMIC_CLASS(Animation)
 
 Animation::Animation()
 {
+	static_cast<Animator*>(getGameObject()->getComponent("Animator"))->addAnimation(this);
 }
 
 Animation::~Animation()
 {
+	static_cast<Animator*>(getGameObject()->getComponent("Animator"))->removeAnimation(this);
 }
 
 void Animation::load(json::JSON& loadNode)

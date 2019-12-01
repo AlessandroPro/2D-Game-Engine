@@ -1,21 +1,12 @@
 #include "Core.h"
+#include "RenderSystem.h"
 #include "Animator.h"
 #include "GameObject.h"
-#include "RenderSystem.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Animator)
 
 void Animator::initialize()
 {
-	for(int animationID : animationIDs)
-	{
-		Animation* currentAnimation = (Animation*)getGameObject()->getComponent(animationID);
-
-		if (currentAnimation != nullptr)
-		{
-			addAnimation(currentAnimation);
-		}
-	}
 }
 
 void Animator::update(float deltaTime)
@@ -30,26 +21,13 @@ void Animator::update(float deltaTime)
 	}
 }
 
-void Animator::load(json::JSON loadNode)
+void Animator::load(json::JSON& loadNode)
 {
 	Component::load(loadNode);
 
 	if (loadNode.hasKey("Name"))
 	{
 		name = loadNode["Name"].ToString();
-	}
-	if(loadNode.hasKey("Animations"))
-	{
-		json::JSON animationsNode = loadNode["Animations"];
-		for (auto& animationNode : animationsNode.ArrayRange())
-		{
-			if(animationNode.hasKey("ID"))
-			{
-				//Push back animation component IDs to load later during initialization
-				//once the GUIDs have been loaded.
-				animationIDs.push_back(animationNode["ID"].ToInt());
-			}
-		}
 	}
 }
 

@@ -26,16 +26,14 @@ private:
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
-
-	friend class RenderSystem;
-
+	void addAnimation(Animation* animation);
+	void removeAnimation(Animation* animation);
+	void load(json::JSON& loadNode) override;
+	friend class Animation;
 public:
 	Animator();
 	~Animator();
 	void setCurrentAnimation(std::string animation) { currentAnimationName = animation; }
-	void addAnimation(Animation* animation);
-	void removeAnimation(Animation* animation);
-	void load(json::JSON loadNode);
 	void playCurrentAnimation() { animations[currentAnimationName]->play(); }
 	void stopCurrentAnimation() { animations[currentAnimationName]->stop(); }
 };

@@ -40,6 +40,7 @@ protected:
 		isPlaying = false; 
 		timeSinceLastFrame = -1;
 	}
+	void load(json::JSON& loadNode) override;
 
 	friend class Animator;
 public:
@@ -50,7 +51,6 @@ public:
 	void setSpeed(float inSpeed) { speed = inSpeed; }
 	void setFrames(std::vector<sf::IntRect> inFrames) { frames = inFrames; }
 	void setLoopingStatus(bool inLoopable) { isLoopable = inLoopable; }
-	void load(json::JSON& loadNode) override;
 };
 
 #endif
