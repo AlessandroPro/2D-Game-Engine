@@ -11,19 +11,18 @@
 
 #include "Component.h"
 #include "IRenderable.h"
-#include "Transform.h"
 
 class Text : public Component, IRenderable
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Text, Component)
 	sf::Text* text = nullptr;
+	std::string fontAssetGUID = "";
 	STRCODE fontAssetID = -1;
-	sf::Font font;
-	std::string string;
+	std::string string = "";
 	//the three text modification settings below have been given default value examples in case the designer does not want to provide their own
 	//A possible characterSize assignment is:
 	//characterSize = 24;
-	int characterSize;
+	int characterSize = 24;
 	//A possible fillColor assignment is:
 	//fillColor = sf::Color::Black;
 	sf::Color fillColor;
@@ -31,26 +30,23 @@ class Text : public Component, IRenderable
 	//style = sf::Text::Bold;
 	//style = sf::Text::Italic;
 	//style = sf::Text::Regular;
-	sf::Text::Style style;
+	sf::Text::Style style = sf::Text::Style::Regular;
 	//The other two styles below cannot be assigned to the style variable and must instead be added to the text through booleans:
 	//sf::Text::StrikeThrough;
 	//sf::Text::Underlined;
 	bool isTextStrikeThrough = false;
 	bool isTextUnderlined = false;
-	Transform* transform = nullptr;
-
-public:
-	Text();
-	~Text();
+protected:
 	void update(float deltaTime) override;
 	void initialize() override;
 	virtual void render(sf::RenderWindow* _window) override;
-	void load(json::JSON& node);
+	void load(json::JSON& node) override;
+public:
+	Text() = default;
+	~Text();
 	void setText(sf::Font inFont, std::string inString, int inCharacterSize, sf::Color inFillColor, sf::Text::Style inStyle);
-	void setText(sf::Text* inText) { text = inText; }
 	void setIsStrikeThrough(bool inIsTextStrikeThrough) { isTextStrikeThrough = inIsTextStrikeThrough; }
 	void setIsUnderlined(bool inIsTextUnderlined) { isTextUnderlined = inIsTextUnderlined; }
-
-	friend class RenderSystem;
+	void setTextString(std::string& inString) { string = inString; }
 };
 

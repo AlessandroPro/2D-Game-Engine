@@ -47,6 +47,7 @@
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextureAsset.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
@@ -80,6 +81,7 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StandardTypes.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>

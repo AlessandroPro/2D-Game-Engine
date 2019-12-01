@@ -51,7 +51,7 @@ void Sprite::load(json::JSON& node)
 void Sprite::initialize()
 {
 	Component::initialize();
-	TextureAsset* asset = static_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
+	TextureAsset* asset = dynamic_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
 	if (asset == nullptr || 
 		(dimensions.left == dimensions.top &&
 		dimensions.top == dimensions.width &&

@@ -59,7 +59,7 @@ void Animation::load(json::JSON& loadNode)
 void Animation::initialize()
 {
 	Component::initialize();
-	asset = static_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(spriteSheetID));
+	asset = dynamic_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(spriteSheetID));
 	if (asset == nullptr)
 	{
 		getGameObject()->removeComponent(this->id);

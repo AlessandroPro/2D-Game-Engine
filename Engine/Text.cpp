@@ -3,12 +3,10 @@
 #include "GameObject.h"
 #include "RenderSystem.h"
 #include "AssetManager.h"
+#include "FontAsset.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Text)
 
-Text::Text()
-{
-}
 
 Text::~Text()
 {
@@ -21,42 +19,20 @@ Text::~Text()
 void Text::load(json::JSON& node)
 {
 	Component::load(node);
-	if (node.hasKey("Font"))
+	if (node.hasKey("FontGUID"))
 	{
-		json::JSON fontNode = node["Font"];
-
-		if (fontNode.hasKey("ID"))
-		{
-			fontAssetID = fontNode["ID"].ToInt();
-			//Load asset via asset manager
-			//font = AssetManager::instance().getAsset(fontAssetID);
-		}
-		else
-		{
-			return;
-		}
-	}
-	else
-	{
-		return;
+		fontAssetGUID = node["FontGUID"].ToString();
+		fontAssetID = GUIDToSTRCODE(fontAssetGUID);
 	}
 
 	if (node.hasKey("String"))
 	{
 		string = node["String"].ToString();
 	}
-	else
-	{
-		return;
-	}
 
 	if (node.hasKey("Character Size"))
 	{
 		characterSize = node["Character Size"].ToInt();
-	}
-	else
-	{
-		return;
 	}
 
 	if (node.hasKey("Fill Color"))
@@ -95,12 +71,8 @@ void Text::load(json::JSON& node)
 		}
 		else
 		{
-			return;
+			fillColor = sf::Color::White;
 		}
-	}
-	else
-	{
-		return;
 	}
 
 	if (node.hasKey("Style"))
@@ -123,12 +95,8 @@ void Text::load(json::JSON& node)
 			}
 			else
 			{
-				return;
+				style = sf::Text::Regular;
 			}
-		}
-		else
-		{
-			return;
 		}
 		if (styleNode.hasKey("Strike Through"))
 		{
@@ -153,26 +121,26 @@ void Text::load(json::JSON& node)
 			}
 		}
 	}
-	else
-	{
-		return;
-	}
-
-	setText(font, string, characterSize, fillColor, style);
 }
 
 void Text::initialize()
 {
 	Component::initialize();
+	FontAsset* asset = dynamic_cast<FontAsset*>(AssetManager::instance().GetAssetBySTRCODE(fontAssetID));
+	if (asset == nullptr)
+	{
+		asset = static_cast<FontAsset*>(AssetManager::instance().GetDefaultAssetOfType("FontAsset"));
+	}
+	setText(asset->getFont(), string, characterSize, fillColor, style);
 }
 
 void Text::update(float deltaTime)
 {
-	if (transform == nullptr)
+	text->setPosition(getGameObject()->getTransform()->getPosition());
+	if (text->getString() != string)
 	{
-		transform = getGameObject()->getTransform();
+		text->setString(string);
 	}
-	text->setPosition(transform->getPosition());
 }
 
 void Text::render(sf::RenderWindow* _window)
@@ -185,7 +153,6 @@ void Text::render(sf::RenderWindow* _window)
 
 void Text::setText(sf::Font inFont, std::string inString, int inCharacterSize, sf::Color inFillColor, sf::Text::Style inStyle)
 {
-	font = inFont;
 	string = inString;
 	characterSize = inCharacterSize;
 	fillColor = inFillColor;
@@ -193,7 +160,7 @@ void Text::setText(sf::Font inFont, std::string inString, int inCharacterSize, s
 
 	text = new sf::Text();
 
-	text->setFont(font);
+	text->setFont(inFont);
 	text->setString(string);
 	text->setCharacterSize(characterSize);
 	text->setFillColor(fillColor);
