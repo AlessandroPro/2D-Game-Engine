@@ -1,6 +1,9 @@
 #include "Core.h"
-#include "Animation.h"
+#include "AssetManager.h"
 #include "GameObject.h"
+#include "TextureAsset.h"
+#include "Sprite.h"
+#include "Animation.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Animation)
 
@@ -12,7 +15,7 @@ Animation::~Animation()
 {
 }
 
-void Animation::load(json::JSON loadNode)
+void Animation::load(json::JSON& loadNode)
 {
 	Component::load(loadNode);
 
@@ -23,10 +26,6 @@ void Animation::load(json::JSON loadNode)
 	if(loadNode.hasKey("Speed"))
 	{
 		speed = loadNode["Speed"].ToFloat();
-	}
-	if(loadNode.hasKey("SpriteID"))
-	{
-		spriteID = loadNode["SpriteID"].ToInt();
 	}
 	if(loadNode.hasKey("Frames"))
 	{
@@ -43,9 +42,10 @@ void Animation::load(json::JSON loadNode)
 			frames.push_back(sf::IntRect(frameNode["Left"].ToInt(), frameNode["Top"].ToInt(), frameNode["Width"].ToInt(), frameNode["Height"].ToInt()));
 		}
 	}
-	if(loadNode.hasKey("SpriteSheetID"))
+	if(loadNode.hasKey("textureGUID"))
 	{
-		spriteSheetID = loadNode["SpriteSheetID"].ToInt();
+		textureGUID = loadNode["textureGUID"].ToString();
+		spriteSheetID = GUIDToSTRCODE(textureGUID);
 	}
 	if(loadNode.hasKey("Loopable"))
 	{
@@ -55,17 +55,23 @@ void Animation::load(json::JSON loadNode)
 
 void Animation::initialize()
 {
-	if(sprite == nullptr && spriteID != -1)
+	Component::initialize();
+	asset = static_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(spriteSheetID));
+	if (asset == nullptr)
 	{
-		sprite = (Sprite*)getGameObject()->getComponent(spriteID);
+		getGameObject()->removeComponent(this->id);
+		return;
 	}
-
-	//Load sprite sheet via asset manager
+	sprite = dynamic_cast<Sprite*>(getGameObject()->getComponent("Sprite"));
+	if (sprite == nullptr)
+	{
+		getGameObject()->removeComponent(this->id);
+	}
 }
 
 void Animation::update(float deltaTime)
 {
-	if(isPlaying && sprite != nullptr)
+	if(isPlaying && sprite != nullptr && asset != nullptr)
 	{
 		if(timeSinceLastFrame < 0)
 		{
@@ -96,7 +102,7 @@ void Animation::update(float deltaTime)
 			}
 
 
-			sprite->setImage(spriteSheet, frames[currentSpriteIndex]);
+			sprite->setImage(asset->getTexture(), frames[currentSpriteIndex]);
 			
 		}
 		

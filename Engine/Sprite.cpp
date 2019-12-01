@@ -46,19 +46,25 @@ void Sprite::load(json::JSON& node)
 		
 		dimensions = sf::IntRect(l,t,w,h);
 	}
-	TextureAsset* asset = static_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
-	if (asset != nullptr)
-	{
-		delete sprite;
-		sprite = new sf::Sprite(asset->getTexture(), dimensions);
-	}
 }
 
 void Sprite::initialize()
 {
 	Component::initialize();
-	TextureAsset* asset = static_cast<TextureAsset*>(AssetManager::instance().GetDefaultAssetOfType("TextureAsset"));
-	sprite = new sf::Sprite(asset->getTexture());
+	TextureAsset* asset = static_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
+	if (asset == nullptr || 
+		(dimensions.left == dimensions.top &&
+		dimensions.top == dimensions.width &&
+		dimensions.width == dimensions.height &&
+		dimensions.height == 0))
+	{
+		asset = static_cast<TextureAsset*>(AssetManager::instance().GetDefaultAssetOfType("TextureAsset"));
+		sprite = new sf::Sprite(asset->getTexture());
+	}
+	else
+	{
+		sprite = new sf::Sprite(asset->getTexture(),dimensions);
+	}
 }
 
 void Sprite::update(float deltaTime)

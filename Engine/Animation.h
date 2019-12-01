@@ -10,9 +10,10 @@
 #define _ANIMATION_H_
 #pragma once
 
-#include "Sprite.h"
 #include "Component.h"
 
+class Sprite;
+class TextureAsset;
 class Animation: public Component
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Animation, Component)
@@ -21,15 +22,15 @@ private:
 	std::string name = "";
 	float speed = 1.0f;
 	clock_t timeSinceLastFrame = -1;
-	sf::Texture spriteSheet;
+	std::string textureGUID;
 	std::vector<sf::IntRect> frames;
 	STRCODE spriteSheetID = -1;
 	STRCODE spriteID = -1;
-	Sprite* sprite = nullptr;
 	int currentSpriteIndex = -1;
 	bool isPlaying = false;
 	bool isLoopable = false;
-
+	Sprite* sprite = nullptr;
+	TextureAsset* asset = nullptr;
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
@@ -41,7 +42,6 @@ protected:
 	}
 
 	friend class Animator;
-
 public:
 	Animation();
 	~Animation();
@@ -50,16 +50,7 @@ public:
 	void setSpeed(float inSpeed) { speed = inSpeed; }
 	void setFrames(std::vector<sf::IntRect> inFrames) { frames = inFrames; }
 	void setLoopingStatus(bool inLoopable) { isLoopable = inLoopable; }
-	void setSprite(Sprite* inSprite) {
-		sprite = inSprite;
-		spriteID = sprite->getID();
-	}
-	void setSpriteSheet(sf::Texture inSpriteSheet, STRCODE inID) 
-	{ 
-		spriteSheet = inSpriteSheet; 
-		spriteSheetID = inID;
-	}
-	void load(json::JSON loadNode);
+	void load(json::JSON& loadNode) override;
 };
 
 #endif
