@@ -19,7 +19,6 @@ private:
 	std::map<STRCODE, json::JSON> loadFiles;
 	std::list<STRCODE> removeFiles;
 	std::vector<STRCODE> levels;
-	json::JSON fileJSON;
 
 	STRCODE fileId = 0;
 	STRCODE currentLevel = 0;
@@ -32,10 +31,12 @@ protected:
     void update(float deltaTime) override;
 	
 	json::JSON loadAsset(std::string& fileName);
+	json::JSON loadRenderSettings(std::string& fileName);
 	STRCODE getCurrentLevel();
 
     friend class GameEngine;
 	friend class AssetManager;
+	friend class RenderSystem;
 	friend class GameObjectManager;
 
 

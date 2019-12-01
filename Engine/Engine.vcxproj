@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,42 +19,70 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="Asset.cpp" />
     <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="AudioAsset.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
+    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CRtti.cpp" />
     <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="FontAsset.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="ICollidable.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="IRenderable.cpp" />
     <ClCompile Include="ISystem.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="mersenne.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PrefabAsset.cpp" />
+    <ClCompile Include="PolygonCollider.cpp" />
     <ClCompile Include="registerClasses.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextureAsset.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Animator.h" />
+    <ClInclude Include="Asset.h" />
     <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="AudioAsset.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CircleCollider.h" />
+    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="CRtti.h" />
     <ClInclude Include="FileSystem.h" />
+    <ClInclude Include="FontAsset.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="ICollidable.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="ISystem.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PrefabAsset.h" />
+    <ClInclude Include="PolygonCollider.h" />
     <ClInclude Include="randomc.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StandardTypes.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>

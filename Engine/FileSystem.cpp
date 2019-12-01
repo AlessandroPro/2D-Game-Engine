@@ -16,6 +16,8 @@ void FileSystem::update(float deltaTime)
 		{
 			GameObjectManager::instance().unload(fileData.find(iter)->first);
 			//AssetManager::instance().unloadFile(fileData.find(iter)->first);
+			GameObjectManager::instance().unload(iter);
+			AssetManager::instance().UnloadLevelAssets(iter);
 			fileData.erase(iter);															// find the file in the cached data and removed it
 		}
 		removeFiles.clear();																// clear the list used to store remove fileIds
@@ -29,6 +31,13 @@ void FileSystem::update(float deltaTime)
 			GameObjectManager::instance().load(iter.second, iter.first);
 			//RenderSystem::instance().load(iter.second, iter.first);
 			fileData.emplace(iter.first, iter.second);										// add the loaded files to the fileData map
+			AssetManager::instance().LoadLevelAssets(iter.second , iter.first);
+			GameObjectManager::instance().load(iter.second, iter.first);
+			if (iter.first == currentLevel)
+			{
+				RenderSystem::instance().load(iter.second, iter.first);
+			}
+			fileData.emplace(iter.first, iter.second);										// find the file in the cached data and removed it
 		}
 		loadFiles.clear();																	// clear the list used to store loadFiles
 	}
@@ -37,7 +46,7 @@ void FileSystem::update(float deltaTime)
 
 void FileSystem::load(std::string& fileName, bool isLevelFile)								//Method to load a file
 {
-	fileJSON = parseJSON(fileName);
+	json::JSON fileJSON = parseJSON(fileName);
 	bool isLoaded = false;
 	if (isEmptyJSON != true)
 	{
@@ -108,6 +117,11 @@ void FileSystem::unload(std::string& fileName)												//Method to unload a f
 }
 
 json::JSON FileSystem::loadAsset(std::string& fileName)										//pass the Json file to the Asset Manager
+{
+	return parseJSON(fileName);
+}
+
+json::JSON FileSystem::loadRenderSettings(std::string& fileName)
 {
 	return parseJSON(fileName);
 }

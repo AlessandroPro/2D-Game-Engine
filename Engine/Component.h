@@ -1,6 +1,8 @@
 ///-------------------------------------------------------------------------------------------------
 // file: Component.h
 //
+// author: Abishek Tippireddy
+//
 // summary:	Component
 ///-------------------------------------------------------------------------------------------------
 #ifndef _COMPONENT_H_
@@ -9,12 +11,9 @@
 
 #include "Object.h"
 
-class CollisionSystem {
-public:
-	struct Collision;
-};
-class GameObject;
 
+class GameObject;
+struct Collision;
 class Component : public Object
 {
 	DECLARE_ABSTRACT_DERIVED_CLASS(Component, Object)
@@ -24,18 +23,18 @@ class Component : public Object
 
 private:
 	GameObject* gameObject = nullptr;
-public:
-	bool enabled=true;
+
 	
 private:
 	void setGameObject(GameObject* _gameObject);
-	virtual void onCollisionEnter(const CollisionSystem::Collision* const collisionData);
-	virtual void onCollisionStay(const CollisionSystem::Collision* const collisionData);
-	virtual void onCollisionExit(const CollisionSystem::Collision* const collisionData);
-	virtual void onTriggerEnter(const CollisionSystem::Collision* const collisionData);
-	virtual void onTriggerStay(const CollisionSystem::Collision* const collisionData);
-	virtual void onTriggerExit(const CollisionSystem::Collision* const collisionData);
-
+	virtual void onCollisionEnter(const Collision* const collisionData);
+	virtual void onCollisionStay(const Collision* const collisionData);
+	virtual void onCollisionExit(const Collision* const collisionData);
+	virtual void onTriggerEnter(const Collision* const collisionData);
+	virtual void onTriggerStay(const Collision* const collisionData);
+	virtual void onTriggerExit(const Collision* const collisionData);
+protected:
+	bool enabled = true;
 protected:
 	Component();
 	virtual ~Component();
@@ -45,6 +44,8 @@ protected:
 
 public:
 	GameObject* getGameObject();
+	virtual void setEnabled(bool _enabled) = 0;
+	bool isEnabled();
 };
 
 #endif 

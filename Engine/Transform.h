@@ -1,10 +1,16 @@
+///-------------------------------------------------------------------------------------------------
+// file: Transform.h
+//
+// author: Abishek Tippireddy
+//
+// summary:	Transform component, included with every game object
+///-------------------------------------------------------------------------------------------------
 #pragma once
 #include "Component.h"
 
-
 class Transform : public Component
 {
-	DECLARE_ABSTRACT_DERIVED_CLASS(Transform, Component)
+	DECLARE_DYNAMIC_DERIVED_CLASS(Transform, Component)
 
 public:
 	enum class Direction
@@ -40,6 +46,7 @@ public:
 	void translate(const sf::Vector2f& offset);
 	void setDirectionLock(Direction direction, bool locked);
 	bool checkDirectionLocked(Direction direction);
-	
+	void setEnabled(bool _enabled) override;
+
 };
 
