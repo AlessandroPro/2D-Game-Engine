@@ -74,7 +74,7 @@ void Sprite::update(float deltaTime)
 
 void Sprite::render(sf::RenderWindow* _window)
 {
-	if(sprite != nullptr && _window != nullptr)
+	if(sprite != nullptr && _window != nullptr && isEnabled())
 	{
 		_window->draw(*sprite);
 	}

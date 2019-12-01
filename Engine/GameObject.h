@@ -25,10 +25,10 @@ private:
 	std::list<Component*> componentsToRemove;
 	Transform* transform = nullptr;
 	STRCODE levelID = -1;
+	bool enabled = true;
 
 public:
 	std::string name;
-	bool enabled = true;
 	bool destroyOnUnload = true;
 
 protected:
@@ -49,6 +49,8 @@ public:
 	Transform* getTransform();
 	void createComponents(std::list<std::string>& compTypes);
 	Component* createComponent(const std::string& compType);
+	void setEnabled(bool _enabled);
+	bool isEnabled();
 
 	template<class T>
 	Component* createComponent()

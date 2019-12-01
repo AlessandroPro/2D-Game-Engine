@@ -23,8 +23,8 @@ class Component : public Object
 
 private:
 	GameObject* gameObject = nullptr;
-public:
-	bool enabled=true;
+	bool enabled = true;
+
 	
 private:
 	void setGameObject(GameObject* _gameObject);
@@ -44,6 +44,8 @@ protected:
 
 public:
 	GameObject* getGameObject();
+	void setEnabled(bool _enabled);
+	bool isEnabled();
 };
 
 #endif 

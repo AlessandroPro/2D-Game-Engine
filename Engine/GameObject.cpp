@@ -89,7 +89,10 @@ void GameObject::update(float deltaTime)
 	{
 		if (component.second != nullptr)
 		{
-			component.second->update(deltaTime);
+			if (component.second->enabled)
+			{
+				component.second->update(deltaTime);
+			}
 		}
 	}
 }
@@ -207,5 +210,23 @@ Component* GameObject::createComponent(const std::string& compType)
 	addComponent(component);
 	component->initialize();
 	return component;
+}
+
+void GameObject::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+
+	for (auto component : components)
+	{
+		if (component.second != nullptr)
+		{
+			component.second->setEnabled(enabled);
+		}
+	}
+}
+
+bool GameObject::isEnabled()
+{
+	return enabled;
 }
 

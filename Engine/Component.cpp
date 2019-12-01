@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "Component.h"
+#include "GameObject.h"
 
 IMPLEMENT_ABSTRACT_CLASS(Component)
 
@@ -21,6 +22,23 @@ void Component::initialize()
 void Component::load(json::JSON& node)
 {
 	Object::load(node);
+}
+
+void Component::setEnabled(bool _enabled)
+{
+	if(gameObject != nullptr)
+	{
+		// Prevents enabling a component that's part of a disabled game object
+		if (gameObject->isEnabled())
+		{
+			enabled = _enabled;
+		}
+	}
+}
+
+bool Component::isEnabled()
+{
+	return enabled;
 }
 
 void Component::setGameObject(GameObject* _gameObject)

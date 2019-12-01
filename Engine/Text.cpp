@@ -145,7 +145,7 @@ void Text::update(float deltaTime)
 
 void Text::render(sf::RenderWindow* _window)
 {
-	if (text != nullptr && _window != nullptr)
+	if (text != nullptr && _window != nullptr && isEnabled())
 	{
 		_window->draw(*text);
 	}
