@@ -26,7 +26,6 @@ void GameEngine::initialize(ISystem* _projectEngine)
 	AssetManager::instance().initialize();
 	
 	InputManager::instance().initialize();
-	FileSystem::instance().initialize();
 	AssetManager::instance().initialize();
 	GameObjectManager::instance().initialize();
 	CollisionSystem::instance().initialize();
