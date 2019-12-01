@@ -1,11 +1,20 @@
 #include "Core.h"
+#include "GameObject.h"
 #include "Transform.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Transform)
 
 void Transform::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
 	Component::initialize();
+}
+
+void Transform::setEnabled(bool _enabled)
+{
 
 }
 
@@ -23,6 +32,10 @@ Transform::Transform()
 
 void Transform::update(float deltaTime)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
 }
 
 void Transform::load(json::JSON& node)

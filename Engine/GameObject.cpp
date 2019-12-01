@@ -29,13 +29,20 @@ GameObject::~GameObject()
 
 void GameObject::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
 	Object::initialize();
 
 	for (auto component : components)
 	{
 		if (component.second != nullptr)
 		{
-			component.second->initialize();
+			if (!component.second->initialized)
+			{
+				component.second->initialize();
+			}
 		}
 	}
 }
@@ -94,10 +101,7 @@ void GameObject::update(float deltaTime)
 	{
 		if (component.second != nullptr)
 		{
-			if (component.second->enabled)
-			{
-				component.second->update(deltaTime);
-			}
+			component.second->update(deltaTime);
 		}
 	}
 }
@@ -220,13 +224,9 @@ Component* GameObject::createComponent(const std::string& compType)
 void GameObject::setEnabled(bool _enabled)
 {
 	enabled = _enabled;
-
-	for (auto component : components)
+	if (enabled && !initialized)
 	{
-		if (component.second != nullptr)
-		{
-			component.second->setEnabled(enabled);
-		}
+		initialize();
 	}
 }
 

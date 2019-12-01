@@ -82,7 +82,10 @@ void GameObjectManager::initializeAllGameObjects()
 	{
 		if (gameObject.second != nullptr)
 		{
-			gameObject.second->initialize();
+			if (!gameObject.second->initialized)
+			{
+				gameObject.second->initialize();
+			}
 		}
 	}
 }

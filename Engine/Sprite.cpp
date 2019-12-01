@@ -48,8 +48,23 @@ void Sprite::load(json::JSON& node)
 	}
 }
 
+void Sprite::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
+
+
 void Sprite::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
+
 	Component::initialize();
 	TextureAsset* asset = dynamic_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
 	if (asset == nullptr || 
@@ -69,12 +84,21 @@ void Sprite::initialize()
 
 void Sprite::update(float deltaTime)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
 	sprite->setPosition(getGameObject()->getTransform()->getPosition());
 }
 
 void Sprite::render(sf::RenderWindow* _window)
 {
-	if(sprite != nullptr && _window != nullptr && isEnabled())
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
+
+	if(sprite != nullptr && _window != nullptr)
 	{
 		_window->draw(*sprite);
 	}

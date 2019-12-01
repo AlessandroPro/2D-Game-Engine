@@ -27,6 +27,7 @@ public:
 	~Sprite();
 	void update(float deltaTime) override;
     void initialize() override;
+	void setEnabled(bool _enabled) override;
 	friend class Animation;
 };
 

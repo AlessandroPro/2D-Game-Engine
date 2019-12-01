@@ -49,6 +49,10 @@ void CircleCollider::setTrigger(bool isTrigger)
 
 void CircleCollider::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
 	Component::initialize();
 
 	b2CircleShape* circle = new b2CircleShape();
@@ -83,8 +87,24 @@ void CircleCollider::initialize()
 
 }
 
+void CircleCollider::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
+
+
 void CircleCollider::update(float deltaTime)
 {
+	
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
+
 	//move b2transform if and only if staticCollider is true
 
 	//use gameobjects getTransform function and use transform.getposition, and transform.getrotation

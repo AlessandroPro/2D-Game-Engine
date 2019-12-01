@@ -56,8 +56,21 @@ void Animation::load(json::JSON& loadNode)
 	}
 }
 
+void Animation::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
+
 void Animation::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
 	Component::initialize();
 	asset = dynamic_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(spriteSheetID));
 	if (asset == nullptr)
@@ -74,6 +87,10 @@ void Animation::initialize()
 
 void Animation::update(float deltaTime)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
 	if(isPlaying && sprite != nullptr && asset != nullptr)
 	{
 		if(timeSinceLastFrame < 0)

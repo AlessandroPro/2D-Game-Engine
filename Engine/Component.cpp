@@ -25,23 +25,7 @@ void Component::load(json::JSON& node)
 
 	if (node.hasKey("enabled"))
 	{
-		setEnabled(node["enabled"].ToBool());
-	}
-}
-
-void Component::setEnabled(bool _enabled)
-{
-	if(gameObject != nullptr)
-	{
-		// Prevents enabling a component that's part of a disabled game object
-		if (gameObject->isEnabled())
-		{
-			enabled = _enabled;
-		}
-		else
-		{
-			enabled = false;
-		}
+		enabled = node["enabled"].ToBool();
 	}
 }
 

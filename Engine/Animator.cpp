@@ -5,12 +5,31 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Animator)
 
+void Animator::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
+
 void Animator::initialize()
 {
+	if (!isEnabled())
+	{
+		return;
+	}
+	Component::initialize();
 }
 
 void Animator::update(float deltaTime)
 {
+	if (!getGameObject()->isEnabled() || !enabled)
+	{
+		return;
+	}
+
 	if(RenderSystem::instance().getRenderWindow() == nullptr)
 	{
 		//Turn off all animations if the window is closed.

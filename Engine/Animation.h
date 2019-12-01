@@ -51,6 +51,7 @@ public:
 	void setSpeed(float inSpeed) { speed = inSpeed; }
 	void setFrames(std::vector<sf::IntRect> inFrames) { frames = inFrames; }
 	void setLoopingStatus(bool inLoopable) { isLoopable = inLoopable; }
+	void setEnabled(bool _enabled) override;
 };
 
 #endif
