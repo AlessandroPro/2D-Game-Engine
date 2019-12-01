@@ -25,7 +25,7 @@ void Component::load(json::JSON& node)
 
 	if (node.hasKey("enabled"))
 	{
-		enabled = node["enabled"].ToBool();
+		setEnabled(node["enabled"].ToBool());
 	}
 }
 
@@ -37,6 +37,10 @@ void Component::setEnabled(bool _enabled)
 		if (gameObject->isEnabled())
 		{
 			enabled = _enabled;
+		}
+		else
+		{
+			enabled = false;
 		}
 	}
 }
