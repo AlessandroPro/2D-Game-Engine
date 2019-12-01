@@ -37,8 +37,7 @@ void RenderSystem::initialize()
 	}
 	else
 	{
-		window->setTitle(name);
-		window->setSize(windowSize);
+		window->create(sf::VideoMode(windowSize.x, windowSize.y, 60), name, sf::Style::Default);
 	}
 	currentView.resetView(window);
 }
