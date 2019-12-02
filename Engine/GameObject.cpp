@@ -120,6 +120,7 @@ void GameObject::deleteFromRemoveList()
 		{
 			components.erase(component->getID());
 			delete component;
+			component = nullptr;
 		}
 	}
 	componentsToRemove.clear();
