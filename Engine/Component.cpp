@@ -44,6 +44,15 @@ GameObject* Component::getGameObject()
 	return gameObject;
 }
 
+void Component::setEnabled(bool _enabled)
+{
+	enabled = _enabled;
+	if (enabled && getGameObject()->isEnabled() && !initialized)
+	{
+		initialize();
+	}
+}
+
 void Component::onCollisionEnter(const Collision* const collisionData)
 {
 }
