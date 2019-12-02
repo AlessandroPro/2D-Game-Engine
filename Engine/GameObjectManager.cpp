@@ -7,15 +7,15 @@
 
 GameObjectManager::~GameObjectManager()
 {
-	for (auto gameObject : gameObjects)
+	for (auto& gameObject : gameObjects)
 	{
 		if (gameObject.second != nullptr)
 		{
 			delete gameObject.second;
+			gameObject.second = nullptr;
 		}
 	}
 	gameObjects.clear();
-
 	deleteFromRemoveList();
 }
 
@@ -64,12 +64,14 @@ void GameObjectManager::unload(STRCODE levelID)
 void GameObjectManager::deleteFromRemoveList()
 {
 	//Created this as a function since it would be written multiple times otherwise
-	for (auto gameObject : gameObjectsToRemove)
+	for (auto& gameObject : gameObjectsToRemove)
 	{
 		if (gameObject != nullptr)
 		{
 			gameObjects.erase(gameObject->id);
+			
 			delete gameObject;
+			//gameObject = nullptr;
 		}
 	}
 	gameObjectsToRemove.clear();
@@ -98,7 +100,7 @@ void GameObjectManager::update(float deltaTime)
 {
 	deleteFromRemoveList();
 
-	for (auto gameObject : gameObjects)
+	for (auto& gameObject : gameObjects)
 	{
 		gameObject.second->update(deltaTime);
 	}

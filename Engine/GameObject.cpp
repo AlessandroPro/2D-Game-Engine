@@ -16,11 +16,12 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	for (auto component : components)
+	for (auto& component : components)
 	{
 		if (component.second != nullptr)
 		{
 			delete component.second;
+			component.second = nullptr;
 		}
 	}
 	components.clear();
@@ -61,6 +62,11 @@ void GameObject::load(json::JSON& node)
 		enabled = node["enabled"].ToBool();
 	}
 
+	if (node.hasKey("name"))
+	{
+		name = node["name"].ToString();
+	}
+
 	if (node.hasKey("Components"))
 	{
 		json::JSON componentsNode = node["Components"];
@@ -97,7 +103,7 @@ void GameObject::update(float deltaTime)
 		return;
 	}
 
-	for (auto component : components)
+	for (auto& component : components)
 	{
 		if (component.second != nullptr)
 		{
@@ -108,7 +114,7 @@ void GameObject::update(float deltaTime)
 
 void GameObject::deleteFromRemoveList()
 {
-	for (auto component : componentsToRemove)
+	for (auto& component : componentsToRemove)
 	{
 		if (component != nullptr)
 		{
