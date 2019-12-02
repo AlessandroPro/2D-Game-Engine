@@ -1,3 +1,11 @@
+///-------------------------------------------------------------------------------------------------
+// file: PrefabAsset.h
+//
+// author: Huzaifa Saboowala
+// date: 11/25/2019
+//
+// summary:	Prefab Asset class
+///-------------------------------------------------------------------------------------------------
 #ifndef _PREFABASSET_H
 #define _PREFABASSET_H
 #pragma once
