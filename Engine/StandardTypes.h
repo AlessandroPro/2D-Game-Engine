@@ -15,6 +15,11 @@
 #define	MATH_180_OVER_PI	(57.295779513082320876798154814105f)
 #define	MATH_PI_OVER_180	(0.01745329251994329576923690768489f)
 
+#define PHYSICS_PIXEL_CONVERSION 0.01f
+#define PIXEL_PHYSICS_CONVERSION 100.f
+#define PIXEL_TO_METER(pixel) (pixel * PHYSICS_PIXEL_CONVERSION) 
+#define METER_TO_PIXEL(meter) (meter * PIXEL_PHYSICS_CONVERSION)
+
 #define	RAD_TO_DEG(rad)		(rad*MATH_180_OVER_PI)
 #define	DEG_TO_RAD(deg)		(deg*MATH_PI_OVER_180)
 
@@ -90,6 +95,11 @@ inline std::string GUIDTostring(UUID& guid)
 inline STRCODE GUIDToSTRCODE(UUID& guid)
 {
 	return getHashCode(GUIDTostring(guid).c_str());
+}
+
+inline STRCODE GUIDToSTRCODE(std::string& guid)
+{
+	return getHashCode(guid.c_str());
 }
 
 #define THROW_RUNTIME_ERROR(condition, message)		\
