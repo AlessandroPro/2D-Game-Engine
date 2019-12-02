@@ -44,7 +44,7 @@ protected:
 
 public:
 	GameObject* getGameObject();
-	virtual void setEnabled(bool _enabled) = 0;
+	virtual void setEnabled(bool _enabled);
 	bool isEnabled();
 };
 

@@ -87,15 +87,6 @@ void CircleCollider::initialize()
 
 }
 
-void CircleCollider::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
-
 
 void CircleCollider::update(float deltaTime)
 {

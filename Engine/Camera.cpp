@@ -15,14 +15,6 @@ void Camera::initialize()
 	Component::initialize();
 }
 
-void Camera::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
 
 void Camera::update(float deltaTime)
 {
