@@ -28,7 +28,7 @@ void Sprite::load(json::JSON& node)
 	}
 	if(node.hasKey("Dimensions"))
 	{
-		float w, h, t, l = 0.0f;
+		int w, h, t, l = 0;
 		json::JSON dimensionNode = node["Dimensions"];
 
 		if(!dimensionNode.hasKey("Left") ||
@@ -39,10 +39,10 @@ void Sprite::load(json::JSON& node)
 			return;
 		}
 
-		l = dimensionNode["Left"].ToFloat();
-		t = dimensionNode["Top"].ToFloat();
-		w = dimensionNode["Width"].ToFloat();
-		h = dimensionNode["Height"].ToFloat();
+		l = dimensionNode["Left"].ToInt();
+		t = dimensionNode["Top"].ToInt();
+		w = dimensionNode["Width"].ToInt();
+		h = dimensionNode["Height"].ToInt();
 		
 		dimensions = sf::IntRect(l,t,w,h);
 	}

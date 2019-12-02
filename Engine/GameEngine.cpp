@@ -24,11 +24,10 @@ void GameEngine::initialize(ISystem* _projectEngine)
     
 	FileSystem::instance().initialize();
 	AssetManager::instance().initialize();
-	
-	InputManager::instance().initialize();
-	GameObjectManager::instance().initialize();
 	CollisionSystem::instance().initialize();
 	RenderSystem::instance().initialize();
+	InputManager::instance().initialize();
+	GameObjectManager::instance().initialize();
 	projectEngine = _projectEngine;
 	if (projectEngine != nullptr)
 	{

@@ -15,7 +15,7 @@
 class Text : public Component, IRenderable
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Text, Component)
-	sf::Text* text = nullptr;
+	sf::Text text;
 	std::string fontAssetGUID = "";
 	STRCODE fontAssetID = -1;
 	std::string string = "";
@@ -44,7 +44,7 @@ protected:
 public:
 	Text() = default;
 	~Text();
-	void setText(sf::Font inFont, std::string inString, int inCharacterSize, sf::Color inFillColor, sf::Text::Style inStyle);
+	void setText(sf::Font& inFont, std::string inString, int inCharacterSize, sf::Color inFillColor, sf::Text::Style inStyle);
 	void setIsStrikeThrough(bool inIsTextStrikeThrough) { isTextStrikeThrough = inIsTextStrikeThrough; }
 	void setIsUnderlined(bool inIsTextUnderlined) { isTextUnderlined = inIsTextUnderlined; }
 	void setTextString(std::string& inString) { string = inString; }
