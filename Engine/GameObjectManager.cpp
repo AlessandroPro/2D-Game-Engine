@@ -71,7 +71,7 @@ void GameObjectManager::deleteFromRemoveList()
 			gameObjects.erase(gameObject->id);
 			
 			delete gameObject;
-			//gameObject = nullptr;
+			gameObject = nullptr;
 		}
 	}
 	gameObjectsToRemove.clear();
