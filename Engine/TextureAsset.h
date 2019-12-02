@@ -1,3 +1,11 @@
+///-------------------------------------------------------------------------------------------------
+// file: TextureAsset.h
+//
+// author: Huzaifa Saboowala
+// date: 11/25/2019
+//
+// summary:	Texture Asset class
+///-------------------------------------------------------------------------------------------------
 #ifndef _TEXTUREASSET_H
 #define _TEXTUREASSET_H
 #pragma once
