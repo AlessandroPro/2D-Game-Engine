@@ -18,10 +18,7 @@ void Text::setEnabled(bool _enabled)
 
 Text::~Text()
 {
-	if (text != nullptr)
-	{
-		delete text;
-	}
+	
 }
 
 void Text::load(json::JSON& node)
@@ -153,10 +150,10 @@ void Text::update(float deltaTime)
 	{
 		return;
 	}
-	text->setPosition(getGameObject()->getTransform()->getPosition());
-	if (text->getString() != string)
+	text.setPosition(getGameObject()->getTransform()->getPosition());
+	if (text.getString() != string)
 	{
-		text->setString(string);
+		text.setString(string);
 	}
 }
 
@@ -167,39 +164,37 @@ void Text::render(sf::RenderWindow* _window)
 		return;
 	}
 
-	if (text != nullptr && _window != nullptr)
+	if (_window != nullptr)
 	{
-		_window->draw(*text);
+		_window->draw(text);
 	}
 }
 
-void Text::setText(sf::Font inFont, std::string inString, int inCharacterSize, sf::Color inFillColor, sf::Text::Style inStyle)
+void Text::setText(sf::Font& inFont, std::string inString, int inCharacterSize, sf::Color inFillColor, sf::Text::Style inStyle)
 {
 	string = inString;
 	characterSize = inCharacterSize;
 	fillColor = inFillColor;
 	style = inStyle;
 
-	text = new sf::Text();
-
-	text->setFont(inFont);
-	text->setString(string);
-	text->setCharacterSize(characterSize);
-	text->setFillColor(fillColor);
+	text.setFont(inFont);
+	text.setString(string);
+	text.setCharacterSize(characterSize);
+	text.setFillColor(fillColor);
 	if (isTextStrikeThrough && isTextUnderlined)
 	{
-		text->setStyle(style | sf::Text::StrikeThrough | sf::Text::Underlined);
+		text.setStyle(style | sf::Text::StrikeThrough | sf::Text::Underlined);
 	}
 	else if (isTextStrikeThrough)
 	{
-		text->setStyle(style | sf::Text::StrikeThrough);
+		text.setStyle(style | sf::Text::StrikeThrough);
 	}
 	else if (isTextUnderlined)
 	{
-		text->setStyle(style | sf::Text::Underlined);
+		text.setStyle(style | sf::Text::Underlined);
 	}
 	else
 	{
-		text->setStyle(style);
+		text.setStyle(style);
 	}
 }
