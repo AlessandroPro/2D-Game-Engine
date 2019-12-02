@@ -39,7 +39,7 @@ void AssetManager::LoadDefaultAssets(json::JSON& node, STRCODE fileID)
 	//Create Default Assets
 	//std::string defaultAssetFilePath = "../Assets/DefaultAssets/DefaultAssets.meta";
 	//FileSystem::instance().load(defaultAssetFilePath, false);
-	
+
 	if (node.hasKey("resources"))
 	{
 		json::JSON levelResourcesNode = node["resources"];
@@ -116,12 +116,16 @@ void AssetManager::UnloadLevelAssets(STRCODE fileID)
 	std::map<STRCODE, Asset*>::iterator iteratorAsset = assets.begin();
 	while (iteratorAsset != assets.end())
 	{
-		for (auto const& iteratorReference : iteratorAsset->second->references)
+		for (auto iteratorReference = iteratorAsset->second->references.begin(); iteratorReference != iteratorAsset->second->references.end(); iteratorReference++)
 		{
 			//Check if the asset has a reference of the file ID, if does, remove the reference
-			if (iteratorReference == fileID)
+			if (*iteratorReference == fileID)
 			{
-				iteratorAsset->second->references.remove(fileID);
+				iteratorReference = iteratorAsset->second->references.erase(iteratorReference);
+				if (iteratorReference == iteratorAsset->second->references.end())
+				{
+					break;
+				}
 			}
 		}
 
@@ -147,7 +151,7 @@ Asset* AssetManager::CreateAssetT(std::string& className, std::string& guid, std
 	return asset;
 }
 
-Asset*const AssetManager::GetAssetByGUID(std::string guid)
+Asset* const AssetManager::GetAssetByGUID(std::string guid)
 {
 	STRCODE uuid = getHashCode(guid.c_str());
 	if (assets.count(uuid))
