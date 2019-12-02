@@ -1,10 +1,6 @@
 ///-------------------------------------------------------------------------------------------------
 // file: FileSystem.h
 //
-<<<<<<< HEAD
-// author: Aditya Dinesh & Shreyas Babu
-// date: 11/24/2019
-=======
 // author: Aditya Dinesh
 // date: 11/29/2019
 //
@@ -16,7 +12,6 @@
 // date: 11/29/2019
 //
 // summary: Filesystem Load file, Load Asset data, Load Render data, Update
->>>>>>> Development
 //
 ///-------------------------------------------------------------------------------------------------
 #ifndef _FILESYSTEM_H_
