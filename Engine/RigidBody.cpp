@@ -82,27 +82,22 @@ void RigidBody::onCollisionEnter(const Collision* const collisionData)
 	sf::Vector2f collisionDirection(collisionData->colliders[otherColliderIx]->getGameObject()->getTransform()->getPosition() -
 							getGameObject()->getTransform()->getPosition());
 	
-	if (std::abs(collisionDirection.y) >= std::abs(collisionDirection.x))
+	if (collisionDirection.x > 0)
 	{
-		if(collisionDirection.y <= 0)
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Down, collisionData->collisionId);
-		}
-		else 
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Up, collisionData->collisionId);
-		}
+		addCollisionToDirectionOnStay(Transform::Direction::Right, collisionData->collisionId);
 	}
-	else
+	else if (collisionDirection.x < 0)
 	{
-		if (collisionDirection.x <= 0)
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Left, collisionData->collisionId);
-		}
-		else
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Right, collisionData->collisionId);
-		}
+		addCollisionToDirectionOnStay(Transform::Direction::Left, collisionData->collisionId);
+	}
+
+	if (collisionDirection.y > 0)
+	{
+		addCollisionToDirectionOnStay(Transform::Direction::Up, collisionData->collisionId);
+	}
+	else if (collisionDirection.y < 0)
+	{
+		addCollisionToDirectionOnStay(Transform::Direction::Down, collisionData->collisionId);
 	}
 
 }
@@ -117,27 +112,22 @@ void RigidBody::onCollisionStay(const Collision* const collisionData)
 	sf::Vector2f collisionDirection(collisionData->colliders[otherColliderIx]->getGameObject()->getTransform()->getPosition() -
 		getGameObject()->getTransform()->getPosition());
 
-	if (std::abs(collisionDirection.y) >= std::abs(collisionDirection.x))
+	if (collisionDirection.x > 0)
 	{
-		if (collisionDirection.y <= 0)
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Down, collisionData->collisionId);
-		}
-		else
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Up, collisionData->collisionId);
-		}
+		addCollisionToDirectionOnStay(Transform::Direction::Right, collisionData->collisionId);
 	}
-	else
+	else if (collisionDirection.x < 0)
 	{
-		if (collisionDirection.x <= 0)
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Left, collisionData->collisionId);
-		}
-		else
-		{
-			addCollisionToDirectionOnStay(Transform::Direction::Right, collisionData->collisionId);
-		}
+		addCollisionToDirectionOnStay(Transform::Direction::Left, collisionData->collisionId);
+	}
+
+	if (collisionDirection.y > 0)
+	{
+		addCollisionToDirectionOnStay(Transform::Direction::Up, collisionData->collisionId);
+	}
+	else if (collisionDirection.y < 0)
+	{
+		addCollisionToDirectionOnStay(Transform::Direction::Down, collisionData->collisionId);
 	}
 }
 
