@@ -1,3 +1,27 @@
+///-------------------------------------------------------------------------------------------------
+// file: FileSystem.h
+//
+// author: Aditya Dinesh & Shreyas Babu
+// date: 11/29/2019
+//
+// summary:	FileSystem::update
+///-------------------------------------------------------------------------------------------------
+//
+// author: Shreyas Babu
+// date: 11/29/2019
+//
+// summary: FileSystem::load, FileSystem::parseJSON, FileSystem::loadAsset, FileSystem::loadRenderSettings
+//
+///-------------------------------------------------------------------------------------------------
+//
+// author: Aditya Dinesh
+// date: 11/29/2019
+//
+// summary: FileSystem::unload, FileSystem::getCurrentLevel 
+//
+///-------------------------------------------------------------------------------------------------
+
+
 #include "Core.h"
 #include "FileSystem.h"
 #include "GameObjectManager.h"
