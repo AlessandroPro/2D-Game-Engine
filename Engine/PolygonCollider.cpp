@@ -17,15 +17,6 @@ PolygonCollider::~PolygonCollider()
 
 }
 
-void PolygonCollider::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
-
 void PolygonCollider::setTrigger(bool isTrigger)
 {
 	trigger = isTrigger;

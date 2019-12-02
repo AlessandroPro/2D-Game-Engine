@@ -24,15 +24,6 @@ RigidBody::~RigidBody()
 	CollisionSystem::instance().removeRigidBody(this);
 }
 
-void RigidBody::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
-
 void RigidBody::addCollidable(ICollidable* collider)
 {
 	if (collider == nullptr)

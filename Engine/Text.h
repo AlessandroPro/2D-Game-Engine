@@ -48,6 +48,5 @@ public:
 	void setIsStrikeThrough(bool inIsTextStrikeThrough) { isTextStrikeThrough = inIsTextStrikeThrough; }
 	void setIsUnderlined(bool inIsTextUnderlined) { isTextUnderlined = inIsTextUnderlined; }
 	void setTextString(std::string& inString) { string = inString; }
-	void setEnabled(bool _enabled) override;
 };
 

@@ -42,6 +42,5 @@ public:
 	void onCollisionEnter(const Collision* const collisionData) override;
 	void onCollisionStay(const Collision* const collisionData) override;
 	void onCollisionExit(const Collision* const collisionData) override;
-	void setEnabled(bool _enabled) override;
 };
 #endif
