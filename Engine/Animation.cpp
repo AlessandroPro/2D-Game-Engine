@@ -10,12 +10,17 @@ IMPLEMENT_DYNAMIC_CLASS(Animation)
 
 Animation::Animation()
 {
-	static_cast<Animator*>(getGameObject()->getComponent("Animator"))->addAnimation(this);
+
 }
 
 Animation::~Animation()
 {
-	static_cast<Animator*>(getGameObject()->getComponent("Animator"))->removeAnimation(this);
+	Animator* currentAnimator = dynamic_cast<Animator*>(getGameObject()->getComponent("Animator"));
+	if (currentAnimator != nullptr)
+	{
+		currentAnimator->removeAnimation(this);
+	}
+
 }
 
 void Animation::load(json::JSON& loadNode)
@@ -26,16 +31,17 @@ void Animation::load(json::JSON& loadNode)
 	{
 		name = loadNode["Name"].ToString();
 	}
-	if(loadNode.hasKey("Speed"))
+
+	if (loadNode.hasKey("Speed"))
 	{
 		speed = loadNode["Speed"].ToFloat();
 	}
-	if(loadNode.hasKey("Frames"))
+	if (loadNode.hasKey("Frames"))
 	{
 		json::JSON framesNode = loadNode["Frames"];
-		for(auto& frameNode : framesNode.ArrayRange())
+		for (auto& frameNode : framesNode.ArrayRange())
 		{
-			if(!frameNode.hasKey("Left") ||
+			if (!frameNode.hasKey("Left") ||
 				!frameNode.hasKey("Top") ||
 				!frameNode.hasKey("Width") ||
 				!frameNode.hasKey("Height"))
@@ -45,12 +51,17 @@ void Animation::load(json::JSON& loadNode)
 			frames.push_back(sf::IntRect(frameNode["Left"].ToInt(), frameNode["Top"].ToInt(), frameNode["Width"].ToInt(), frameNode["Height"].ToInt()));
 		}
 	}
-	if(loadNode.hasKey("textureGUID"))
+	if (loadNode.hasKey("Texture"))
 	{
-		textureGUID = loadNode["textureGUID"].ToString();
-		spriteSheetID = GUIDToSTRCODE(textureGUID);
+		json::JSON textureNode = loadNode["Texture"];
+		if (textureNode.hasKey("textureAssetGUID"))
+		{
+			textureGUID = textureNode["textureAssetGUID"].ToString();
+			spriteSheetID = GUIDToSTRCODE(textureGUID);
+		}
 	}
-	if(loadNode.hasKey("Loopable"))
+
+	if (loadNode.hasKey("Loopable"))
 	{
 		isLoopable = loadNode["Loopable"].ToBool();
 	}
@@ -71,7 +82,9 @@ void Animation::initialize()
 	{
 		return;
 	}
+
 	Component::initialize();
+	static_cast<Animator*>(getGameObject()->getComponent("Animator"))->addAnimation(this);
 	asset = dynamic_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(spriteSheetID));
 	if (asset == nullptr)
 	{
@@ -85,26 +98,29 @@ void Animation::initialize()
 	}
 }
 
+void Animation::play()
+{
+	isPlaying = true;
+	currentSpriteIndex = 0;
+	timeSinceLastFrame = 0;
+	sprite->setImage(asset->getTexture(), frames[currentSpriteIndex]);
+}
+
 void Animation::update(float deltaTime)
 {
 	if (!getGameObject()->isEnabled() || !enabled)
 	{
 		return;
 	}
-	if(isPlaying && sprite != nullptr && asset != nullptr)
+	if (isPlaying && sprite != nullptr && asset != nullptr)
 	{
-		if(timeSinceLastFrame < 0)
-		{
-			timeSinceLastFrame = clock();
-			return;
-		} 
+		timeSinceLastFrame += deltaTime;
 
 		//If the most recent iteration of the clock() is greater than the frame switching speed
 		//then the frame is updated for the animation
-		if((double(clock()) - double(timeSinceLastFrame)) / double(CLOCKS_PER_SEC) > speed)
+		if (timeSinceLastFrame > speed)
 		{
 			currentSpriteIndex++;
-			timeSinceLastFrame = clock();
 
 			//Behaviour for reaching the end of the clip
 			if (currentSpriteIndex >= frames.size())
@@ -116,15 +132,12 @@ void Animation::update(float deltaTime)
 				else
 				{
 					isPlaying = false;
-					timeSinceLastFrame = -1;
 					return;
 				}
 			}
-
-
+			timeSinceLastFrame = 0;
 			sprite->setImage(asset->getTexture(), frames[currentSpriteIndex]);
-			
 		}
-		
+
 	}
 }

@@ -14,14 +14,14 @@
 
 class Sprite;
 class TextureAsset;
-class Animation: public Component
+class Animation : public Component
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Animation, Component)
 
 private:
 	std::string name = "";
 	float speed = 1.0f;
-	clock_t timeSinceLastFrame = -1;
+	double timeSinceLastFrame = 0;
 	std::string textureGUID;
 	std::vector<sf::IntRect> frames;
 	STRCODE spriteSheetID = -1;
@@ -34,10 +34,10 @@ private:
 protected:
 	void initialize() override;
 	void update(float deltaTime) override;
-	void play() { isPlaying = true; }
-	void stop() 
-	{ 
-		isPlaying = false; 
+	void play();
+	void stop()
+	{
+		isPlaying = false;
 		timeSinceLastFrame = -1;
 	}
 	void load(json::JSON& loadNode) override;
