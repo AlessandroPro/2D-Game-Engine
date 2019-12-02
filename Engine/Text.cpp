@@ -7,15 +7,6 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Text)
 
-void Text::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
-
 Text::~Text()
 {
 	
