@@ -46,6 +46,11 @@ void Sprite::load(json::JSON& node)
 
 		dimensions = sf::IntRect(l, t, w, h);
 	}
+	if(node.hasKey("Layer"))
+	{
+		RenderSystem::instance().setRenderLayer(this, (RenderSystem::RenderLayer)node["Layer"].ToInt());
+
+	}
 }
 
 void Sprite::initialize()
