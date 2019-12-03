@@ -67,15 +67,6 @@ void Animation::load(json::JSON& loadNode)
 	}
 }
 
-void Animation::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
-
 void Animation::initialize()
 {
 	if (!isEnabled())

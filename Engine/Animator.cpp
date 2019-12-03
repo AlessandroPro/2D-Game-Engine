@@ -5,15 +5,6 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Animator)
 
-void Animator::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
-
 void Animator::initialize()
 {
 	if (!isEnabled())

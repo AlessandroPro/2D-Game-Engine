@@ -13,11 +13,6 @@ void Transform::initialize()
 	Component::initialize();
 }
 
-void Transform::setEnabled(bool _enabled)
-{
-
-}
-
 Transform::Transform()
 {
 	transform.setPosition(sf::Vector2f(0, 0));

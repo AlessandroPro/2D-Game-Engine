@@ -48,16 +48,6 @@ void Sprite::load(json::JSON& node)
 	}
 }
 
-void Sprite::setEnabled(bool _enabled)
-{
-	enabled = _enabled;
-	if (enabled && getGameObject()->isEnabled() && !initialized)
-	{
-		initialize();
-	}
-}
-
-
 void Sprite::initialize()
 {
 	if (!isEnabled())

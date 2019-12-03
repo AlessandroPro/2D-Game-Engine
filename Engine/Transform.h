@@ -46,7 +46,5 @@ public:
 	void translate(const sf::Vector2f& offset);
 	void setDirectionLock(Direction direction, bool locked);
 	bool checkDirectionLocked(Direction direction);
-	void setEnabled(bool _enabled) override;
-
 };
 
