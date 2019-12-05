@@ -58,9 +58,12 @@ void RenderSystem::update(float deltaTime)
 		currentView.setWindowView(window);
 		window->clear();
 
-		for (auto renderable : renderables)
+		for(RenderLayer layer : layerOrder)
 		{
-			renderable->render(window);
+			for(IRenderable* renderable : renderables[layer])
+			{
+				renderable->render(window);
+			}
 		}
 
 		window->display();
@@ -76,10 +79,36 @@ void RenderSystem::closeWindow()
 
 void RenderSystem::addRenderable(IRenderable* _renderable)
 {
-	renderables.push_back(_renderable);
+	RenderSystem::RenderLayer currentLayer = _renderable->getRenderLayer();
+	std::list<IRenderable*> placeholder;
+
+	if(renderables.count(currentLayer) == 0)
+	{
+		renderables.insert(std::pair<RenderSystem::RenderLayer, std::list<IRenderable*>>(currentLayer, placeholder));
+	}
+
+	renderables[currentLayer].push_back(_renderable);
 }
 
 void RenderSystem::removeRenderable(IRenderable* _renderable)
 {
-	renderables.remove(_renderable);
+	RenderSystem::RenderLayer currentLayer = _renderable->getRenderLayer();
+
+	if(renderables.count(currentLayer) != 0)
+	{
+		renderables[currentLayer].remove(_renderable);
+	}
+}
+
+void RenderSystem::setRenderLayer(IRenderable* _renderable, RenderSystem::RenderLayer newLayer)
+{
+	RenderSystem::RenderLayer currentLayer = _renderable->getRenderLayer();
+
+	if (renderables.count(currentLayer) != 0)
+	{
+		renderables[currentLayer].remove(_renderable);
+	}
+	_renderable->setRenderLayer(newLayer);
+	addRenderable(_renderable);
+
 }

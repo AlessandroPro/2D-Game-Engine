@@ -8,7 +8,7 @@ IMPLEMENT_DYNAMIC_CLASS(Sprite)
 
 Sprite::~Sprite()
 {
-	if(sprite != nullptr)
+	if (sprite != nullptr)
 	{
 		delete sprite;
 	}
@@ -26,12 +26,12 @@ void Sprite::load(json::JSON& node)
 			textureAssetID = GUIDToSTRCODE(textureAssetGUID);
 		}
 	}
-	if(node.hasKey("Dimensions"))
+	if (node.hasKey("Dimensions"))
 	{
 		int w, h, t, l = 0;
 		json::JSON dimensionNode = node["Dimensions"];
 
-		if(!dimensionNode.hasKey("Left") ||
+		if (!dimensionNode.hasKey("Left") ||
 			!dimensionNode.hasKey("Top") ||
 			!dimensionNode.hasKey("Width") ||
 			!dimensionNode.hasKey("Height"))
@@ -43,8 +43,13 @@ void Sprite::load(json::JSON& node)
 		t = dimensionNode["Top"].ToInt();
 		w = dimensionNode["Width"].ToInt();
 		h = dimensionNode["Height"].ToInt();
-		
-		dimensions = sf::IntRect(l,t,w,h);
+
+		dimensions = sf::IntRect(l, t, w, h);
+	}
+	if(node.hasKey("Layer"))
+	{
+		RenderSystem::instance().setRenderLayer(this, (RenderSystem::RenderLayer)node["Layer"].ToInt());
+
 	}
 }
 
@@ -57,18 +62,18 @@ void Sprite::initialize()
 
 	Component::initialize();
 	TextureAsset* asset = dynamic_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
-	if (asset == nullptr || 
+	if (asset == nullptr ||
 		(dimensions.left == dimensions.top &&
-		dimensions.top == dimensions.width &&
-		dimensions.width == dimensions.height &&
-		dimensions.height == 0))
+			dimensions.top == dimensions.width &&
+			dimensions.width == dimensions.height &&
+			dimensions.height == 0))
 	{
 		asset = static_cast<TextureAsset*>(AssetManager::instance().GetDefaultAssetOfType("TextureAsset"));
 		sprite = new sf::Sprite(asset->getTexture());
 	}
 	else
 	{
-		sprite = new sf::Sprite(asset->getTexture(),dimensions);
+		sprite = new sf::Sprite(asset->getTexture(), dimensions);
 	}
 }
 
@@ -88,7 +93,7 @@ void Sprite::render(sf::RenderWindow* _window)
 		return;
 	}
 
-	if(sprite != nullptr && _window != nullptr)
+	if (sprite != nullptr && _window != nullptr)
 	{
 		_window->draw(*sprite);
 	}
@@ -99,12 +104,24 @@ void Sprite::setImage(sf::Texture inTexture, sf::IntRect inDimensions)
 	dimensions = inDimensions;
 
 	//Check the dimensions of the texture against the requested sprite dimensions to see if it can actually map them
-	if(inTexture.getSize().x < (dimensions.left + dimensions.width) ||
+	if (inTexture.getSize().x < (dimensions.left + dimensions.width) ||
 		inTexture.getSize().y < (dimensions.top + dimensions.height))
-	{ 
+	{
 		return;
 	}
 
-	sprite->setTexture(inTexture);
-	sprite->setTextureRect(inDimensions);
+	TextureAsset* asset = dynamic_cast<TextureAsset*>(AssetManager::instance().GetAssetBySTRCODE(textureAssetID));
+	if (asset == nullptr ||
+		(dimensions.left == dimensions.top &&
+			dimensions.top == dimensions.width &&
+			dimensions.width == dimensions.height &&
+			dimensions.height == 0))
+	{
+		asset = static_cast<TextureAsset*>(AssetManager::instance().GetDefaultAssetOfType("TextureAsset"));
+		sprite = new sf::Sprite(asset->getTexture());
+	}
+	else
+	{
+		sprite = new sf::Sprite(asset->getTexture(), dimensions);
+	}
 }

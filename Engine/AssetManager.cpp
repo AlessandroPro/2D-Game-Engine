@@ -187,3 +187,28 @@ Asset* AssetManager::GetDefaultAssetOfType(std::string classType)
 	}
 	return nullptr;
 }
+
+void AssetManager::DoNotDestroyAssetbyGUID(std::string guid)
+{
+	STRCODE uuid = getHashCode(guid.c_str());
+	if (assets.count(uuid))
+	{
+		//If the GameObject is 'do not destroy on load' push back the UUID of the asset in references, 
+		//so it persists throughout the game, as does the gameObject FOR NOW (5 DEC 2019).
+		//It will only get deleted at the AssetManager destruction.
+		//Change this as and when the gameObject loading/unloading for level persistence and deletion changes.
+		assets[uuid]->references.push_back(uuid);	
+	}
+}
+
+void AssetManager::DoNotDestroyAssetbySTRCODE(STRCODE uuid)
+{
+	if (assets.count(uuid))
+	{
+		//If the GameObject is 'do not destroy on load' push back the UUID of the asset in references, 
+		//so it persists throughout the game, as does the gameObject FOR NOW (5 DEC 2019).
+		//It will only get deleted at the AssetManager destruction.
+		//Change this as and when the gameObject loading/unloading for level persistence and deletion changes.
+		assets[uuid]->references.push_back(uuid);
+	}
+}
