@@ -21,10 +21,10 @@ void Animator::update(float deltaTime)
 		return;
 	}
 
-	if(RenderSystem::instance().getRenderWindow() == nullptr)
+	if (RenderSystem::instance().getRenderWindow() == nullptr)
 	{
 		//Turn off all animations if the window is closed.
-		for(auto animation : animations)
+		for (auto animation : animations)
 		{
 			animation.second->stop();
 		}
@@ -47,12 +47,13 @@ Animator::Animator()
 
 Animator::~Animator()
 {
+
 }
 
 //may need better handling here?
 void Animator::addAnimation(Animation* animation)
 {
-	animations.emplace(animation->name,animation);
+	animations.emplace(animation->name, animation);
 }
 
 void Animator::removeAnimation(Animation* animation)
