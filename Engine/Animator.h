@@ -13,7 +13,7 @@
 #include "Component.h"
 #include "Animation.h"
 
-class Animator: public Component
+class Animator : public Component
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Animator, Component)
 
@@ -33,7 +33,15 @@ protected:
 public:
 	Animator();
 	~Animator();
-	void setCurrentAnimation(std::string animation) { currentAnimationName = animation; }
+	void setCurrentAnimation(std::string animation)
+	{
+		if (animations[currentAnimationName] != nullptr)
+		{
+			animations[currentAnimationName]->stop();
+		}
+		currentAnimationName = animation;
+	}
+	std::string& getCurrentAnimationName() { return currentAnimationName; }
 	void playCurrentAnimation() { animations[currentAnimationName]->play(); }
 	void stopCurrentAnimation() { animations[currentAnimationName]->stop(); }
 };

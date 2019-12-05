@@ -17,6 +17,12 @@ class IRenderable;
 
 class RenderSystem final : public ISystem
 {
+public:
+	enum RenderLayer
+	{
+		Environment, StartingObjects, Enemies, Players, Effects, UI, UIEffects
+	};
+	std::vector<RenderLayer> layerOrder{ Environment, StartingObjects, Enemies, Players, Effects, UI, UIEffects };
 private:
 	//Used for controlling the dimensions/positioning of the screen.
 	class ViewPoint
@@ -56,7 +62,7 @@ private:
 	std::string name = "";
 	bool fullscreen = false;
 	sf::RenderWindow* window = nullptr;
-	std::list<IRenderable*> renderables;
+	std::map<RenderLayer, std::list<IRenderable*>> renderables;
 
 protected:
 	void initialize() override;
@@ -74,6 +80,7 @@ public:
 	void removeRenderable(IRenderable* _renderable);
 	void load(json::JSON loadNode, STRCODE fileId);
 	const sf::Vector2f& getViewSize() { return currentView.getSize(); }
+	void setRenderLayer(IRenderable* _renderable, RenderSystem::RenderLayer newLayer);
 };
 
 #endif
