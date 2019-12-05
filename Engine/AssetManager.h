@@ -49,6 +49,10 @@ public:
 	Asset*const GetAssetByGUID(std::string guid);
 	Asset* GetAssetBySTRCODE(STRCODE);
 	Asset* GetDefaultAssetOfType(std::string classType);
+
+	void DoNotDestroyAssetbyGUID(std::string guid);
+	void DoNotDestroyAssetbySTRCODE(STRCODE);
+
 };
 
 #endif
