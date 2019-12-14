@@ -296,6 +296,10 @@ void CollisionSystem::removeCollidable(ICollidable* collider)
 		{
 			activeCollision->colliders[0] = nullptr;
 		}
+		else
+		{
+			activeCollision->colliders[1] = nullptr;
+		}
 	}
 	colliders.remove(collider);
 }

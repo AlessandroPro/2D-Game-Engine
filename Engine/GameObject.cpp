@@ -16,6 +16,7 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
+	deleteFromRemoveList();
 	for (auto& component : components)
 	{
 		if (component.second != nullptr)
@@ -25,7 +26,7 @@ GameObject::~GameObject()
 		}
 	}
 	components.clear();
-	deleteFromRemoveList();
+	//deleteFromRemoveList();
 }
 
 void GameObject::initialize()
