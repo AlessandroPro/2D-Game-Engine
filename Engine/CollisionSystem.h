@@ -78,7 +78,7 @@ public:
 
 	//Adders and removers for lists of Icollidables
 	inline void addCollidable(ICollidable* collider) { colliders.push_back(collider); }
-	inline void removeCollidable(ICollidable* collider) { colliders.remove(collider); }
+	void removeCollidable(ICollidable* collider);
 };
 
 #endif

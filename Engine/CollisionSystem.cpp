@@ -244,8 +244,14 @@ void CollisionSystem::update(float deltaTime)
 	for (auto collisionId : collisionsToRemove)
 	{
 		Collision* collisionData = activeCollisions[collisionId];
-		collisionData->colliders[0]->collisionIDs.remove(collisionId);
-		collisionData->colliders[1]->collisionIDs.remove(collisionId);
+		if (collisionData->colliders[0] != nullptr)
+		{
+			collisionData->colliders[0]->collisionIDs.remove(collisionId);
+		}
+		if (collisionData->colliders[1] != nullptr)
+		{
+			collisionData->colliders[1]->collisionIDs.remove(collisionId);
+		}
 		delete collisionData->collisionManifold;
 		delete collisionData->localCollisionManifold;
 		delete collisionData;
@@ -279,4 +285,17 @@ void CollisionSystem::removeRigidBodyFromWorld(b2Body* rigidBody)
 	{
 		physicsWorld->DestroyBody(rigidBody);
 	}
+}
+
+void CollisionSystem::removeCollidable(ICollidable* collider)
+{
+	for (auto& collisionId : collider->collisionIDs)
+	{
+		Collision* activeCollision = activeCollisions[collisionId];
+		if (activeCollision->colliders[0] == collider)
+		{
+			activeCollision->colliders[0] = nullptr;
+		}
+	}
+	colliders.remove(collider);
 }
